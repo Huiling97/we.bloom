@@ -1,0 +1,20 @@
+@import "../../assets/style/color";
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  width: 100vw;
+}
+
+.navbar-list {
+  position: relative;
+  left: 75%;
+}
+
+.navbar-list-item {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 40px;
+  color: $grey-color;
+}
