@@ -1,7 +1,8 @@
-### What
+**What:**
 
-### How
+**How:**
 
-### Screenshots
+**Screenshots:**
 
-### Test
+**Test:**
+
