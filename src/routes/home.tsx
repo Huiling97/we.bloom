@@ -1,10 +1,11 @@
 import NavBar from '../components/navbar/index.tsx';
+import CarouselBanner from '../components/carousel/index.tsx';
 
 const Home = () => {
   return (
     <div>
       <NavBar />
-      <div>Home page</div>
+      <CarouselBanner />
     </div>
   )
 }
