@@ -2,18 +2,16 @@
   height: 300px;
   width: 80%;
   margin: 0 auto;
+  margin-bottom: 25px;
 }
 
-.image-container {
+.carousel-image {
+  opacity: 50%;
   height: 300px;
 }
 
-.image {
-  opacity: 50%;
-}
-
 .text {
-  font-family: 'Source Sans 3';
+  font-family: "Source Sans 3";
   position: fixed;
   top: 0;
   width: 80%;
