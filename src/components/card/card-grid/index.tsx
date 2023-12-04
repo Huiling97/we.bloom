@@ -23,7 +23,6 @@ const CardGrid = <T extends CardTypeProps, C extends CardsProps>({
       {cards.map((card) => {
         return <Card type={type} card={card} />;
       })}
-      ;
     </div>
   );
 };
