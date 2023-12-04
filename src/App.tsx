@@ -8,17 +8,30 @@ import Body from './routes/services/body';
 import Nail from './routes/services/nail.tsx';
 import HairRemoval from './routes/services/hair-removal.tsx';
 import Error from './routes/error.tsx';
+import NavBar from './components/navbar/index.tsx';
+
+import './App.css';
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home />,
-      errorElement: <Error />
+      element: (
+        <div>
+          <NavBar />
+          <Home />
+        </div>
+      ),
+      errorElement: <Error />,
     },
     {
       path: '/services',
-      element: <AllServices />,
+      element: (
+        <div>
+          <NavBar />
+          <AllServices />
+        </div>
+      ),
       children: [
         {
           path: 'face',
@@ -36,19 +49,20 @@ function App() {
           path: 'hair-removal',
           element: <HairRemoval />,
         },
-      ]
+      ],
     },
     {
       path: '/contact',
-      element: <Contact />,
+      element: (
+        <div>
+          <NavBar />
+          <Contact />
+        </div>
+      ),
     },
-  ])
+  ]);
 
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
