@@ -1,0 +1,24 @@
+@import 'src/assets/style/_color.scss';
+
+.card-detailed-container {
+  background-color: #ede0df;
+  color: $grey-color;
+  padding: 25px 35px;
+}
+
+.card-detailed-title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.card-detailed-description {
+  margin: 10px 0;
+  height: 200px;
+}
+
+.card-details-item {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-bottom: 5px;
+}
