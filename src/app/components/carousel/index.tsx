@@ -13,7 +13,7 @@ const CarouselBanner = () => {
         infiniteLoop={true}
       >
         <div className='carousel-image-container'>
-          <img src='src/assets/images/image1.jpg' className='image' />
+          <img src='src/app/assets/images/image1.jpg' className='image' />
           <div className='text'>
             <p className='text--large'>
               There is beauty in everyone,<br></br>
@@ -25,15 +25,15 @@ const CarouselBanner = () => {
           </div>
         </div>
         <div className='carousel-image-container'>
-          <img src='src/assets/images/image2.jpg' className='image' />
+          <img src='src/app/assets/images/image2.jpg' className='image' />
           <p className='text'>Legend 2</p>
         </div>
         <div className='carousel-image-container'>
-          <img src='src/assets/images/image3.jpg' className='image' />
+          <img src='src/app/assets/images/image3.jpg' className='image' />
           <p className='text'>Legend 3</p>
         </div>
         <div className='carousel-image-container'>
-          <img src='src/assets/images/image4.jpg' className='image' />
+          <img src='src/app/assets/images/image4.jpg' className='image' />
           <p className='text'>Legend 4</p>
         </div>
       </Carousel>
