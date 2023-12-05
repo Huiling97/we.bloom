@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <div>
       <CarouselBanner />
-      <CardGrid type='overview' cards={DUMMY_TITLES} />
+      <CardGrid type='generic' cards={DUMMY_TITLES} />
     </div>
   );
 };
