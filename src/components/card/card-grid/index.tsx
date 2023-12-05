@@ -1,27 +1,40 @@
-import {
-  type CardOverviewProps,
-  type CardDetailedProps,
-  type CardTypeProps,
-} from '../card-item/index.tsx';
-import Card from '../card-item/index.tsx';
+import { type ReactNode } from 'react';
+import { type CardGenericProps } from '../card-generic/index.tsx';
+import { type CardDetailedProps } from '../card-detailed/index.tsx';
+import CardDetailed from '../card-detailed/index.tsx';
+import CardGeneric from '../card-generic/index.tsx';
 
 import './style.scss';
 
-type CardsProps = CardOverviewProps[] | CardDetailedProps[];
+type CardTypeProps = 'generic' | 'detailed';
+type CardProps<T extends CardTypeProps> = T extends 'generic'
+  ? CardGenericProps[]
+  : CardDetailedProps[];
 
-type CardGridProps<T extends CardTypeProps, C extends CardsProps> = {
+type CardGridProps<T extends CardTypeProps> = {
   type: T;
-  cards: C;
+  cards: CardProps<T>;
 };
 
-const CardGrid = <T extends CardTypeProps, C extends CardsProps>({
+const CardGrid = <T extends CardTypeProps>({
   type,
   cards,
-}: CardGridProps<T, C>) => {
+}: CardGridProps<T>): ReactNode => {
   return (
     <div className='grid-container'>
       {cards.map((card) => {
-        return <Card type={type} card={card} />;
+        if (type === 'detailed') {
+          const { title, description, details } = card as CardDetailedProps;
+          return (
+            <CardDetailed
+              title={title}
+              description={description}
+              details={details}
+            />
+          );
+        }
+        const { title, image } = card as CardGenericProps;
+        return <CardGeneric title={title} image={image} />;
       })}
     </div>
   );
