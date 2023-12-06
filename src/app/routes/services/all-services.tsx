@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import CardGrid from '../../components/card/card-grid';
 
 const AllServices = () => {
@@ -24,7 +23,6 @@ const AllServices = () => {
   return (
     <div>
       <CardGrid type='generic' cards={DUMMY_TITLES} />
-      <Outlet />
     </div>
   );
 };
