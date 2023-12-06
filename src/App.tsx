@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './app/routes/home.tsx';
 import Contact from './app/routes/contact.tsx';
+import DisplayServices from './app/routes/services/index.tsx';
 import AllServices from './app/routes/services/all-services.tsx';
 import Face from './app/routes/services/face.tsx';
 import Body from './app/routes/services/body.tsx';
@@ -31,11 +32,15 @@ function App() {
       element: (
         <div>
           <NavBar />
-          <AllServices />
+          <DisplayServices />
           <Footer />
         </div>
       ),
       children: [
+        {
+          path: '',
+          element: <AllServices />,
+        },
         {
           path: 'face',
           element: <Face />,
