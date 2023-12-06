@@ -20,11 +20,7 @@ const AllServices = () => {
     },
   ];
 
-  return (
-    <div>
-      <CardGrid type='generic' cards={DUMMY_TITLES} />
-    </div>
-  );
+  return <CardGrid type='generic' cards={DUMMY_TITLES} />;
 };
 
 export default AllServices;
