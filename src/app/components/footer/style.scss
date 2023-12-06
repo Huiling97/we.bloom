@@ -1,0 +1,31 @@
+@import 'src/app/assets/style/_color.scss';
+
+.footer-container {
+  background-color: $grey-medium-light-color;
+  color: $grey-medium-dark-color;
+  padding: 20px 0 10px 0;
+}
+
+.footer-container > div:first-child {
+  border-bottom: 1px solid $grey-color;
+}
+
+.footer-details-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding-left: 20px;
+}
+
+.bottom-padding {
+  padding-bottom: 10px;
+}
+
+.top-padding {
+  padding-top: 10px;
+}
+
+.footer-logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 50px;
+}
