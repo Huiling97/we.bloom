@@ -9,6 +9,7 @@ import Nail from './app/routes/services/nail.tsx';
 import HairRemoval from './app/routes/services/hair-removal.tsx';
 import Error from './app/routes/error.tsx';
 import NavBar from './app/components/navbar/index.tsx';
+import Footer from './app/components/footer/index.tsx';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
         <div>
           <NavBar />
           <Home />
+          <Footer />
         </div>
       ),
       errorElement: <Error />,
@@ -30,6 +32,7 @@ function App() {
         <div>
           <NavBar />
           <AllServices />
+          <Footer />
         </div>
       ),
       children: [
@@ -57,6 +60,7 @@ function App() {
         <div>
           <NavBar />
           <Contact />
+          <Footer />
         </div>
       ),
     },
