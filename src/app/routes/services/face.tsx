@@ -1,3 +1,4 @@
+import Banner from '../../components/banner/index.tsx';
 import CardGrid from '../../components/card/card-grid/index.tsx';
 
 const DUMMY_TITLES_DETAILED = [
@@ -32,7 +33,12 @@ const DUMMY_TITLES_DETAILED = [
 const Face = () => {
   return (
     <div>
-      <div>Face page</div>
+      <Banner
+        image='/src/app/assets/images/face.jpg'
+        title='Face'
+        description='Equipped with the latest technology and only using the quality products from Germany, achieve healthy, elastic, wrinkle-free and young-looking skin for yourself. 
+        Treatments available for all skin types.'
+      />
       <CardGrid type='detailed' cards={DUMMY_TITLES_DETAILED} />
     </div>
   );
