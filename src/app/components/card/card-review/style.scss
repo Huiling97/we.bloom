@@ -1,0 +1,37 @@
+@import 'src/app/assets/style/_color.scss';
+
+.slider-container {
+  width: 75vw;
+  margin: 20px auto;
+}
+
+.card-review-container {
+  color: $grey-color;
+  padding: 25px 35px;
+  width: 80%;
+  margin: 0 auto;
+  max-height: 600px;
+}
+
+.card-review-title {
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.card-review-user {
+  text-align: right;
+  margin: 10px 0;
+}
+
+.card-review-description {
+  text-align: center;
+}
+
+.slick-next::before {
+  content: '>';
+}
+
+.slick-prev:before {
+  content: '<';
+}
