@@ -1,9 +1,5 @@
+import { CardGenericProps } from '../../../types/card';
 import './styles.scss';
-
-export type CardGenericProps = {
-  title: string;
-  image: string;
-};
 
 const CardGeneric = (card: CardGenericProps) => {
   const { title, image } = card;
