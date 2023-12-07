@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import { useDropzone } from 'react-dropzone';
 import AlertDismissible from '../alert';
 
@@ -12,28 +14,69 @@ const DropZone = () => {
         'image/png': [],
       },
     });
+  const [files, setFiles] = useState(acceptedFiles);
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const deleteHandler = () => {
+    setFiles((prevFile) => prevFile.filter((file) => prevFile[0] !== file));
+  };
 
   const acceptedFileItems = acceptedFiles.map((file) => (
-    <div>
-      Image added: {file.name} - {file.size} bytes
+    <div key={file.name}>
+      <div className='dropzone-file-container'>
+        <div>
+          Image added:
+          <br />
+          {file.name} - {file.size} bytes
+        </div>
+        <Button variant='danger' onClick={deleteHandler}>
+          Delete
+        </Button>
+      </div>
+      <img src={`${preview}`} className='preview-image' />
     </div>
   ));
 
+  const hasFileItems = files?.length !== 0;
   const isFileRejected = fileRejections.length !== 0;
 
+  console.log('hasfile', hasFileItems);
+  console.log('file', files);
+  console.log('acceptedFileItems', acceptedFileItems);
+
+  useEffect(() => {
+    setFiles(acceptedFiles);
+  }, [acceptedFiles]);
+
+  useEffect(() => {
+    if (hasFileItems) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(acceptedFiles[0]);
+    }
+  }, [files]);
+
   return (
-    <section className='container'>
-      <AlertDismissible
-        text='Only *.jpeg and *.png images will be accepted'
-        showAlert={isFileRejected}
-      />
-      <div {...getRootProps({ className: 'dropzone' })}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop an image here, or click to select an image</p>
-        <em>(Only *.jpeg and *.png images will be accepted)</em>
+    <div className='dropzone-container'>
+      {!hasFileItems && (
+        <section>
+          <AlertDismissible
+            text='Only *.jpeg and *.png images will be accepted'
+            showAlert={isFileRejected}
+          />
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop an image here, or click to select an image</p>
+            <em>(Only *.jpeg and *.png images will be accepted)</em>
+          </div>
+        </section>
+      )}
+      <div>
+        <aside>{hasFileItems && acceptedFileItems}</aside>
       </div>
-      <aside>{acceptedFileItems}</aside>
-    </section>
+    </div>
   );
 };
 

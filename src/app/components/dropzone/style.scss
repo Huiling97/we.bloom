@@ -1,7 +1,7 @@
-.container {
+.dropzone-container {
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
+  margin: 20px 0;
 }
 
 .container > p {
@@ -34,4 +34,22 @@
 
 .dropzone.disabled {
   opacity: 0.6;
+}
+
+.dropzone-file-container {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 10px;
+
+  > div:first-child {
+    flex: 5;
+  }
+
+  > Button {
+    flex: 1;
+  }
+}
+
+.preview-image {
+  width: 100%;
 }

@@ -21,7 +21,7 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
     setValidated(true);
   };
 
-  const handleCloseClick = () => {
+  const closeHandler = () => {
     if (onClose && validated) {
       onClose();
     }
@@ -37,10 +37,9 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId='image'>
-        <Form.Label>Image</Form.Label>
         <DropZone />
       </Form.Group>
-      <Button variant='primary' type='submit' onClick={handleCloseClick}>
+      <Button variant='primary' type='submit' onClick={closeHandler}>
         Add
       </Button>
     </Form>
