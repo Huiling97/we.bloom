@@ -19,6 +19,7 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
     }
 
     setValidated(true);
+    onClose();
   };
 
   const closeHandler = () => {
