@@ -1,6 +1,10 @@
+import { type CardGenericObjectProps } from '../../types/card.ts';
 import ShowModal from '../../components/modal';
 import CardGenericForm from '../../components/card/card-generic/form';
 import CardGrid from '../../components/card/card-grid';
+
+import { ref, onValue } from 'firebase/database';
+import { database } from '../../../main';
 
 const AllServices = () => {
   const DUMMY_TITLES = [
@@ -21,6 +25,14 @@ const AllServices = () => {
       image: 'hair-removal',
     },
   ];
+
+  const categoriesRef = ref(database, '/categories');
+  let data: CardGenericObjectProps = {};
+  onValue(categoriesRef, (snapshot) => {
+    data = snapshot.val();
+  });
+
+  console.log('data', data);
 
   return (
     <div>

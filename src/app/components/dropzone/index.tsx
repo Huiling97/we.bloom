@@ -5,7 +5,11 @@ import AlertDismissible from '../alert';
 
 import './style.scss';
 
-const DropZone = () => {
+type DropZoneProps = {
+  onAdd: (img: string) => void;
+};
+
+const DropZone = ({ onAdd }: DropZoneProps) => {
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
     useDropzone({
       maxFiles: 1,
@@ -40,10 +44,6 @@ const DropZone = () => {
   const hasFileItems = files?.length !== 0;
   const isFileRejected = fileRejections.length !== 0;
 
-  console.log('hasfile', hasFileItems);
-  console.log('file', files);
-  console.log('acceptedFileItems', acceptedFileItems);
-
   useEffect(() => {
     setFiles(acceptedFiles);
   }, [acceptedFiles]);
@@ -52,7 +52,9 @@ const DropZone = () => {
     if (hasFileItems) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result as string);
+        const img = reader.result as string;
+        setPreview(img);
+        onAdd(img);
       };
       reader.readAsDataURL(acceptedFiles[0]);
     }
