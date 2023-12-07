@@ -1,3 +1,5 @@
+import ShowModal from '../../components/modal';
+import CardGenericForm from '../../components/card/card-generic/form';
 import CardGrid from '../../components/card/card-grid';
 
 const AllServices = () => {
@@ -20,7 +22,12 @@ const AllServices = () => {
     },
   ];
 
-  return <CardGrid type='generic' cards={DUMMY_TITLES} />;
+  return (
+    <div>
+      <ShowModal heading='Add new cateogry' form={CardGenericForm} />
+      <CardGrid type='generic' cards={DUMMY_TITLES} />
+    </div>
+  );
 };
 
 export default AllServices;
