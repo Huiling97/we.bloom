@@ -1,10 +1,15 @@
-import { useState, type FormEvent, ReactNode, ChangeEvent } from 'react';
+import {
+  useState,
+  type FormEvent,
+  type ReactNode,
+  type ChangeEvent,
+} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import DropZone from '../../dropzone';
-
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
+import ServiceDetailsForm from './details/form';
 
 type CardDetailedFormProps = {
   onClose: () => void;
@@ -21,6 +26,10 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
 
   const [formData, setFormData] = useState(formInput);
   const [dropdownOption, setDropdownOption] = useState('');
+  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
+    ReactNode[]
+  >([]);
+
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
@@ -76,6 +85,13 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     }
   };
 
+  const addDetailsHandler = () => {
+    setAdditionalDetailsForm([
+      ...additionalDetailsForm,
+      <ServiceDetailsForm />,
+    ]);
+  };
+
   const displayCategoryOptions = (categories: string[]): ReactNode => {
     return categories.map((category) => {
       return (
@@ -124,9 +140,18 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
           onChange={onChangeHandler}
         />
         <Form.Control.Feedback type='invalid'>
-          Please provide a name
+          Please provide a description
         </Form.Control.Feedback>
       </Form.Group>
+      <ServiceDetailsForm />
+      <div>
+        {additionalDetailsForm.map((form, index) => (
+          <div key={index}>{form}</div>
+        ))}
+      </div>
+      <Button variant='primary' onClick={addDetailsHandler}>
+        Add additional price and duration
+      </Button>
       <Form.Group controlId='image'>
         <DropZone onAdd={onAddHandler} />
       </Form.Group>
