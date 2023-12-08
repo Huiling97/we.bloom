@@ -11,6 +11,7 @@ import HairRemoval from './app/routes/services/hair-removal.tsx';
 import Error from './app/routes/error.tsx';
 import NavBar from './app/components/navbar/index.tsx';
 import Footer from './app/components/footer/index.tsx';
+import Manage from './app/routes/manage.tsx';
 
 import './App.css';
 
@@ -68,6 +69,10 @@ function App() {
           <Footer />
         </div>
       ),
+    },
+    {
+      path: '/manage',
+      element: <Manage />,
     },
   ]);
 
