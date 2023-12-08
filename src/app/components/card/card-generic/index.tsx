@@ -1,11 +1,11 @@
-import { CardGenericProps } from '../../../types/card';
+import { type ReactNode } from 'react';
+import { type CardGenericProps } from '../../../types/card';
 import './styles.scss';
 
-const CardGeneric = (card: CardGenericProps) => {
-  const { title, image } = card;
+const CardGeneric = ({ title, image }: CardGenericProps): ReactNode => {
   return (
     <div className='card-container'>
-      <img src={`src/app/assets/images/${image}.jpg`} className='card-image' />
+      <img src={image.imageSrc} className='card-image' />
       <div className='card-title'>{title}</div>
     </div>
   );
