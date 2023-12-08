@@ -1,4 +1,4 @@
-import { type CardDetailsProps } from '../../../types/card.ts';
+import { type CardDetailsProps } from '../../../../types/card.ts';
 
 import './style.scss';
 

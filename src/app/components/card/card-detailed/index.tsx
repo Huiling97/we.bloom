@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
-import { type CardDetailsProps } from './card-details.tsx';
+import { type CardDetailsProps } from '../../../types/card.ts';
 
-import CardDetails from './card-details.tsx';
+import CardDetails from './details/index.tsx';
 import './style.scss';
 
 export type CardDetailedProps = {
