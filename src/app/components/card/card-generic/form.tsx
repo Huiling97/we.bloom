@@ -38,8 +38,9 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     if (form.checkValidity() === false) {
-      e.preventDefault();
       e.stopPropagation();
+      setValidated(true);
+      return;
     }
 
     set(ref(database, 'categories/' + formData.name), {
