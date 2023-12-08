@@ -1,9 +1,6 @@
-import './style.scss';
+import { type CardDetailsProps } from '../../../types/card.ts';
 
-export type CardDetailsProps = {
-  duration: number;
-  price: number;
-};
+import './style.scss';
 
 const CardDetails = (details: CardDetailsProps) => {
   const { duration, price } = details;

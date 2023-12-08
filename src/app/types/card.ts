@@ -1,10 +1,27 @@
 export type CardGenericProps = {
   title: string;
-  image: string;
-};
-
-export interface CardGenericObjectProps {
-  [name: string]: {
+  image: {
     imageSrc: string;
   };
+};
+
+export interface CardDetailedObjectProps {
+  [category: string]: {
+    [service: string]: {
+      title: string;
+      description: string;
+      details: CardDetailsObjectProps;
+    };
+  };
 }
+
+type CardDetailsObjectProps = {
+  [details: string]: {
+    info: CardDetailsProps;
+  };
+};
+
+export type CardDetailsProps = {
+  duration: number;
+  price: number;
+};
