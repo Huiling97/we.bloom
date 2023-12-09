@@ -40,6 +40,18 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
+  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const detail = {
+      [name]: value,
+    };
+    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
+  };
+
+  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
+    ReactNode[]
+  >([<ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />]);
+
   const onDropdownChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setDropdownOption(e.target.value);
     setIsDropdownInvalid(false);
@@ -53,17 +65,13 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     }));
   };
 
-  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const detail = {
-      [name]: value,
-    };
-    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
+  const addDetailsHandler = () => {
+    setAdditionalDetailsForm([
+      ...additionalDetailsForm,
+      <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
+    ]);
+    setAllDetailsData((prevValue) => [...prevValue, detailsData]);
   };
-
-  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
-    ReactNode[]
-  >([<ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />]);
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -85,6 +93,12 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     onClose();
   };
 
+  const closeHandler = () => {
+    if (onClose && validated) {
+      onClose();
+    }
+  };
+
   const { name, description } = formData;
   useEffect(() => {
     if (dropdownOption && name && description && allDetailsData.length > 0)
@@ -95,19 +109,6 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
         details: allDetailsData,
       });
   }, [dropdownOption, name, description, allDetailsData]);
-
-  const closeHandler = () => {
-    if (onClose && validated) {
-      onClose();
-    }
-  };
-
-  const addDetailsHandler = () => {
-    setAdditionalDetailsForm([
-      ...additionalDetailsForm,
-      <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
-    ]);
-  };
 
   const displayCategoryOptions = (categories: string[]): ReactNode => {
     return categories.map((category) => {
