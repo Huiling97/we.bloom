@@ -43,10 +43,6 @@ const Manage = () => {
     fetchData();
   }, []);
 
-  console.log('categoryType', categoryType);
-
-  console.log('categoriesData', categoriesData);
-
   return (
     <div>
       {isLoading ? (
