@@ -5,7 +5,7 @@ export interface CardGenericProps {
   };
 }
 
-export interface CardDetailedObjectProps {
+export interface CardDetailedProps {
   [category: string]: {
     [service: string]: {
       title: string;
@@ -24,4 +24,11 @@ type CardDetailsObjectProps = {
 export type CardDetailsProps = {
   duration: '';
   price: '';
+};
+
+export type CardDetailedFormInputProps = {
+  category: string;
+  name: string;
+  description: string;
+  details: CardDetailsProps[];
 };
