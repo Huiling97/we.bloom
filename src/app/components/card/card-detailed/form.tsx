@@ -3,10 +3,11 @@ import {
   type FormEvent,
   type ReactNode,
   type ChangeEvent,
+  useEffect,
 } from 'react';
+import { type CardDetailsProps } from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import DropZone from '../../dropzone';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
 import ServiceDetailsForm from './details/form';
@@ -16,19 +17,25 @@ type CardDetailedFormProps = {
   categories: string[];
 };
 
+type FormInputProps = {
+  category: string;
+  name: string;
+  description: string;
+  details: CardDetailsProps[];
+};
+
 const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   const formInput = {
     category: '',
     name: '',
     description: '',
-    imageSrc: '',
+    details: [],
   };
 
-  const [formData, setFormData] = useState(formInput);
-  const [dropdownOption, setDropdownOption] = useState('');
-  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
-    ReactNode[]
-  >([]);
+  const [formData, setFormData] = useState(formInput as FormInputProps);
+  const [detailsData, setDetailsData] = useState({});
+  const [allDetailsData, setAllDetailsData] = useState([detailsData]);
+  const [dropdownOption, setDropdownOption] = useState<string>('');
 
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
@@ -46,38 +53,48 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     }));
   };
 
-  const onAddHandler = (img: string) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      imageSrc: img,
-    }));
+  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const detail = {
+      [name]: value,
+    };
+    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
   };
+
+  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
+    ReactNode[]
+  >([<ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />]);
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
 
     if (!dropdownOption) {
       setIsDropdownInvalid(true);
       return;
     }
-
-    const form = e.currentTarget as HTMLFormElement;
     if (form.checkValidity() === false) {
       e.stopPropagation();
       setValidated(true);
       return;
     }
 
-    const { name, description, imageSrc } = formData;
-    set(ref(database, 'service/' + formData.name), {
-      category: dropdownOption,
-      name,
-      description,
-      imageSrc,
-    });
+    setAllDetailsData((prevValue) => [...prevValue, detailsData]);
+
     setValidated(true);
     onClose();
   };
+
+  const { name, description } = formData;
+  useEffect(() => {
+    if (dropdownOption && name && description && allDetailsData.length > 0)
+      set(ref(database, 'service/' + name), {
+        category: dropdownOption,
+        name,
+        description,
+        details: allDetailsData,
+      });
+  }, [dropdownOption, name, description, allDetailsData]);
 
   const closeHandler = () => {
     if (onClose && validated) {
@@ -88,7 +105,7 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   const addDetailsHandler = () => {
     setAdditionalDetailsForm([
       ...additionalDetailsForm,
-      <ServiceDetailsForm />,
+      <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
     ]);
   };
 
@@ -143,7 +160,6 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
           Please provide a description
         </Form.Control.Feedback>
       </Form.Group>
-      <ServiceDetailsForm />
       <div>
         {additionalDetailsForm.map((form, index) => (
           <div key={index}>{form}</div>
@@ -152,9 +168,6 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
       <Button variant='primary' onClick={addDetailsHandler}>
         Add additional price and duration
       </Button>
-      <Form.Group controlId='image'>
-        <DropZone onAdd={onAddHandler} />
-      </Form.Group>
       <Button variant='primary' type='submit' onClick={closeHandler}>
         Add
       </Button>
