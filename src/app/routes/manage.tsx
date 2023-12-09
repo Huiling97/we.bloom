@@ -47,7 +47,7 @@ const Manage = () => {
   }, []);
 
   useEffect(() => {
-    const servicesRef = ref(database, 'service');
+    const servicesRef = ref(database, 'services');
 
     const fetchServicesData = () => {
       try {
