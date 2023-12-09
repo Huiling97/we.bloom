@@ -1,9 +1,9 @@
-export type CardGenericProps = {
+export interface CardGenericProps {
   title: string;
   image: {
     imageSrc: string;
   };
-};
+}
 
 export interface CardDetailedObjectProps {
   [category: string]: {
@@ -22,6 +22,6 @@ type CardDetailsObjectProps = {
 };
 
 export type CardDetailsProps = {
-  duration: number;
-  price: number;
+  duration: '';
+  price: '';
 };

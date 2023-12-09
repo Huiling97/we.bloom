@@ -4,16 +4,19 @@ import Modal from 'react-bootstrap/Modal';
 
 type FormComponentProps = {
   onClose: () => void;
+  categories: string[];
 };
 
 type ShowModalProps = {
   heading: string;
   form: FunctionComponent<FormComponentProps>;
+  categories?: string[];
 };
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
   form: FormComponent,
+  categories,
 }: ShowModalProps) => {
   const [show, setShow] = useState(false);
 
@@ -30,7 +33,10 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
           <Modal.Title>{heading}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormComponent onClose={handleClose} />
+          <FormComponent
+            onClose={handleClose}
+            categories={categories as string[]}
+          />
         </Modal.Body>
       </Modal>
     </>
