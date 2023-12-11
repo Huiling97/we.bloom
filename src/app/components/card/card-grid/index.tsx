@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import {
   type CardGenericProps,
-  type CardDetailedObjectProps,
+  type CardDetailedProps,
 } from '../../../types/card.ts';
 import CardGeneric from '../card-generic/index.tsx';
 
@@ -10,7 +10,7 @@ import './style.scss';
 type CardTypeProps = 'generic' | 'detailed';
 type CardProps<T extends CardTypeProps> = T extends 'generic'
   ? CardGenericProps
-  : CardDetailedObjectProps;
+  : CardDetailedProps;
 
 type CardGridProps<T extends CardTypeProps> = {
   type: T;

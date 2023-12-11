@@ -1,25 +1,28 @@
 import { useEffect, useState } from 'react';
-import { type CardGenericProps } from '../../app/types/card.ts';
+import {
+  type CardGenericProps,
+  type CardDetailedFormInputProps,
+} from '../../app/types/card.ts';
 import ShowModal from '../components/modal/index.tsx';
 import CardGenericForm from '../components/card/card-generic/form.tsx';
+import CardDetailedForm from '../components/card/card-detailed/form.tsx';
+import CardOverview from '../components/card/card-overview/index.tsx';
 
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
-
-import CardDetailedForm from '../components/card/card-detailed/form.tsx';
-import CardOverview from '../components/card/card-overview/index.tsx';
 
 const Manage = () => {
   const [categoriesData, setCategoriesData] = useState<CardGenericProps | null>(
     null
   );
   const [categoryType, setCategoryType] = useState<string[]>([]);
+  const [services, setServices] = useState<CardDetailedFormInputProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const categoriesRef = ref(database, 'categories');
 
-    const fetchData = () => {
+    const fetchCategoriesData = () => {
       try {
         onValue(categoriesRef, (snapshot) => {
           if (snapshot) {
@@ -40,8 +43,34 @@ const Manage = () => {
       }
     };
 
-    fetchData();
+    fetchCategoriesData();
   }, []);
+
+  useEffect(() => {
+    const servicesRef = ref(database, 'services');
+
+    const fetchServicesData = () => {
+      try {
+        onValue(servicesRef, (snapshot) => {
+          if (snapshot) {
+            const data = snapshot.val();
+            if (data) {
+              setServices(data);
+            }
+          } else {
+            throw new Error('Unable to fetch services');
+          }
+          setIsLoading(false);
+        });
+      } catch (e) {
+        setIsLoading(false);
+        throw new Error('Unable to fetch services');
+      }
+    };
+    fetchServicesData();
+  }, []);
+
+  console.log('services', services);
 
   return (
     <div>

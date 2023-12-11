@@ -5,7 +5,7 @@ import {
   type ChangeEvent,
   useEffect,
 } from 'react';
-import { type CardDetailsProps } from '../../../types/card.ts';
+import { type CardDetailedFormInputProps } from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { ref, set } from 'firebase/database';
@@ -17,13 +17,6 @@ type CardDetailedFormProps = {
   categories: string[];
 };
 
-type FormInputProps = {
-  category: string;
-  name: string;
-  description: string;
-  details: CardDetailsProps[];
-};
-
 const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   const formInput = {
     category: '',
@@ -32,7 +25,9 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     details: [],
   };
 
-  const [formData, setFormData] = useState(formInput as FormInputProps);
+  const [formData, setFormData] = useState(
+    formInput as CardDetailedFormInputProps
+  );
   const [detailsData, setDetailsData] = useState({});
   const [allDetailsData, setAllDetailsData] = useState([detailsData]);
   const [dropdownOption, setDropdownOption] = useState<string>('');
@@ -102,7 +97,7 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   const { name, description } = formData;
   useEffect(() => {
     if (dropdownOption && name && description && allDetailsData.length > 0)
-      set(ref(database, 'service/' + name), {
+      set(ref(database, 'services/' + name), {
         category: dropdownOption,
         name,
         description,
