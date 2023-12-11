@@ -14,7 +14,7 @@ const displayCardDetails = (details: CardDetailsProps[]): ReactNode => {
   return (
     <>
       {details.map(({ duration, price }) => (
-        <CardDetails duration={duration} price={price} />
+        <CardDetails key={`${duration}`} duration={duration} price={price} />
       ))}
     </>
   );
