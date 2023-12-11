@@ -22,8 +22,8 @@ type CardDetailsObjectProps = {
 };
 
 export type CardDetailsProps = {
-  duration: '';
-  price: '';
+  duration: string;
+  price: string;
 };
 
 export type CardDetailedFormInputProps = {
