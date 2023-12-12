@@ -84,6 +84,7 @@ const Manage = () => {
               heading='Add new service'
               form={CardDetailedForm}
               categories={categoryType}
+              services={services}
             />
             {categoriesData && CardOverview(categoriesData)}
           </div>

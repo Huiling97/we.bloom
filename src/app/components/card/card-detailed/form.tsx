@@ -5,7 +5,10 @@ import {
   type ChangeEvent,
   useEffect,
 } from 'react';
-import { type CardDetailedFormInputProps } from '../../../types/card.ts';
+import {
+  type CardDetailedFormInputProps,
+  type CardDetailsProps,
+} from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { ref, set } from 'firebase/database';
@@ -15,9 +18,14 @@ import ServiceDetailsForm from './details/form';
 type CardDetailedFormProps = {
   onClose: () => void;
   categories: string[];
+  services: CardDetailedFormInputProps[];
 };
 
-const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
+const CardDetailedForm = ({
+  onClose,
+  categories,
+  services,
+}: CardDetailedFormProps) => {
   const formInput = {
     category: '',
     name: '',
@@ -29,7 +37,9 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     formInput as CardDetailedFormInputProps
   );
   const [detailsData, setDetailsData] = useState({});
-  const [allDetailsData, setAllDetailsData] = useState([detailsData]);
+  const [allDetailsData, setAllDetailsData] = useState<
+    CardDetailsProps[] | {}[]
+  >([]);
   const [dropdownOption, setDropdownOption] = useState<string>('');
 
   const [validated, setValidated] = useState(false);
@@ -97,12 +107,14 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   const { name, description } = formData;
   useEffect(() => {
     if (dropdownOption && name && description && allDetailsData.length > 0)
-      set(ref(database, 'services/' + name), {
-        category: dropdownOption,
-        name,
-        description,
-        details: allDetailsData,
-      });
+      set(ref(database, 'services/' + dropdownOption), [
+        {
+          category: dropdownOption,
+          name,
+          description,
+          details: allDetailsData,
+        },
+      ]);
   }, [dropdownOption, name, description, allDetailsData]);
 
   const displayCategoryOptions = (categories: string[]): ReactNode => {
