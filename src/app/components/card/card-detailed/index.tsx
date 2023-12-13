@@ -5,7 +5,7 @@ import CardDetails from './details/index.tsx';
 import './style.scss';
 
 export type CardDetailedProps = {
-  title: string;
+  name: string;
   description: string;
   details: CardDetailsProps[];
 };
@@ -20,10 +20,10 @@ const displayCardDetails = (details: CardDetailsProps[]): ReactNode => {
   );
 };
 
-const CardDetailed = ({ title, description, details }: CardDetailedProps) => {
+const CardDetailed = ({ name, description, details }: CardDetailedProps) => {
   return (
     <div className='card-detailed-container'>
-      <div className='card-detailed-title'>{title.toUpperCase()}</div>
+      <div className='card-detailed-title'>{name.toUpperCase()}</div>
       <p className='card-detailed-description'>{description}</p>
       {displayCardDetails(details)}
     </div>
