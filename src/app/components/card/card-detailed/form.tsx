@@ -8,6 +8,7 @@ import {
 import {
   type CardDetailedFormInputProps,
   type CardDetailsProps,
+  type CardServicesProps,
 } from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -18,7 +19,7 @@ import ServiceDetailsForm from './details/form';
 type CardDetailedFormProps = {
   onClose: () => void;
   categories: string[];
-  services: CardDetailedFormInputProps[];
+  services: CardServicesProps;
 };
 
 const CardDetailedForm = ({
@@ -42,6 +43,7 @@ const CardDetailedForm = ({
   >([]);
   const [dropdownOption, setDropdownOption] = useState<string>('');
 
+  const [completed, setCompleted] = useState(false);
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
@@ -51,6 +53,7 @@ const CardDetailedForm = ({
       [name]: value,
     };
     setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
+    setCompleted(true);
   };
 
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
@@ -76,6 +79,7 @@ const CardDetailedForm = ({
       <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
     ]);
     setAllDetailsData((prevValue) => [...prevValue, detailsData]);
+    setCompleted(false);
   };
 
   const submitFormHandler = (e: FormEvent) => {
@@ -94,6 +98,7 @@ const CardDetailedForm = ({
 
     setAllDetailsData((prevValue) => [...prevValue, detailsData]);
 
+    setCompleted(true);
     setValidated(true);
     onClose();
   };
@@ -105,16 +110,25 @@ const CardDetailedForm = ({
   };
 
   const { name, description } = formData;
+
   useEffect(() => {
-    if (dropdownOption && name && description && allDetailsData.length > 0)
-      set(ref(database, 'services/' + dropdownOption), [
-        {
-          category: dropdownOption,
-          name,
-          description,
-          details: allDetailsData,
-        },
-      ]);
+    let updatedData;
+    const data = {
+      category: dropdownOption,
+      name,
+      description,
+      details: allDetailsData,
+    };
+
+    if (dropdownOption && name && description && completed) {
+      if (services[dropdownOption] && services[dropdownOption].length !== 0) {
+        const existingData = services[dropdownOption];
+        updatedData = [...existingData, data];
+      } else {
+        updatedData = [data];
+      }
+      set(ref(database, 'services/' + dropdownOption), updatedData);
+    }
   }, [dropdownOption, name, description, allDetailsData]);
 
   const displayCategoryOptions = (categories: string[]): ReactNode => {
