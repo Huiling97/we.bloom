@@ -32,8 +32,6 @@ const Body = () => {
     fetchServicesData();
   }, []);
 
-  console.log('servies', services);
-
   return <div>{isLoading ? <div>Loading</div> : <div>Body page</div>}</div>;
 };
 

@@ -70,8 +70,6 @@ const Manage = () => {
     fetchServicesData();
   }, []);
 
-  console.log('services', services);
-
   return (
     <div>
       {isLoading ? (
