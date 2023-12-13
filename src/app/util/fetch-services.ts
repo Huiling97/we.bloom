@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { type CardDetailedFormInputProps } from '../types/card.ts';
+import { type CardServicesProps } from '../types/card.ts';
 
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const fetchServicesData = (category: string) => {
-  const [services, setServices] = useState<CardDetailedFormInputProps[]>([]);
+  const [services, setServices] = useState<CardServicesProps | []>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const serviceRef = ref(database, `services/${category}`);
