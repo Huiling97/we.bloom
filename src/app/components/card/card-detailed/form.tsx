@@ -5,7 +5,11 @@ import {
   type ChangeEvent,
   useEffect,
 } from 'react';
-import { type CardDetailedFormInputProps } from '../../../types/card.ts';
+import {
+  type CardDetailedFormInputProps,
+  type CardDetailsProps,
+  type CardServicesProps,
+} from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { ref, set } from 'firebase/database';
@@ -15,9 +19,14 @@ import ServiceDetailsForm from './details/form';
 type CardDetailedFormProps = {
   onClose: () => void;
   categories: string[];
+  services: CardServicesProps;
 };
 
-const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
+const CardDetailedForm = ({
+  onClose,
+  categories,
+  services,
+}: CardDetailedFormProps) => {
   const formInput = {
     category: '',
     name: '',
@@ -29,9 +38,12 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
     formInput as CardDetailedFormInputProps
   );
   const [detailsData, setDetailsData] = useState({});
-  const [allDetailsData, setAllDetailsData] = useState([detailsData]);
+  const [allDetailsData, setAllDetailsData] = useState<
+    CardDetailsProps[] | {}[]
+  >([]);
   const [dropdownOption, setDropdownOption] = useState<string>('');
 
+  const [completed, setCompleted] = useState(false);
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
@@ -41,6 +53,7 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
       [name]: value,
     };
     setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
+    setCompleted(true);
   };
 
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
@@ -66,6 +79,7 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
       <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
     ]);
     setAllDetailsData((prevValue) => [...prevValue, detailsData]);
+    setCompleted(false);
   };
 
   const submitFormHandler = (e: FormEvent) => {
@@ -84,6 +98,7 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
 
     setAllDetailsData((prevValue) => [...prevValue, detailsData]);
 
+    setCompleted(true);
     setValidated(true);
     onClose();
   };
@@ -95,14 +110,25 @@ const CardDetailedForm = ({ onClose, categories }: CardDetailedFormProps) => {
   };
 
   const { name, description } = formData;
+
   useEffect(() => {
-    if (dropdownOption && name && description && allDetailsData.length > 0)
-      set(ref(database, 'services/' + name), {
-        category: dropdownOption,
-        name,
-        description,
-        details: allDetailsData,
-      });
+    let updatedData;
+    const data = {
+      category: dropdownOption,
+      name,
+      description,
+      details: allDetailsData,
+    };
+
+    if (dropdownOption && name && description && completed) {
+      if (services[dropdownOption] && services[dropdownOption].length !== 0) {
+        const existingData = services[dropdownOption];
+        updatedData = [...existingData, data];
+      } else {
+        updatedData = [data];
+      }
+      set(ref(database, 'services/' + dropdownOption), updatedData);
+    }
   }, [dropdownOption, name, description, allDetailsData]);
 
   const displayCategoryOptions = (categories: string[]): ReactNode => {
