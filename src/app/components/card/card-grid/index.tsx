@@ -25,10 +25,10 @@ const CardGrid = <T extends CardTypeProps>({
 
   return (
     <div className='grid-container'>
-      {Object.entries(cards as CardGenericProps).map(([key, value]) => {
+      {Object.entries(cards as CardGenericProps).map(([key, value], index) => {
         return (
           <CardGeneric
-            key={key}
+            key={index}
             title={key}
             image={{
               imageSrc: (value as { imageSrc: string }).imageSrc,
