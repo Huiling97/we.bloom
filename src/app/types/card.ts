@@ -15,6 +15,10 @@ export interface CardDetailedProps {
   };
 }
 
+export interface CardServicesProps {
+  [category: string]: CardDetailedFormInputProps[];
+}
+
 type CardDetailsObjectProps = {
   [details: string]: {
     info: CardDetailsProps;

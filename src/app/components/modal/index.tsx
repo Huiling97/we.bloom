@@ -1,19 +1,19 @@
 import { useState, type FunctionComponent } from 'react';
-import { CardDetailedFormInputProps } from '../../types/card.ts';
+import { type CardServicesProps } from '../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 type FormComponentProps = {
   onClose: () => void;
   categories: string[];
-  services: CardDetailedFormInputProps[];
+  services: CardServicesProps;
 };
 
 type ShowModalProps = {
   heading: string;
   form: FunctionComponent<FormComponentProps>;
   categories?: string[];
-  services?: CardDetailedFormInputProps[];
+  services?: CardServicesProps;
 };
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
@@ -40,7 +40,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
           <FormComponent
             onClose={handleClose}
             categories={categories as string[]}
-            services={services as CardDetailedFormInputProps[]}
+            services={services as CardServicesProps}
           />
         </Modal.Body>
       </Modal>

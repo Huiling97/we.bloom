@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   type CardGenericProps,
-  type CardDetailedFormInputProps,
+  type CardServicesProps,
 } from '../../app/types/card.ts';
 import ShowModal from '../components/modal/index.tsx';
 import CardGenericForm from '../components/card/card-generic/form.tsx';
@@ -16,7 +16,7 @@ const Manage = () => {
     null
   );
   const [categoryType, setCategoryType] = useState<string[]>([]);
-  const [services, setServices] = useState<CardDetailedFormInputProps[]>([]);
+  const [services, setServices] = useState<CardServicesProps>({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
