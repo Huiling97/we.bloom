@@ -17,4 +17,14 @@ describe('CardGeneric', () => {
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('src', 'mock-image');
   });
+
+  it('should render component with the correct hyperlink', () => {
+    render(<CardGeneric {...cardGenericProps} />);
+    const linkElement = screen.getByRole('link');
+
+    expect(linkElement).toHaveAttribute(
+      'href',
+      `/services/${cardGenericProps.title}`
+    );
+  });
 });
