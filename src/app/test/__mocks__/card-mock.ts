@@ -1,10 +1,19 @@
-import { type CardGenericProps, CardDetailsProps } from '../../types/card.ts';
+import {
+  type CardGenericProps,
+  type CardDetailsProps,
+  type CardDetailedFormInputProps,
+  type CardServicesProps,
+} from '../../types/card.ts';
 
 export const cardGenericProps: CardGenericProps = {
-  title: 'Mock Title',
-  image: {
-    imageSrc: 'mock-image',
-  },
+  name: 'Mock Title',
+  description: 'Mock Description',
+  image: 'mock-image',
+};
+
+export const cardGenericArrayProps = {
+  MockCategory1: cardGenericProps,
+  MockCategory2: cardGenericProps,
 };
 
 export const cardDetailsProps: CardDetailsProps = {
@@ -18,8 +27,14 @@ const cardDetailsArrayProps = [
   cardDetailsProps,
 ];
 
-export const cardDetailedProps = {
-  title: 'mock title',
+export const cardDetailedProps: CardDetailedFormInputProps = {
+  category: 'mock category',
+  name: 'mock title',
   description: 'Mock description',
   details: cardDetailsArrayProps,
+};
+
+export const cardDetailedArrayProps: CardServicesProps = {
+  MockCategory1: [cardDetailedProps, cardDetailedProps],
+  MockCategory2: [cardDetailedProps],
 };

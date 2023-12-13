@@ -24,7 +24,7 @@ describe('CardGeneric', () => {
 
     expect(linkElement).toHaveAttribute(
       'href',
-      `/services/${cardGenericProps.title}`
+      `/services/${cardGenericProps.name}`
     );
   });
 });

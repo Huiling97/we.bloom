@@ -1,74 +1,27 @@
-import { useEffect, useState } from 'react';
 import {
-  type CardGenericProps,
   type CardServicesProps,
-} from '../../app/types/card.ts';
+  type CardGenericObjectProps,
+} from '../types/card.ts';
 import ShowModal from '../components/modal/index.tsx';
 import CardGenericForm from '../components/card/card-generic/form.tsx';
 import CardDetailedForm from '../components/card/card-detailed/form.tsx';
-import CardOverview from '../components/card/card-overview/index.tsx';
+import {
+  displayCategories,
+  displayServices,
+} from '../components/card/card-overview/index.tsx';
 
-import { onValue, ref } from 'firebase/database';
-import { database } from '../../main.tsx';
+import fetchCategoriesData from '../util/fetch-categories.ts';
+import fetchServicesData from '../util/fetch-services.ts';
 
 const Manage = () => {
-  const [categoriesData, setCategoriesData] = useState<CardGenericProps | null>(
-    null
-  );
-  const [categoryType, setCategoryType] = useState<string[]>([]);
-  const [services, setServices] = useState<CardServicesProps>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    isLoading: isLoadingCategories,
+    categories,
+    categoryType,
+  } = fetchCategoriesData();
+  const { isLoading: isLoadingServices, services } = fetchServicesData('');
 
-  useEffect(() => {
-    const categoriesRef = ref(database, 'categories');
-
-    const fetchCategoriesData = () => {
-      try {
-        onValue(categoriesRef, (snapshot) => {
-          if (snapshot) {
-            const data = snapshot.val() as CardGenericProps;
-            if (data) {
-              const updatedTypes = Object.keys(data);
-              setCategoryType(updatedTypes);
-              setCategoriesData(data);
-            }
-          } else {
-            throw new Error('Unable to fetch categories');
-          }
-          setIsLoading(false);
-        });
-      } catch (e) {
-        setIsLoading(false);
-        throw new Error('Unable to fetch categories');
-      }
-    };
-
-    fetchCategoriesData();
-  }, []);
-
-  useEffect(() => {
-    const servicesRef = ref(database, 'services');
-
-    const fetchServicesData = () => {
-      try {
-        onValue(servicesRef, (snapshot) => {
-          if (snapshot) {
-            const data = snapshot.val();
-            if (data) {
-              setServices(data);
-            }
-          } else {
-            throw new Error('Unable to fetch services');
-          }
-          setIsLoading(false);
-        });
-      } catch (e) {
-        setIsLoading(false);
-        throw new Error('Unable to fetch services');
-      }
-    };
-    fetchServicesData();
-  }, []);
+  const isLoading = isLoadingCategories && isLoadingServices;
 
   return (
     <div>
@@ -82,9 +35,11 @@ const Manage = () => {
               heading='Add new service'
               form={CardDetailedForm}
               categories={categoryType}
-              services={services}
+              services={services as CardServicesProps}
             />
-            {categoriesData && CardOverview(categoriesData)}
+            {categories &&
+              displayCategories(categories as CardGenericObjectProps)}
+            {services && displayServices(services as CardServicesProps)}
           </div>
         </div>
       )}

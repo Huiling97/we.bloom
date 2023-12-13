@@ -13,7 +13,7 @@ type CardGenericFormProps = {
 const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
   const formInput = {
     name: '',
-    imageSrc: '',
+    image: '',
   };
 
   const [formData, setFormData] = useState(formInput);
@@ -30,7 +30,7 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
   const onAddHandler = (img: string) => {
     setFormData((prevData) => ({
       ...prevData,
-      imageSrc: img,
+      image: img,
     }));
   };
 
@@ -44,7 +44,7 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
     }
 
     set(ref(database, 'categories/' + formData.name), {
-      imageSrc: formData.imageSrc,
+      image: formData.image,
     });
     setValidated(true);
     onClose();

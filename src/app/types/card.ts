@@ -1,8 +1,11 @@
 export interface CardGenericProps {
-  title: string;
-  image: {
-    imageSrc: string;
-  };
+  name: string;
+  description: string;
+  image: string;
+}
+
+export interface CardGenericObjectProps {
+  [category: string]: CardGenericProps;
 }
 
 export interface CardDetailedProps {
