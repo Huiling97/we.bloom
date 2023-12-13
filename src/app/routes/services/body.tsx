@@ -1,38 +1,27 @@
-import { useEffect, useState } from 'react';
-import { type CardDetailedFormInputProps } from '../../types/card.ts';
-
-import { onValue, ref } from 'firebase/database';
-import { database } from '../../../main.tsx';
+import fetchServicesData from '../../util/fetch-services.ts';
+import Banner from '../../components/banner/index.tsx';
+import CardGrid from '../../components/card/card-grid/index.tsx';
 
 const Body = () => {
-  const [services, setServices] = useState<CardDetailedFormInputProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, services } = fetchServicesData('body');
 
-  useEffect(() => {
-    const serviceRef = ref(database, 'services');
-
-    const fetchServicesData = () => {
-      try {
-        onValue(serviceRef, (snapshot) => {
-          if (snapshot) {
-            const data = snapshot.val();
-            if (data) {
-              setServices(data);
-            }
-          } else {
-            throw new Error('Unable to fetch services');
-          }
-          setIsLoading(false);
-        });
-      } catch (e) {
-        setIsLoading(false);
-        throw new Error('Unable to fetch services');
-      }
-    };
-    fetchServicesData();
-  }, []);
-
-  return <div>{isLoading ? <div>Loading</div> : <div>Body page</div>}</div>;
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <div>
+          <Banner
+            image='/src/app/assets/images/body.jpg'
+            title='Body'
+            description='Equipped with the latest technology and only using the quality products from Germany, achieve healthy, elastic, wrinkle-free and young-looking skin for yourself. 
+                        Treatments available for all skin types.'
+          />
+          <CardGrid type='detailed' cards={services} />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Body;
