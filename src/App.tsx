@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { CategoriesContextProvider } from './app/store/categories-context.tsx';
 
 import Home from './app/routes/home.tsx';
 import Contact from './app/routes/contact.tsx';
@@ -76,7 +77,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <CategoriesContextProvider>
+      <RouterProvider router={router} />
+    </CategoriesContextProvider>
+  );
 }
 
 export default App;
