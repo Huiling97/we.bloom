@@ -6,8 +6,8 @@ import {
 } from '../../types/card.ts';
 
 export const cardGenericProps: CardGenericProps = {
+  id: '123',
   name: 'Mock Title',
-  description: 'Mock Description',
   image: 'mock-image',
 };
 

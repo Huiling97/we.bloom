@@ -1,4 +1,6 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useContext, type FormEvent } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import DropZone from '../../dropzone';
@@ -11,10 +13,13 @@ type CardGenericFormProps = {
 };
 
 const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
+  const id = uuidv4();
   const formInput = {
     name: '',
     image: '',
   };
+
+  const categoriesCtx = useContext(CategoriesContext);
 
   const [formData, setFormData] = useState(formInput);
   const [validated, setValidated] = useState(false);
@@ -43,9 +48,14 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
       return;
     }
 
-    set(ref(database, 'categories/' + formData.name), {
+    const data = {
+      id: id,
+      name: formData.name,
       image: formData.image,
-    });
+    };
+
+    categoriesCtx.addCategory({ [formData.name]: data });
+    set(ref(database, 'categories/' + formData.name), data);
     setValidated(true);
     onClose();
   };

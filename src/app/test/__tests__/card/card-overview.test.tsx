@@ -9,8 +9,10 @@ import {
 } from '../../__mocks__/card-mock.ts';
 
 describe('displayCategories', () => {
+  const mockOnDeleteHandler = jest.fn();
+
   beforeEach(() => {
-    render(displayCategories(cardGenericArrayProps));
+    render(displayCategories(cardGenericArrayProps, mockOnDeleteHandler));
   });
 
   it('should render the correct number of components', () => {

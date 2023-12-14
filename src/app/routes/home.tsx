@@ -4,20 +4,24 @@ import CardReview from '../components/card/card-review/index.tsx';
 
 const DUMMY_TITLES = [
   {
-    title: 'Face',
+    name: 'Face',
     image: 'face',
+    id: '1',
   },
   {
-    title: 'Body',
+    name: 'Body',
     image: 'body',
+    id: '2',
   },
   {
-    title: 'Nail',
+    name: 'Nail',
     image: 'nail',
+    id: '3',
   },
   {
-    title: 'Hair Removal',
+    name: 'Hair Removal',
     image: 'hair-removal',
+    id: '4',
   },
 ];
 

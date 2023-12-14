@@ -1,6 +1,6 @@
 export interface CardGenericProps {
+  id: string;
   name: string;
-  description: string;
   image: string;
 }
 
