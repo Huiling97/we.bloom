@@ -1,24 +1,33 @@
+import Button from 'react-bootstrap/Button';
 import {
   type CardGenericObjectProps,
   type CardDetailedFormInputProps,
   type CardServicesProps,
 } from '../../../types/card.ts';
 import CardDetailed from '../card-detailed/index.tsx';
-
 import './style.scss';
 
-const displayCategories = (data: CardGenericObjectProps) => {
+type onDeleteHandlerProps = (id: string) => void;
+
+const displayCategories = (
+  data: CardGenericObjectProps,
+  onDeleteHandler: onDeleteHandlerProps
+) => {
   return (
     <div className='card-overview-container'>
       {Object.entries(data).map(([key, value]) => {
+        const { id, image } = value;
         return (
-          <div key={key} role='listCategories'>
+          <div key={id} role='listCategories'>
             <div>{key}</div>
             <img
-              src={value.image}
+              src={image}
               alt='category name'
               className='card-overview-image'
             />
+            <Button variant='danger' onClick={() => onDeleteHandler(id)}>
+              Delete
+            </Button>
           </div>
         );
       })}
