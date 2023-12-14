@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { type CardGenericObjectProps } from '../../app/types/card.ts';
-
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 
