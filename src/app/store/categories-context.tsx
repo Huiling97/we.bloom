@@ -8,12 +8,14 @@ export interface CategoriesContextProps {
   categories: CardGenericObjectProps;
   setCategories: (categoriesData: CardGenericObjectProps | null) => void;
   addCategory: (categoryData: CardGenericObjectProps) => void;
+  updateCategory: (id: string, image: string) => void;
   deleteCategory: (id: string) => void;
 }
 
 enum CategoryActionType {
   SET = 'SET',
   ADD = 'ADD',
+  UPDATE = 'UPDATE',
   DELETE = 'DELETE',
 }
 
@@ -26,10 +28,16 @@ export interface CategoryActionProps {
     | null;
 }
 
+export interface CategoryUpdatePayload {
+  id: string;
+  image: string;
+}
+
 const CategoriesContext = createContext<CategoriesContextProps>({
   categories: {},
   setCategories: () => {},
   addCategory: () => {},
+  updateCategory: () => {},
   deleteCategory: () => {},
 });
 
@@ -39,9 +47,15 @@ const categoriesReducer = (state: {}, action: CategoryActionProps) => {
       return { ...action.payload };
     case 'ADD':
       return { ...action.payload, ...state };
+    case 'UPDATE':
+      const { id, image } = action.payload as CategoryUpdatePayload;
+      const allCategories = Object.values(state);
+      let editedCategory = allCategories.find(
+        (category) => (category as CardGenericProps).id === id
+      ) as CardGenericProps;
+      editedCategory.image = image;
     case 'DELETE':
       const categories = Object.values(state);
-      console.log(categories);
       return categories.filter(
         (category) => (category as CardGenericProps).id !== action.payload!.id
       );
@@ -61,6 +75,10 @@ const CategoriesContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'ADD', payload: categoryData });
   };
 
+  const updateCategory = (id: string, image: string) => {
+    dispatch({ type: 'UPDATE', payload: { id, image } });
+  };
+
   const deleteCategory = (id: string) => {
     dispatch({ type: 'DELETE', payload: { id } });
   };
@@ -69,6 +87,7 @@ const CategoriesContextProvider = ({ children }: { children: ReactNode }) => {
     categories: categoriesState,
     setCategories: setCategories,
     addCategory: addCategory,
+    updateCategory: updateCategory,
     deleteCategory: deleteCategory,
   };
 
