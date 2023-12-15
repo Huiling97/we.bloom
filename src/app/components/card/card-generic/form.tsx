@@ -1,5 +1,6 @@
-import { useState, useContext, type FormEvent, useEffect } from 'react';
+import { useState, useContext, type FormEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { type CardGenericProps } from '../../../types/card.ts';
 import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -11,17 +12,17 @@ import { database } from '../../../../main';
 type CardGenericFormProps = {
   onClose: () => void;
   isEditing: boolean;
-  editId: string;
+  catgeoryData: CardGenericProps;
 };
 
 const CardGenericForm = ({
   onClose,
   isEditing,
-  editId,
+  catgeoryData,
 }: CardGenericFormProps) => {
   const formInput = {
     id: uuidv4(),
-    name: '',
+    name: catgeoryData.name || '',
     image: '',
   };
 
@@ -45,7 +46,8 @@ const CardGenericForm = ({
     }));
 
     if (isEditing) {
-      categoriesCtx.updateCategory(editId, img);
+      const { id } = catgeoryData;
+      categoriesCtx.updateCategory(id, img);
     }
   };
 
@@ -83,9 +85,10 @@ const CardGenericForm = ({
         <Form.Control
           type='text'
           name='name'
-          value={formData.name}
+          value={catgeoryData.name || formData.name}
           required
           onChange={onChangeHandler}
+          disabled={isEditing}
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a name

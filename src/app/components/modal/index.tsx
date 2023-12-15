@@ -1,5 +1,8 @@
 import { useContext, type FunctionComponent } from 'react';
-import { type CardServicesProps } from '../../types/card.ts';
+import {
+  type CardServicesProps,
+  type CardGenericProps,
+} from '../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ModalContext } from '../../store/modal-context.tsx';
@@ -9,7 +12,7 @@ type FormComponentProps = {
   categories: string[];
   services: CardServicesProps;
   isEditing: boolean;
-  editId: string;
+  catgeoryData: CardGenericProps;
 };
 
 type ShowModalProps = {
@@ -19,7 +22,7 @@ type ShowModalProps = {
   services?: CardServicesProps;
   show: boolean;
   isEditing: boolean;
-  editId: string;
+  catgeoryData: CardGenericProps;
 };
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
@@ -29,7 +32,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   services,
   show,
   isEditing,
-  editId,
+  catgeoryData,
 }: ShowModalProps) => {
   const { setShowModal, setIsEditModal } = useContext(ModalContext);
 
@@ -54,7 +57,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
             categories={categories as string[]}
             services={services as CardServicesProps}
             isEditing={isEditing}
-            editId={editId}
+            catgeoryData={catgeoryData}
           />
         </Modal.Body>
       </Modal>

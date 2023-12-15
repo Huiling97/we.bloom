@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import {
+  type CardGenericProps,
   type CardGenericObjectProps,
   type CardDetailedFormInputProps,
   type CardServicesProps,
@@ -8,7 +9,7 @@ import CardDetailed from '../card-detailed/index.tsx';
 import './style.scss';
 
 type onDeleteHandlerProps = (id: string) => void;
-type onEditHandlerProps = (id: string) => void;
+type onEditHandlerProps = (value: CardGenericProps) => void;
 
 const displayCategories = (
   data: CardGenericObjectProps,
@@ -27,7 +28,7 @@ const displayCategories = (
               alt='category name'
               className='card-overview-image'
             />
-            <Button variant='danger' onClick={() => onEditHandler(id)}>
+            <Button variant='danger' onClick={() => onEditHandler(value)}>
               Edit
             </Button>
             <Button variant='danger' onClick={() => onDeleteHandler(id)}>

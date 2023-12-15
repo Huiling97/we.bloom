@@ -31,7 +31,11 @@ const Manage = () => {
   const { showModal, setShowModal, isEditModal, setIsEditModal } =
     useContext(ModalContext);
 
-  const [editId, setEditId] = useState('');
+  const [catgeoryData, setCategoryData] = useState<CardGenericProps>({
+    id: '',
+    name: '',
+    image: '',
+  });
 
   const getCategoryById = (categories: CardGenericObjectProps, id: string) => {
     return Object.values(categories).find((category) => category.id === id);
@@ -48,10 +52,10 @@ const Manage = () => {
     }
   };
 
-  const onEditHandler = (id: string) => {
+  const onEditHandler = (data: CardGenericProps) => {
     setIsEditModal(true);
     setShowModal(true);
-    setEditId(id);
+    setCategoryData(data);
   };
 
   useEffect(() => {
@@ -70,7 +74,7 @@ const Manage = () => {
               form={CardGenericForm}
               show={showModal}
               isEditing={isEditModal}
-              editId={editId}
+              catgeoryData={catgeoryData}
             />
             <ShowModal
               heading='Add new service'
@@ -79,7 +83,7 @@ const Manage = () => {
               services={services as CardServicesProps}
               show={false}
               isEditing={false}
-              editId={editId}
+              catgeoryData={catgeoryData}
             />
             {categories &&
               displayCategories(
