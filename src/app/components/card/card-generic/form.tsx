@@ -1,6 +1,6 @@
 import { useState, useContext, type FormEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { type CardGenericProps } from '../../../types/card.ts';
+import { type CardGenericFormProps } from '../../../types/form.ts';
 import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,12 +8,6 @@ import DropZone from '../../dropzone';
 
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
-
-type CardGenericFormProps = {
-  onClose: () => void;
-  isEditing: boolean;
-  catgeoryData: CardGenericProps;
-};
 
 const CardGenericForm = ({
   onClose,
