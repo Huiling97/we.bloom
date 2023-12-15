@@ -1,31 +1,26 @@
-import { useState, type FunctionComponent } from 'react';
+import { useContext, type FunctionComponent } from 'react';
 import { type CardServicesProps } from '../../types/card.ts';
+import { type ShowModalProps } from '../../types/modal.ts';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
-type FormComponentProps = {
-  onClose: () => void;
-  categories: string[];
-  services: CardServicesProps;
-};
-
-type ShowModalProps = {
-  heading: string;
-  form: FunctionComponent<FormComponentProps>;
-  categories?: string[];
-  services?: CardServicesProps;
-};
+import { ModalContext } from '../../store/modal-context.tsx';
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
   form: FormComponent,
   categories,
   services,
+  show,
+  isEditing,
+  catgeoryData,
 }: ShowModalProps) => {
-  const [show, setShow] = useState(false);
+  const { setShowModal, setIsEditModal } = useContext(ModalContext);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setIsEditModal(false);
+    setShowModal(false);
+  };
+  const handleShow = () => setShowModal(true);
 
   return (
     <>
@@ -41,6 +36,8 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
             onClose={handleClose}
             categories={categories as string[]}
             services={services as CardServicesProps}
+            isEditing={isEditing}
+            catgeoryData={catgeoryData}
           />
         </Modal.Body>
       </Modal>

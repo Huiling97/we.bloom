@@ -10,9 +10,16 @@ import {
 
 describe('displayCategories', () => {
   const mockOnDeleteHandler = jest.fn();
+  const mockOnEditHandler = jest.fn();
 
   beforeEach(() => {
-    render(displayCategories(cardGenericArrayProps, mockOnDeleteHandler));
+    render(
+      displayCategories(
+        cardGenericArrayProps,
+        mockOnDeleteHandler,
+        mockOnEditHandler
+      )
+    );
   });
 
   it('should render the correct number of components', () => {

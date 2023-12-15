@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ModalContextProvider } from './app/store/modal-context.tsx';
 import { CategoriesContextProvider } from './app/store/categories-context.tsx';
 
 import Home from './app/routes/home.tsx';
@@ -78,9 +79,11 @@ function App() {
   ]);
 
   return (
-    <CategoriesContextProvider>
-      <RouterProvider router={router} />
-    </CategoriesContextProvider>
+    <ModalContextProvider>
+      <CategoriesContextProvider>
+        <RouterProvider router={router} />
+      </CategoriesContextProvider>
+    </ModalContextProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useState, useContext, type FormEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { type CardGenericFormProps } from '../../../types/form.ts';
 import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,14 +9,14 @@ import DropZone from '../../dropzone';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
 
-type CardGenericFormProps = {
-  onClose: () => void;
-};
-
-const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
-  const id = uuidv4();
+const CardGenericForm = ({
+  onClose,
+  isEditing,
+  catgeoryData,
+}: CardGenericFormProps) => {
   const formInput = {
-    name: '',
+    id: uuidv4(),
+    name: catgeoryData.name || '',
     image: '',
   };
 
@@ -37,6 +38,11 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
       ...prevData,
       image: img,
     }));
+
+    if (isEditing) {
+      const { id } = catgeoryData;
+      categoriesCtx.updateCategory(id, img);
+    }
   };
 
   const submitFormHandler = (e: FormEvent) => {
@@ -49,7 +55,7 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
     }
 
     const data = {
-      id: id,
+      id: formData.id,
       name: formData.name,
       image: formData.image,
     };
@@ -73,9 +79,10 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
         <Form.Control
           type='text'
           name='name'
-          value={formData.name}
+          value={catgeoryData.name || formData.name}
           required
           onChange={onChangeHandler}
+          disabled={isEditing}
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a name
