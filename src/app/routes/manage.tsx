@@ -1,6 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   type CardServicesProps,
+  type CardGenericProps,
   type CardGenericObjectProps,
 } from '../types/card.ts';
 import ShowModal from '../components/modal/index.tsx';
@@ -12,6 +13,7 @@ import {
 } from '../components/card/card-overview/index.tsx';
 import fetchCategoriesData from '../util/fetch-categories.ts';
 import fetchServicesData from '../util/fetch-services.ts';
+import { ModalContext } from '../store/modal-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
@@ -26,6 +28,10 @@ const Manage = () => {
   const isLoading = isLoadingCategories && isLoadingServices;
 
   const categoriesCtx = useContext(CategoriesContext);
+  const { showModal, setShowModal, isEditModal, setIsEditModal } =
+    useContext(ModalContext);
+
+  const [editId, setEditId] = useState('');
 
   const getCategoryById = (categories: CardGenericObjectProps, id: string) => {
     return Object.values(categories).find((category) => category.id === id);
@@ -42,6 +48,12 @@ const Manage = () => {
     }
   };
 
+  const onEditHandler = (id: string) => {
+    setIsEditModal(true);
+    setShowModal(true);
+    setEditId(id);
+  };
+
   useEffect(() => {
     categoriesCtx.setCategories(categories);
   }, [categories]);
@@ -53,17 +65,27 @@ const Manage = () => {
       ) : (
         <div>
           <div>
-            <ShowModal heading='Add new cateogry' form={CardGenericForm} />
+            <ShowModal
+              heading='Add new cateogry'
+              form={CardGenericForm}
+              show={showModal}
+              isEditing={isEditModal}
+              editId={editId}
+            />
             <ShowModal
               heading='Add new service'
               form={CardDetailedForm}
               categories={categoryType}
               services={services as CardServicesProps}
+              show={false}
+              isEditing={false}
+              editId={editId}
             />
             {categories &&
               displayCategories(
                 categoriesCtx.categories as CardGenericObjectProps,
-                onDeleteHandler
+                onDeleteHandler,
+                onEditHandler
               )}
             {services && displayServices(services as CardServicesProps)}
           </div>

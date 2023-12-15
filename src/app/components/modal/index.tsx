@@ -1,12 +1,15 @@
-import { useState, type FunctionComponent } from 'react';
+import { useContext, type FunctionComponent } from 'react';
 import { type CardServicesProps } from '../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { ModalContext } from '../../store/modal-context.tsx';
 
 type FormComponentProps = {
   onClose: () => void;
   categories: string[];
   services: CardServicesProps;
+  isEditing: boolean;
+  editId: string;
 };
 
 type ShowModalProps = {
@@ -14,6 +17,9 @@ type ShowModalProps = {
   form: FunctionComponent<FormComponentProps>;
   categories?: string[];
   services?: CardServicesProps;
+  show: boolean;
+  isEditing: boolean;
+  editId: string;
 };
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
@@ -21,11 +27,17 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   form: FormComponent,
   categories,
   services,
+  show,
+  isEditing,
+  editId,
 }: ShowModalProps) => {
-  const [show, setShow] = useState(false);
+  const { setShowModal, setIsEditModal } = useContext(ModalContext);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setIsEditModal(false);
+    setShowModal(false);
+  };
+  const handleShow = () => setShowModal(true);
 
   return (
     <>
@@ -41,6 +53,8 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
             onClose={handleClose}
             categories={categories as string[]}
             services={services as CardServicesProps}
+            isEditing={isEditing}
+            editId={editId}
           />
         </Modal.Body>
       </Modal>
