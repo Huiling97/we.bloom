@@ -1,29 +1,9 @@
 import { useContext, type FunctionComponent } from 'react';
-import {
-  type CardServicesProps,
-  type CardGenericProps,
-} from '../../types/card.ts';
+import { type CardServicesProps } from '../../types/card.ts';
+import { type ShowModalProps } from '../../types/modal.ts';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ModalContext } from '../../store/modal-context.tsx';
-
-type FormComponentProps = {
-  onClose: () => void;
-  categories: string[];
-  services: CardServicesProps;
-  isEditing: boolean;
-  catgeoryData: CardGenericProps;
-};
-
-type ShowModalProps = {
-  heading: string;
-  form: FunctionComponent<FormComponentProps>;
-  categories?: string[];
-  services?: CardServicesProps;
-  show: boolean;
-  isEditing: boolean;
-  catgeoryData: CardGenericProps;
-};
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
