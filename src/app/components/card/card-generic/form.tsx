@@ -1,4 +1,4 @@
-import { useState, useContext, type FormEvent } from 'react';
+import { useState, useContext, type FormEvent, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
@@ -10,11 +10,17 @@ import { database } from '../../../../main';
 
 type CardGenericFormProps = {
   onClose: () => void;
+  isEditing: boolean;
+  editId: string;
 };
 
-const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
-  const id = uuidv4();
+const CardGenericForm = ({
+  onClose,
+  isEditing,
+  editId,
+}: CardGenericFormProps) => {
   const formInput = {
+    id: uuidv4(),
     name: '',
     image: '',
   };
@@ -37,6 +43,10 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
       ...prevData,
       image: img,
     }));
+
+    if (isEditing) {
+      categoriesCtx.updateCategory(editId, img);
+    }
   };
 
   const submitFormHandler = (e: FormEvent) => {
@@ -49,7 +59,7 @@ const CardGenericForm = ({ onClose }: CardGenericFormProps) => {
     }
 
     const data = {
-      id: id,
+      id: formData.id,
       name: formData.name,
       image: formData.image,
     };
