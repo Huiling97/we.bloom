@@ -16,7 +16,7 @@ const CardGenericForm = ({
 }: CardGenericFormProps) => {
   const formInput = {
     id: uuidv4(),
-    name: catgeoryData.name || '',
+    name: isEditing ? catgeoryData.name : '',
     image: '',
   };
 
@@ -79,7 +79,7 @@ const CardGenericForm = ({
         <Form.Control
           type='text'
           name='name'
-          value={catgeoryData.name || formData.name}
+          value={formData.name}
           required
           onChange={onChangeHandler}
           disabled={isEditing}
