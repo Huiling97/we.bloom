@@ -17,6 +17,7 @@ import { ModalContext } from '../store/modal-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
+import Button from 'react-bootstrap/Button';
 
 const Manage = () => {
   const {
@@ -30,6 +31,8 @@ const Manage = () => {
   const categoriesCtx = useContext(CategoriesContext);
   const { showModal, setShowModal, isEditModal, setIsEditModal } =
     useContext(ModalContext);
+
+  const [activeForm, setActiveForm] = useState<string>('');
 
   const [catgeoryData, setCategoryData] = useState<CardGenericProps>({
     id: '',
@@ -54,8 +57,19 @@ const Manage = () => {
 
   const onEditHandler = (data: CardGenericProps) => {
     setIsEditModal(true);
+    setActiveForm('category');
     setShowModal(true);
     setCategoryData(data);
+  };
+
+  const addCategoryHandler = () => {
+    setActiveForm('category');
+    setShowModal(true);
+  };
+
+  const addServiceHandler = () => {
+    setActiveForm('service');
+    setShowModal(true);
   };
 
   useEffect(() => {
@@ -69,22 +83,31 @@ const Manage = () => {
       ) : (
         <div>
           <div>
-            <ShowModal
-              heading='Add new cateogry'
-              form={CardGenericForm}
-              show={showModal}
-              isEditing={isEditModal}
-              catgeoryData={catgeoryData}
-            />
-            <ShowModal
-              heading='Add new service'
-              form={CardDetailedForm}
-              categories={categoryType}
-              services={services as CardServicesProps}
-              show={false}
-              isEditing={false}
-              catgeoryData={catgeoryData}
-            />
+            <Button variant='primary' onClick={addCategoryHandler}>
+              Add new cateogry
+            </Button>
+            <Button variant='primary' onClick={addServiceHandler}>
+              Add new service
+            </Button>
+            {activeForm === 'category' && showModal && (
+              <ShowModal
+                heading='Add new cateogry'
+                form={CardGenericForm}
+                show={showModal}
+                isEditing={isEditModal}
+                catgeoryData={catgeoryData}
+              />
+            )}
+            {activeForm === 'service' && showModal && (
+              <ShowModal
+                heading='Add new service'
+                form={CardDetailedForm}
+                categories={categoryType}
+                services={services as CardServicesProps}
+                show={showModal}
+                isEditing={false}
+              />
+            )}
             {categories &&
               displayCategories(
                 categoriesCtx.categories as CardGenericObjectProps,
