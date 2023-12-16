@@ -52,8 +52,8 @@ const CardDetailedForm = ({
     const detail = {
       [name]: value,
     };
-    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
     setCompleted(true);
+    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
   };
 
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
