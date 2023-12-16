@@ -9,5 +9,5 @@ export type ShowModalProps = {
   services?: CardServicesProps;
   show: boolean;
   isEditing: boolean;
-  catgeoryData: CardGenericProps;
+  catgeoryData?: CardGenericProps;
 };
