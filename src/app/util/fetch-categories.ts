@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { type CardGenericObjectProps } from '../../app/types/card.ts';
+import { CategoriesContext } from '../store/categories-context.tsx';
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const fetchCategoriesData = () => {
   const [categoryType, setCategoryType] = useState<string[]>([]);
-  const [categories, setCategories] = useState<CardGenericObjectProps | null>(
-    null
-  );
+  const { categories, setCategories } = useContext(CategoriesContext);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

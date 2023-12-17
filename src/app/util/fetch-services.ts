@@ -5,8 +5,7 @@ import { database } from '../../main.tsx';
 
 const fetchServicesData = (category: string) => {
   const [isLoading, setIsLoading] = useState(true);
-
-  const { setServices, services } = useContext(ServicesContext);
+  const { services, setServices } = useContext(ServicesContext);
 
   const serviceRef = ref(database, `services/${category}`);
 
