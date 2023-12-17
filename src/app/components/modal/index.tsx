@@ -16,14 +16,11 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   isEditing,
   catgeoryData,
 }: ShowModalProps) => {
-  const { setShowModal, setIsEditModal, isFormCompleted } =
-    useContext(ModalContext);
+  const { setShowModal, setIsEditModal } = useContext(ModalContext);
 
   const handleClose = () => {
-    if (isFormCompleted) {
-      setIsEditModal(false);
-      setShowModal(false);
-    }
+    setIsEditModal(false);
+    setShowModal(false);
   };
 
   return (
@@ -34,7 +31,6 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
         </Modal.Header>
         <Modal.Body>
           <FormComponent
-            onClose={handleClose}
             categories={categories as string[]}
             services={services as CardServicesProps}
             isEditing={isEditing}
