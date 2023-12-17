@@ -44,8 +44,14 @@ describe('displayCategories', () => {
 
 describe('displayServices', () => {
   describe('categories', () => {
+    const mockOnDeleteServiceHandler = jest.fn();
+
     beforeEach(() => {
-      render(<>{displayServices(cardDetailedArrayProps)}</>);
+      render(
+        <>
+          {displayServices(cardDetailedArrayProps, mockOnDeleteServiceHandler)}
+        </>
+      );
     });
 
     it('should render component with correct number of categories', () => {
