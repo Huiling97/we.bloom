@@ -6,6 +6,7 @@ import {
 enum ServiceActionType {
   SET = 'SET',
   ADD = 'ADD',
+  UPDATE = 'UPDATE',
   DELETE = 'DELETE',
 }
 
@@ -14,7 +15,13 @@ export interface ServiceActionProps {
   payload:
     | CardDetailedFormInputProps
     | ServiceDeletePayload
+    | ServiceUpdatePayload
     | CardServicesProps;
+}
+
+export interface ServiceUpdatePayload {
+  serviceData: CardDetailedFormInputProps;
+  updatedServiceData: CardDetailedFormInputProps;
 }
 
 export interface ServiceDeletePayload {
