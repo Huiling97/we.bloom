@@ -1,6 +1,5 @@
 import { type ReactNode } from 'react';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 
 import './style.scss';
 
@@ -13,24 +12,30 @@ const ServiceDetailsForm = ({
 }: ServiceDetailsFormProps): ReactNode => {
   return (
     <div className='service-details-container'>
-      <div>
-        <Form.Label>Price</Form.Label>
-        <InputGroup>
-          <InputGroup.Text>$</InputGroup.Text>
-          <Form.Control
-            name='price'
-            aria-label='Amount (to the nearest dollar)'
-            onChange={onDetailsChange}
-          />
-        </InputGroup>
-      </div>
-      <div>
+      <Form.Group className='mb-3' controlId='duration'>
         <Form.Label>Duration</Form.Label>
-        <InputGroup>
-          <Form.Control name='duration' onChange={onDetailsChange} />
-          <InputGroup.Text>min</InputGroup.Text>
-        </InputGroup>
-      </div>
+        <Form.Control
+          type='text'
+          required
+          name='duration'
+          onChange={onDetailsChange}
+        />
+        <Form.Control.Feedback type='invalid'>
+          Please provide a duration
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group className='mb-3' controlId='price'>
+        <Form.Label>Price</Form.Label>
+        <Form.Control
+          type='text'
+          required
+          name='price'
+          onChange={onDetailsChange}
+        />
+        <Form.Control.Feedback type='invalid'>
+          Please provide a price
+        </Form.Control.Feedback>
+      </Form.Group>
     </div>
   );
 };
