@@ -28,6 +28,7 @@ const cardDetailsArrayProps = [
 ];
 
 export const cardDetailedProps: CardDetailedFormInputProps = {
+  id: '123',
   category: 'mock category',
   name: 'mock title',
   description: 'Mock description',
