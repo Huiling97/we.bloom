@@ -10,11 +10,7 @@ import DropZone from '../../dropzone';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
 
-const CardGenericForm = ({
-  onClose,
-  isEditing,
-  catgeoryData,
-}: CardGenericFormProps) => {
+const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
   const formInput = {
     id: uuidv4(),
     name: isEditing ? catgeoryData.name : '',
@@ -22,7 +18,8 @@ const CardGenericForm = ({
   };
 
   const categoriesCtx = useContext(CategoriesContext);
-  const { isFormCompleted, setIsFormCompleted } = useContext(ModalContext);
+  const { setShowModal, isFormCompleted, setIsFormCompleted } =
+    useContext(ModalContext);
 
   const [formData, setFormData] = useState(formInput);
   const [validated, setValidated] = useState(false);
@@ -70,7 +67,7 @@ const CardGenericForm = ({
     if ((formData.name, formData.image)) {
       categoriesCtx.addCategory({ [formData.name]: data });
       set(ref(database, 'categories/' + formData.name), data);
-      onClose();
+      setShowModal(false);
       setIsFormCompleted(false);
     }
   }, [isFormCompleted]);
