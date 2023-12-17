@@ -3,27 +3,23 @@ import {
   type CardServicesProps,
   type CardDetailedFormInputProps,
 } from '../types/card';
+import {
+  ServiceActionProps,
+  ServiceDeletePayload,
+} from '../types/context/services.ts';
 
-export interface CategoriesContextProps {
+export interface ServicesContextProps {
   services: CardServicesProps;
-  setServices: (servicesData: CardDetailedFormInputProps) => void;
+  setServices: (servicesData: CardServicesProps) => void;
   addService: (categoryData: CardDetailedFormInputProps) => void;
+  deleteService: (categoryKey: string, id: string) => void;
 }
 
-enum ServiceActionType {
-  SET = 'SET',
-  ADD = 'ADD',
-}
-
-export interface ServiceActionProps {
-  type: ServiceActionType | string;
-  payload: CardDetailedFormInputProps;
-}
-
-const ServicesContext = createContext<CategoriesContextProps>({
+const ServicesContext = createContext<ServicesContextProps>({
   services: {},
   setServices: () => {},
   addService: () => {},
+  deleteService: () => {},
 });
 
 const servicesReducer = (state: {}, action: ServiceActionProps) => {
@@ -32,6 +28,19 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
       return { ...action.payload };
     case 'ADD':
       return { ...action.payload, ...state };
+    case 'DELETE':
+      const { categoryKey, id } = action.payload as ServiceDeletePayload;
+      const categoryServices = (state as CardServicesProps)[categoryKey];
+      if (categoryServices) {
+        const updatedServices = categoryServices.filter(
+          (service: CardDetailedFormInputProps) => service.id !== id
+        );
+        return {
+          ...state,
+          [categoryKey]: updatedServices,
+        };
+      }
+      return state;
     default:
       return state;
   }
@@ -40,7 +49,7 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
 const ServicesContextProvider = ({ children }: { children: ReactNode }) => {
   const [servicesState, dispatch] = useReducer(servicesReducer, {});
 
-  const setServices = (servicesData: CardDetailedFormInputProps) => {
+  const setServices = (servicesData: CardServicesProps) => {
     dispatch({ type: 'SET', payload: servicesData });
   };
 
@@ -48,10 +57,15 @@ const ServicesContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'ADD', payload: serviceData });
   };
 
+  const deleteService = (categoryKey: string, id: string) => {
+    dispatch({ type: 'DELETE', payload: { categoryKey, id } });
+  };
+
   const value = {
     services: servicesState,
     setServices: setServices,
     addService: addService,
+    deleteService: deleteService,
   };
 
   return (
