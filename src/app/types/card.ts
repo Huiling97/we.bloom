@@ -34,6 +34,7 @@ export type CardDetailsProps = {
 };
 
 export type CardDetailedFormInputProps = {
+  id: string;
   category: string;
   name: string;
   description: string;
