@@ -6,6 +6,7 @@ import {
   useEffect,
   useContext,
 } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   type CardDetailedFormInputProps,
   type CardDetailsProps,
@@ -16,6 +17,7 @@ import Form from 'react-bootstrap/Form';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
 import ServiceDetailsForm from './details/form';
+import { displayCategoryOptions } from './helpers.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
 
 type CardDetailedFormProps = {
@@ -25,6 +27,7 @@ type CardDetailedFormProps = {
 
 const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
   const formInput = {
+    id: uuidv4(),
     category: '',
     name: '',
     description: '',
@@ -99,11 +102,12 @@ const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
     setValidated(true);
   };
 
-  const { name, description } = formData;
+  const { id, name, description } = formData;
 
   useEffect(() => {
     let updatedData;
     const data = {
+      id,
       category: dropdownOption,
       name,
       description,
@@ -122,16 +126,6 @@ const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
       setIsFormCompleted(false);
     }
   }, [isFormCompleted]);
-
-  const displayCategoryOptions = (categories: string[]): ReactNode => {
-    return categories.map((category) => {
-      return (
-        <option key={category} value={category}>
-          {category}
-        </option>
-      );
-    });
-  };
 
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>
