@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ModalContextProvider } from './app/store/modal-context.tsx';
 import { CategoriesContextProvider } from './app/store/categories-context.tsx';
+import { ServicesContextProvider } from './app/store/services-context.tsx';
 
 import Home from './app/routes/home.tsx';
 import Contact from './app/routes/contact.tsx';
@@ -81,7 +82,9 @@ function App() {
   return (
     <ModalContextProvider>
       <CategoriesContextProvider>
-        <RouterProvider router={router} />
+        <ServicesContextProvider>
+          <RouterProvider router={router} />
+        </ServicesContextProvider>
       </CategoriesContextProvider>
     </ModalContextProvider>
   );

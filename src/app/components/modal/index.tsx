@@ -16,11 +16,14 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   isEditing,
   catgeoryData,
 }: ShowModalProps) => {
-  const { setShowModal, setIsEditModal } = useContext(ModalContext);
+  const { setShowModal, setIsEditModal, isFormCompleted } =
+    useContext(ModalContext);
 
   const handleClose = () => {
-    setIsEditModal(false);
-    setShowModal(false);
+    if (isFormCompleted) {
+      setIsEditModal(false);
+      setShowModal(false);
+    }
   };
 
   return (
