@@ -9,6 +9,7 @@ import CardDetailed from '../card-detailed/index.tsx';
 import './style.scss';
 
 type onDeleteHandlerProps = (id: string) => void;
+type onDeleteServiceHandler = (key: string, id: string) => void;
 type onEditHandlerProps = (value: CardGenericProps) => void;
 
 const displayCategories = (
@@ -41,30 +42,45 @@ const displayCategories = (
   );
 };
 
-const displayServiceCards = (serviceData: CardDetailedFormInputProps[]) => {
+const displayServiceCards = (
+  key: string,
+  serviceData: CardDetailedFormInputProps[],
+  onDeleteServiceHandler: onDeleteServiceHandler
+) => {
   return serviceData.map((service, index) => {
-    const { name, description, details } = service;
+    const { id, name, description, details } = service;
     return (
       <div
         key={`${name}-${index}`}
         className='card-overview-detailed-container'
       >
         <CardDetailed name={name} description={description} details={details} />
+        <Button
+          variant='danger'
+          onClick={() => onDeleteServiceHandler(key, id)}
+        >
+          Delete
+        </Button>
       </div>
     );
   });
 };
 
-const displayServices = (services: CardServicesProps) => {
+const displayServices = (
+  services: CardServicesProps,
+  onDeleteServiceHandler: onDeleteServiceHandler
+) => {
   return Object.entries(services).map(([key, value], index) => {
-    return (
-      <div key={index} role='listServices'>
-        <div className='card-overview-title'>{key}</div>
-        <div className='card-overview-container'>
-          {displayServiceCards(value)}
+    if (value.length !== 0) {
+      return (
+        <div key={index} role='listServices'>
+          <div className='card-overview-title'>{key}</div>
+          <div className='card-overview-container'>
+            {displayServiceCards(key, value, onDeleteServiceHandler)}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   });
 };
 

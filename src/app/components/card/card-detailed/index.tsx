@@ -13,8 +13,8 @@ export type CardDetailedProps = {
 const displayCardDetails = (details: CardDetailsProps[]): ReactNode => {
   return (
     <>
-      {details.map(({ duration, price }) => (
-        <CardDetails key={`${duration}`} duration={duration} price={price} />
+      {details.map(({ duration, price }, index) => (
+        <CardDetails key={index} duration={duration} price={price} />
       ))}
     </>
   );

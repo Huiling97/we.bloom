@@ -3,6 +3,7 @@ import {
   type CardServicesProps,
   type CardGenericProps,
   type CardGenericObjectProps,
+  type CardDetailedFormInputProps,
 } from '../types/card.ts';
 import ShowModal from '../components/modal/index.tsx';
 import CardGenericForm from '../components/card/card-generic/form.tsx';
@@ -18,6 +19,7 @@ import { CategoriesContext } from '../store/categories-context.tsx';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
 import Button from 'react-bootstrap/Button';
+import { ServicesContext } from '../store/services-context.tsx';
 
 const Manage = () => {
   const {
@@ -28,9 +30,10 @@ const Manage = () => {
   const { isLoading: isLoadingServices, services } = fetchServicesData('');
   const isLoading = isLoadingCategories && isLoadingServices;
 
-  const categoriesCtx = useContext(CategoriesContext);
   const { showModal, setShowModal, isEditModal, setIsEditModal } =
     useContext(ModalContext);
+  const categoriesCtx = useContext(CategoriesContext);
+  const servicesCtx = useContext(ServicesContext);
 
   const [activeForm, setActiveForm] = useState<string>('');
 
@@ -72,9 +75,27 @@ const Manage = () => {
     setShowModal(true);
   };
 
+  const onDeleteServiceHandler = (categoryKey: string, id: string) => {
+    if (services) {
+      servicesCtx.deleteService(categoryKey, id);
+      const categoryServices = services[
+        categoryKey
+      ] as CardDetailedFormInputProps[];
+
+      if (categoryServices) {
+        const remainingServices = categoryServices.filter(
+          (service: CardDetailedFormInputProps) => service.id !== id
+        );
+        set(ref(database, 'services/' + categoryKey), remainingServices);
+      }
+    }
+  };
+
   useEffect(() => {
-    categoriesCtx.setCategories(categories);
-  }, [categories]);
+    if (services) {
+      servicesCtx.setServices(services);
+    }
+  }, []);
 
   return (
     <div>
@@ -114,7 +135,11 @@ const Manage = () => {
                 onDeleteHandler,
                 onEditHandler
               )}
-            {services && displayServices(services as CardServicesProps)}
+            {services &&
+              displayServices(
+                services as CardServicesProps,
+                onDeleteServiceHandler
+              )}
           </div>
         </div>
       )}
