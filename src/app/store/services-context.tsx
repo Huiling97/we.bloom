@@ -5,6 +5,7 @@ import {
 } from '../types/card';
 import {
   ServiceActionProps,
+  ServiceUpdatePayload,
   ServiceDeletePayload,
 } from '../types/context/services.ts';
 
@@ -12,6 +13,10 @@ export interface ServicesContextProps {
   services: CardServicesProps;
   setServices: (servicesData: CardServicesProps) => void;
   addService: (categoryData: CardDetailedFormInputProps) => void;
+  updateService: (
+    serviceData: CardDetailedFormInputProps,
+    updatedServiceData: CardDetailedFormInputProps
+  ) => void;
   deleteService: (categoryKey: string, id: string) => void;
 }
 
@@ -19,6 +24,7 @@ const ServicesContext = createContext<ServicesContextProps>({
   services: {},
   setServices: () => {},
   addService: () => {},
+  updateService: () => {},
   deleteService: () => {},
 });
 
@@ -28,6 +34,24 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
       return { ...action.payload };
     case 'ADD':
       return { ...action.payload, ...state };
+    case 'UPDATE':
+      let { serviceData, updatedServiceData } =
+        action.payload as ServiceUpdatePayload;
+      const serviceList = (state as CardServicesProps)[serviceData.category];
+      const serviceIndex = serviceList.findIndex(
+        (service) => service.id === serviceData.id
+      );
+
+      if (serviceIndex === -1) {
+        return state;
+      } else {
+        serviceList[serviceIndex] = updatedServiceData;
+        const result = {
+          ...state,
+          [serviceData.category]: serviceList,
+        };
+        return result;
+      }
     case 'DELETE':
       const { categoryKey, id } = action.payload as ServiceDeletePayload;
       const categoryServices = (state as CardServicesProps)[categoryKey];
@@ -57,6 +81,13 @@ const ServicesContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'ADD', payload: serviceData });
   };
 
+  const updateService = (
+    serviceData: CardDetailedFormInputProps,
+    updatedServiceData: CardDetailedFormInputProps
+  ) => {
+    dispatch({ type: 'UPDATE', payload: { serviceData, updatedServiceData } });
+  };
+
   const deleteService = (categoryKey: string, id: string) => {
     dispatch({ type: 'DELETE', payload: { categoryKey, id } });
   };
@@ -65,6 +96,7 @@ const ServicesContextProvider = ({ children }: { children: ReactNode }) => {
     services: servicesState,
     setServices: setServices,
     addService: addService,
+    updateService: updateService,
     deleteService: deleteService,
   };
 

@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   type CardDetailedFormInputProps,
   type CardDetailsProps,
-  type CardServicesProps,
 } from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -19,34 +18,39 @@ import { database } from '../../../../main';
 import ServiceDetailsForm from './details/form';
 import { displayCategoryOptions } from './helpers.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
+import { ServicesContext } from '../../../store/services-context.tsx';
 
 type CardDetailedFormProps = {
   categories: string[];
-  services: CardServicesProps;
+  service: CardDetailedFormInputProps;
 };
 
-const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
+const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
+  const {
+    setShowModal,
+    isEditModal,
+    setIsEditModal,
+    isFormCompleted,
+    setIsFormCompleted,
+  } = useContext(ModalContext);
+  const { services, setServices, updateService } = useContext(ServicesContext);
+
   const formInput = {
     id: uuidv4(),
-    category: '',
-    name: '',
-    description: '',
-    details: [],
+    category: isEditModal ? service.category : '',
+    name: isEditModal ? service.name : '',
+    description: isEditModal ? service.description : '',
+    details: isEditModal ? service.details : [],
   };
 
   const [formData, setFormData] = useState(
     formInput as CardDetailedFormInputProps
   );
   const [detailsData, setDetailsData] = useState({});
-  const [allDetailsData, setAllDetailsData] = useState<
-    CardDetailsProps[] | {}[]
-  >([]);
+  const [allDetailsData, setAllDetailsData] = useState<CardDetailsProps[]>([]);
   const [dropdownOption, setDropdownOption] = useState<string>('');
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
-
-  const { setShowModal, isFormCompleted, setIsFormCompleted } =
-    useContext(ModalContext);
 
   const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,7 +82,10 @@ const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
       ...additionalDetailsForm,
       <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
     ]);
-    setAllDetailsData((prevValue) => [...prevValue, detailsData]);
+    setAllDetailsData((prevValue) => [
+      ...prevValue,
+      detailsData as CardDetailsProps,
+    ]);
     setIsFormCompleted(false);
   };
 
@@ -96,7 +103,11 @@ const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
       return;
     }
 
-    setAllDetailsData((prevValue) => [...prevValue, detailsData]);
+    setAllDetailsData((prevValue) => [
+      ...prevValue,
+      detailsData as CardDetailsProps,
+    ]);
+    setServices(services);
 
     setIsFormCompleted(true);
     setValidated(true);
@@ -115,17 +126,25 @@ const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
     };
 
     if (dropdownOption && name && description) {
-      if (services[dropdownOption] && services[dropdownOption].length !== 0) {
-        const existingData = services[dropdownOption];
-        updatedData = [...existingData, data];
+      if (isEditModal) {
+        updateService(service, data);
+        set(ref(database, 'services/' + dropdownOption), [data]);
       } else {
-        updatedData = [data];
+        if (services[dropdownOption] && services[dropdownOption].length !== 0) {
+          const existingData = services[dropdownOption];
+          updatedData = [...existingData, data];
+        } else {
+          updatedData = [data];
+        }
+        set(ref(database, 'services/' + dropdownOption), updatedData);
       }
-      set(ref(database, 'services/' + dropdownOption), updatedData);
       setShowModal(false);
       setIsFormCompleted(false);
+      setIsEditModal(false);
     }
   }, [isFormCompleted]);
+
+  console.log('services', services);
 
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>

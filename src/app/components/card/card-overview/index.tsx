@@ -9,8 +9,9 @@ import CardDetailed from '../card-detailed/index.tsx';
 import './style.scss';
 
 type onDeleteHandlerProps = (id: string) => void;
-type onDeleteServiceHandler = (key: string, id: string) => void;
+type onDeleteServiceHandlerProps = (key: string, id: string) => void;
 type onEditHandlerProps = (value: CardGenericProps) => void;
+type onEditServiceHandlerProps = (service: CardDetailedFormInputProps) => void;
 
 const displayCategories = (
   data: CardGenericObjectProps,
@@ -45,7 +46,8 @@ const displayCategories = (
 const displayServiceCards = (
   key: string,
   serviceData: CardDetailedFormInputProps[],
-  onDeleteServiceHandler: onDeleteServiceHandler
+  onDeleteServiceHandler: onDeleteServiceHandlerProps,
+  onEditServiceHandler: onEditServiceHandlerProps
 ) => {
   return serviceData.map((service, index) => {
     const { id, name, description, details } = service;
@@ -55,6 +57,9 @@ const displayServiceCards = (
         className='card-overview-detailed-container'
       >
         <CardDetailed name={name} description={description} details={details} />
+        <Button variant='danger' onClick={() => onEditServiceHandler(service)}>
+          Edit
+        </Button>
         <Button
           variant='danger'
           onClick={() => onDeleteServiceHandler(key, id)}
@@ -68,7 +73,8 @@ const displayServiceCards = (
 
 const displayServices = (
   services: CardServicesProps,
-  onDeleteServiceHandler: onDeleteServiceHandler
+  onDeleteServiceHandler: onDeleteServiceHandlerProps,
+  onEditServiceHandler: onEditServiceHandlerProps
 ) => {
   return Object.entries(services).map(([key, value], index) => {
     if (value.length !== 0) {
@@ -76,7 +82,12 @@ const displayServices = (
         <div key={index} role='listServices'>
           <div className='card-overview-title'>{key}</div>
           <div className='card-overview-container'>
-            {displayServiceCards(key, value, onDeleteServiceHandler)}
+            {displayServiceCards(
+              key,
+              value,
+              onDeleteServiceHandler,
+              onEditServiceHandler
+            )}
           </div>
         </div>
       );
