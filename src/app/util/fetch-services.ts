@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { type CardServicesProps } from '../types/card.ts';
-
+import { useContext, useEffect, useState } from 'react';
+import { ServicesContext } from '../store/services-context.tsx';
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const fetchServicesData = (category: string) => {
-  const [services, setServices] = useState<CardServicesProps | []>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { setServices, services } = useContext(ServicesContext);
 
   const serviceRef = ref(database, `services/${category}`);
 
