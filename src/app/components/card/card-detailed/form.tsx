@@ -19,16 +19,11 @@ import ServiceDetailsForm from './details/form';
 import { ModalContext } from '../../../store/modal-context.tsx';
 
 type CardDetailedFormProps = {
-  onClose: () => void;
   categories: string[];
   services: CardServicesProps;
 };
 
-const CardDetailedForm = ({
-  onClose,
-  categories,
-  services,
-}: CardDetailedFormProps) => {
+const CardDetailedForm = ({ categories, services }: CardDetailedFormProps) => {
   const formInput = {
     category: '',
     name: '',
@@ -47,7 +42,8 @@ const CardDetailedForm = ({
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
-  const { isFormCompleted, setIsFormCompleted } = useContext(ModalContext);
+  const { setShowModal, isFormCompleted, setIsFormCompleted } =
+    useContext(ModalContext);
 
   const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -122,7 +118,7 @@ const CardDetailedForm = ({
         updatedData = [data];
       }
       set(ref(database, 'services/' + dropdownOption), updatedData);
-      onClose();
+      setShowModal(false);
       setIsFormCompleted(false);
     }
   }, [isFormCompleted]);
