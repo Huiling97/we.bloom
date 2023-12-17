@@ -4,6 +4,7 @@ import {
   type ReactNode,
   type ChangeEvent,
   useEffect,
+  useContext,
 } from 'react';
 import {
   type CardDetailedFormInputProps,
@@ -15,6 +16,7 @@ import Form from 'react-bootstrap/Form';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
 import ServiceDetailsForm from './details/form';
+import { ModalContext } from '../../../store/modal-context.tsx';
 
 type CardDetailedFormProps = {
   onClose: () => void;
@@ -42,17 +44,16 @@ const CardDetailedForm = ({
     CardDetailsProps[] | {}[]
   >([]);
   const [dropdownOption, setDropdownOption] = useState<string>('');
-
-  const [completed, setCompleted] = useState(false);
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
+
+  const { isFormCompleted, setIsFormCompleted } = useContext(ModalContext);
 
   const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const detail = {
       [name]: value,
     };
-    setCompleted(true);
     setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
   };
 
@@ -79,7 +80,7 @@ const CardDetailedForm = ({
       <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
     ]);
     setAllDetailsData((prevValue) => [...prevValue, detailsData]);
-    setCompleted(false);
+    setIsFormCompleted(false);
   };
 
   const submitFormHandler = (e: FormEvent) => {
@@ -98,15 +99,8 @@ const CardDetailedForm = ({
 
     setAllDetailsData((prevValue) => [...prevValue, detailsData]);
 
-    setCompleted(true);
+    setIsFormCompleted(true);
     setValidated(true);
-    onClose();
-  };
-
-  const closeHandler = () => {
-    if (onClose && validated) {
-      onClose();
-    }
   };
 
   const { name, description } = formData;
@@ -120,7 +114,7 @@ const CardDetailedForm = ({
       details: allDetailsData,
     };
 
-    if (dropdownOption && name && description && completed) {
+    if (dropdownOption && name && description) {
       if (services[dropdownOption] && services[dropdownOption].length !== 0) {
         const existingData = services[dropdownOption];
         updatedData = [...existingData, data];
@@ -128,8 +122,10 @@ const CardDetailedForm = ({
         updatedData = [data];
       }
       set(ref(database, 'services/' + dropdownOption), updatedData);
+      onClose();
+      setIsFormCompleted(false);
     }
-  }, [dropdownOption, name, description, allDetailsData]);
+  }, [isFormCompleted]);
 
   const displayCategoryOptions = (categories: string[]): ReactNode => {
     return categories.map((category) => {
@@ -190,7 +186,7 @@ const CardDetailedForm = ({
       <Button variant='primary' onClick={addDetailsHandler}>
         Add additional price and duration
       </Button>
-      <Button variant='primary' type='submit' onClick={closeHandler}>
+      <Button variant='primary' type='submit'>
         Add
       </Button>
     </Form>

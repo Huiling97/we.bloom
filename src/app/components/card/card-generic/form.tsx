@@ -1,6 +1,7 @@
-import { useState, useContext, type FormEvent } from 'react';
+import { useState, useContext, type FormEvent, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { type CardGenericFormProps } from '../../../types/form.ts';
+import { ModalContext } from '../../../store/modal-context.tsx';
 import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -21,6 +22,7 @@ const CardGenericForm = ({
   };
 
   const categoriesCtx = useContext(CategoriesContext);
+  const { isFormCompleted, setIsFormCompleted } = useContext(ModalContext);
 
   const [formData, setFormData] = useState(formInput);
   const [validated, setValidated] = useState(false);
@@ -54,23 +56,24 @@ const CardGenericForm = ({
       return;
     }
 
+    setIsFormCompleted(true);
+    setValidated(true);
+  };
+
+  useEffect(() => {
     const data = {
       id: formData.id,
       name: formData.name,
       image: formData.image,
     };
 
-    categoriesCtx.addCategory({ [formData.name]: data });
-    set(ref(database, 'categories/' + formData.name), data);
-    setValidated(true);
-    onClose();
-  };
-
-  const closeHandler = () => {
-    if (onClose && validated) {
+    if ((formData.name, formData.image)) {
+      categoriesCtx.addCategory({ [formData.name]: data });
+      set(ref(database, 'categories/' + formData.name), data);
       onClose();
+      setIsFormCompleted(false);
     }
-  };
+  }, [isFormCompleted]);
 
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>
@@ -91,7 +94,7 @@ const CardGenericForm = ({
       <Form.Group controlId='image'>
         <DropZone onAdd={onAddHandler} />
       </Form.Group>
-      <Button variant='primary' type='submit' onClick={closeHandler}>
+      <Button variant='primary' type='submit'>
         Add
       </Button>
     </Form>
