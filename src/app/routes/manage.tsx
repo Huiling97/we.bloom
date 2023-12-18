@@ -98,7 +98,6 @@ const Manage = () => {
   };
 
   const onEditServiceHandler = (data: CardDetailedFormInputProps) => {
-    console.log('data', data);
     setIsEditModal(true);
     setActiveForm('service');
     setShowModal(true);
@@ -119,14 +118,14 @@ const Manage = () => {
         <div>
           <div>
             <Button variant='primary' onClick={addCategoryHandler}>
-              Add new cateogry
+              Add new category
             </Button>
             <Button variant='primary' onClick={addServiceHandler}>
               Add new service
             </Button>
             {activeForm === 'category' && showModal && (
               <ShowModal
-                heading='Add new cateogry'
+                heading={isEditModal ? 'Edit category' : 'Add new category'}
                 form={CardGenericForm}
                 show={showModal}
                 isEditing={isEditModal}
@@ -135,7 +134,7 @@ const Manage = () => {
             )}
             {activeForm === 'service' && showModal && (
               <ShowModal
-                heading='Add new service'
+                heading={isEditModal ? 'Edit service' : 'Add new service'}
                 form={CardDetailedForm}
                 show={showModal}
                 isEditing={isEditModal}
