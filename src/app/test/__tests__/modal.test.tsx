@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { modalProps } from '../__mocks__/modal-mock';
-import ShowModal from '../../components/modal';
+import ShowModal from '../../components/modal/form-modal';
 import { ModalContext } from '../../store/modal-context';
 
 describe('ShowModal', () => {
