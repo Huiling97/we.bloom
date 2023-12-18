@@ -1,6 +1,6 @@
 import { useContext, type FunctionComponent } from 'react';
 import {
-  type CardServicesProps,
+  type CardDetailedFormInputProps,
   type CardGenericProps,
 } from '../../types/card.ts';
 import { type ShowModalProps } from '../../types/modal.ts';
@@ -10,11 +10,11 @@ import { ModalContext } from '../../store/modal-context.tsx';
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
   form: FormComponent,
-  categories,
-  services,
   show,
   isEditing,
   catgeoryData,
+  categories,
+  service,
 }: ShowModalProps) => {
   const { setShowModal, setIsEditModal } = useContext(ModalContext);
 
@@ -32,7 +32,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
         <Modal.Body>
           <FormComponent
             categories={categories as string[]}
-            services={services as CardServicesProps}
+            service={service as CardDetailedFormInputProps}
             isEditing={isEditing}
             catgeoryData={catgeoryData as CardGenericProps}
           />

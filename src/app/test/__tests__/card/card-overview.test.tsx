@@ -45,11 +45,16 @@ describe('displayCategories', () => {
 describe('displayServices', () => {
   describe('categories', () => {
     const mockOnDeleteServiceHandler = jest.fn();
+    const mockOnEditServiceHandler = jest.fn();
 
     beforeEach(() => {
       render(
         <>
-          {displayServices(cardDetailedArrayProps, mockOnDeleteServiceHandler)}
+          {displayServices(
+            cardDetailedArrayProps,
+            mockOnDeleteServiceHandler,
+            mockOnEditServiceHandler
+          )}
         </>
       );
     });

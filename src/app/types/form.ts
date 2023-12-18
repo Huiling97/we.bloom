@@ -1,8 +1,11 @@
-import { type CardServicesProps, type CardGenericProps } from './card.ts';
+import {
+  type CardDetailedFormInputProps,
+  type CardGenericProps,
+} from './card.ts';
 
 export type FormComponentProps = {
   categories: string[];
-  services: CardServicesProps;
+  service: CardDetailedFormInputProps;
   isEditing: boolean;
   catgeoryData: CardGenericProps;
 };

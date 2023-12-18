@@ -36,11 +36,17 @@ const Manage = () => {
   const servicesCtx = useContext(ServicesContext);
 
   const [activeForm, setActiveForm] = useState<string>('');
-
   const [catgeoryData, setCategoryData] = useState<CardGenericProps>({
     id: '',
     name: '',
     image: '',
+  });
+  const [serviceData, setServiceDate] = useState<CardDetailedFormInputProps>({
+    id: '',
+    category: '',
+    name: '',
+    description: '',
+    details: [],
   });
 
   const getCategoryById = (categories: CardGenericObjectProps, id: string) => {
@@ -91,6 +97,14 @@ const Manage = () => {
     }
   };
 
+  const onEditServiceHandler = (data: CardDetailedFormInputProps) => {
+    console.log('data', data);
+    setIsEditModal(true);
+    setActiveForm('service');
+    setShowModal(true);
+    setServiceDate(data);
+  };
+
   useEffect(() => {
     if (services) {
       servicesCtx.setServices(services);
@@ -123,10 +137,10 @@ const Manage = () => {
               <ShowModal
                 heading='Add new service'
                 form={CardDetailedForm}
-                categories={categoryType}
-                services={services as CardServicesProps}
                 show={showModal}
-                isEditing={false}
+                isEditing={isEditModal}
+                categories={categoryType}
+                service={serviceData as CardDetailedFormInputProps}
               />
             )}
             {categories &&
@@ -138,7 +152,8 @@ const Manage = () => {
             {services &&
               displayServices(
                 services as CardServicesProps,
-                onDeleteServiceHandler
+                onDeleteServiceHandler,
+                onEditServiceHandler
               )}
           </div>
         </div>
