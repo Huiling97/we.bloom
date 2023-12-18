@@ -1,5 +1,5 @@
 import { type FunctionComponent } from 'react';
-import { type ShowModalProps } from '../../types/modal';
+import { type ShowModalProps, type DeleteModalProps } from '../../types/modal';
 import { type FormComponentProps } from '../../types/form';
 import { cardGenericProps, cardDetailedProps } from './card-mock';
 
@@ -17,7 +17,7 @@ const MockFormComponent: FunctionComponent<FormComponentProps> = ({
   );
 };
 
-export const modalProps: ShowModalProps = {
+export const formModalProps: ShowModalProps = {
   heading: 'Modal Heading',
   form: MockFormComponent,
   show: false,
@@ -25,4 +25,10 @@ export const modalProps: ShowModalProps = {
   catgeoryData: cardGenericProps,
   categories: [],
   service: cardDetailedProps,
+};
+
+export const deleteModalProps: DeleteModalProps = {
+  id: '123',
+  showDeleteModal: false,
+  setShowDeleteModal: () => {},
 };
