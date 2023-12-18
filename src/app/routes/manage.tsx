@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import {
   type CardServicesProps,
   type CardGenericProps,
   type CardGenericObjectProps,
   type CardDetailedFormInputProps,
 } from '../types/card.ts';
-import ShowModal from '../components/modal/index.tsx';
+import DeleteModal from '../components/modal/delete-modal.tsx';
+import ShowModal from '../components/modal/form-modal.tsx';
 import CardGenericForm from '../components/card/card-generic/form.tsx';
 import CardDetailedForm from '../components/card/card-detailed/form.tsx';
 import {
@@ -16,10 +18,9 @@ import fetchCategoriesData from '../util/fetch-categories.ts';
 import fetchServicesData from '../util/fetch-services.ts';
 import { ModalContext } from '../store/modal-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
+import { ServicesContext } from '../store/services-context.tsx';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
-import Button from 'react-bootstrap/Button';
-import { ServicesContext } from '../store/services-context.tsx';
 
 const Manage = () => {
   const {
@@ -35,6 +36,8 @@ const Manage = () => {
   const categoriesCtx = useContext(CategoriesContext);
   const servicesCtx = useContext(ServicesContext);
 
+  const [deleteCategoryId, setDeleteCategoryId] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeForm, setActiveForm] = useState<string>('');
   const [catgeoryData, setCategoryData] = useState<CardGenericProps>({
     id: '',
@@ -49,22 +52,12 @@ const Manage = () => {
     details: [],
   });
 
-  const getCategoryById = (categories: CardGenericObjectProps, id: string) => {
-    return Object.values(categories).find((category) => category.id === id);
+  const deleteModalHandler = (id: string) => {
+    setShowDeleteModal(true);
+    setDeleteCategoryId(id);
   };
 
-  const onDeleteHandler = (id: string) => {
-    if (categories) {
-      const selectedCategory = getCategoryById(categories, id);
-      if (selectedCategory) {
-        const { name } = selectedCategory;
-        categoriesCtx.deleteCategory(id);
-        set(ref(database, 'categories/' + name), null);
-      }
-    }
-  };
-
-  const onEditHandler = (data: CardGenericProps) => {
+  const onEditCategoryHandler = (data: CardGenericProps) => {
     setIsEditModal(true);
     setActiveForm('category');
     setShowModal(true);
@@ -117,6 +110,13 @@ const Manage = () => {
       ) : (
         <div>
           <div>
+            {showDeleteModal && (
+              <DeleteModal
+                id={deleteCategoryId}
+                showDeleteModal={showDeleteModal}
+                setShowDeleteModal={setShowDeleteModal}
+              />
+            )}
             <Button variant='primary' onClick={addCategoryHandler}>
               Add new category
             </Button>
@@ -145,8 +145,8 @@ const Manage = () => {
             {categories &&
               displayCategories(
                 categoriesCtx.categories as CardGenericObjectProps,
-                onDeleteHandler,
-                onEditHandler
+                deleteModalHandler,
+                onEditCategoryHandler
               )}
             {services &&
               displayServices(
