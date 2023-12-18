@@ -127,8 +127,16 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
 
     if (dropdownOption && name && description) {
       if (isEditModal) {
+        const selectedCategory = services[dropdownOption];
+        const serviceIndex = selectedCategory.findIndex(
+          (s) => s.id === service.id
+        );
+
         updateService(service, data);
-        set(ref(database, 'services/' + dropdownOption), [data]);
+        set(
+          ref(database, 'services/' + dropdownOption + `/${serviceIndex}`),
+          data
+        );
       } else {
         if (services[dropdownOption] && services[dropdownOption].length !== 0) {
           const existingData = services[dropdownOption];
