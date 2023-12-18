@@ -162,8 +162,9 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
           onChange={onDropdownChangeHandler}
           value={dropdownOption}
           isInvalid={isDropdownInvalid}
+          disabled={isEditModal}
         >
-          <option value='' disabled={true}>
+          <option value={isEditModal ? formInput.category : ''} disabled={true}>
             Open this select menu
           </option>
           {displayCategoryOptions(categories)}
