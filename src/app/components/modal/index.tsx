@@ -25,7 +25,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} role='modal'>
         <Modal.Header closeButton>
           <Modal.Title>{heading}</Modal.Title>
         </Modal.Header>
