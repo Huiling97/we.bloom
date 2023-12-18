@@ -15,7 +15,7 @@ type onEditServiceHandlerProps = (service: CardDetailedFormInputProps) => void;
 
 const displayCategories = (
   data: CardGenericObjectProps,
-  onDeleteHandler: onDeleteHandlerProps,
+  deleteModalHandler: onDeleteHandlerProps,
   onEditHandler: onEditHandlerProps
 ) => {
   return (
@@ -33,7 +33,7 @@ const displayCategories = (
             <Button variant='danger' onClick={() => onEditHandler(value)}>
               Edit
             </Button>
-            <Button variant='danger' onClick={() => onDeleteHandler(id)}>
+            <Button variant='danger' onClick={() => deleteModalHandler(id)}>
               Delete
             </Button>
           </div>

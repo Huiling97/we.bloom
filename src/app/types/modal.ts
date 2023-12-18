@@ -1,4 +1,4 @@
-import { type FunctionComponent } from 'react';
+import { Dispatch, type FunctionComponent, type SetStateAction } from 'react';
 import {
   type CardDetailedFormInputProps,
   type CardGenericProps,
@@ -13,4 +13,10 @@ export type ShowModalProps = {
   catgeoryData?: CardGenericProps;
   categories?: string[];
   service?: CardDetailedFormInputProps;
+};
+
+export type DeleteModalProps = {
+  id: string;
+  showDeleteModal: boolean;
+  setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
 };
