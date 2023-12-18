@@ -8,69 +8,100 @@ describe('ShowModal', () => {
   const setIsEditModalMock = jest.fn();
   const setIsFormCompletedMock = jest.fn();
 
-  it('should render modal when `show` prop is true', () => {
-    render(
-      <ModalContext.Provider
-        value={{
-          showModal: false,
-          setShowModal: setShowModalMock,
-          isEditModal: false,
-          setIsEditModal: setIsEditModalMock,
-          isFormCompleted: true,
-          setIsFormCompleted: setIsFormCompletedMock,
-        }}
-      >
-        <ShowModal {...modalProps} show={true} />
-      </ModalContext.Provider>
-    );
+  describe('Categories', () => {
+    describe('Hide modal', () => {
+      it('should not render modal when `show` prop is false', () => {
+        render(
+          <ModalContext.Provider
+            value={{
+              showModal: false,
+              setShowModal: setShowModalMock,
+              isEditModal: false,
+              setIsEditModal: setIsEditModalMock,
+              isFormCompleted: true,
+              setIsFormCompleted: setIsFormCompletedMock,
+            }}
+          >
+            <ShowModal {...modalProps} show={false} />
+          </ModalContext.Provider>
+        );
 
-    const modal = screen.getByRole('modal');
+        const modal = screen.queryByRole('modal');
 
-    expect(modal).toBeInTheDocument();
-  });
+        expect(modal).not.toBeInTheDocument();
+      });
 
-  it('should not render modal when `show` prop is false', () => {
-    render(
-      <ModalContext.Provider
-        value={{
-          showModal: false,
-          setShowModal: setShowModalMock,
-          isEditModal: false,
-          setIsEditModal: setIsEditModalMock,
-          isFormCompleted: true,
-          setIsFormCompleted: setIsFormCompletedMock,
-        }}
-      >
-        <ShowModal {...modalProps} show={false} />
-      </ModalContext.Provider>
-    );
+      it('should close the modal when close button is clicked', () => {
+        render(
+          <ModalContext.Provider
+            value={{
+              showModal: false,
+              setShowModal: setShowModalMock,
+              isEditModal: false,
+              setIsEditModal: setIsEditModalMock,
+              isFormCompleted: true,
+              setIsFormCompleted: setIsFormCompletedMock,
+            }}
+          >
+            <ShowModal {...modalProps} show={true} />
+          </ModalContext.Provider>
+        );
 
-    const modal = screen.queryByRole('modal');
+        const closeButton = screen.getByRole('button', { name: 'Close' });
 
-    expect(modal).not.toBeInTheDocument();
-  });
+        fireEvent.click(closeButton);
 
-  it('should close the modal when close button is clicked', () => {
-    render(
-      <ModalContext.Provider
-        value={{
-          showModal: false,
-          setShowModal: setShowModalMock,
-          isEditModal: false,
-          setIsEditModal: setIsEditModalMock,
-          isFormCompleted: true,
-          setIsFormCompleted: setIsFormCompletedMock,
-        }}
-      >
-        <ShowModal {...modalProps} show={true} />
-      </ModalContext.Provider>
-    );
+        expect(setShowModalMock).toHaveBeenCalledWith(false);
+        expect(setIsEditModalMock).toHaveBeenCalledWith(false);
+      });
+    });
 
-    const closeButton = screen.getByRole('button', { name: 'Close' });
+    describe('Show modal', () => {
+      it('should render new modal when `show` prop is true and `isEditModal` is false', () => {
+        render(
+          <ModalContext.Provider
+            value={{
+              showModal: false,
+              setShowModal: setShowModalMock,
+              isEditModal: false,
+              setIsEditModal: setIsEditModalMock,
+              isFormCompleted: true,
+              setIsFormCompleted: setIsFormCompletedMock,
+            }}
+          >
+            <ShowModal {...modalProps} show={true} isEditing={false} />
+          </ModalContext.Provider>
+        );
 
-    fireEvent.click(closeButton);
+        const modal = screen.getByRole('modal');
+        const newModalTitle = screen.getByText('Mock New Form Component');
 
-    expect(setShowModalMock).toHaveBeenCalledWith(false);
-    expect(setIsEditModalMock).toHaveBeenCalledWith(false);
+        expect(modal).toBeInTheDocument();
+        expect(newModalTitle).toBeInTheDocument();
+      });
+
+      it('should render edit modal when `show` prop is true and `isEditModal` is true', () => {
+        render(
+          <ModalContext.Provider
+            value={{
+              showModal: false,
+              setShowModal: setShowModalMock,
+              isEditModal: false,
+              setIsEditModal: setIsEditModalMock,
+              isFormCompleted: true,
+              setIsFormCompleted: setIsFormCompletedMock,
+            }}
+          >
+            <ShowModal {...modalProps} show={true} isEditing={true} />
+          </ModalContext.Provider>
+        );
+
+        const modal = screen.getByRole('modal');
+        const editModalTitle = screen.getByText('Mock Edit Form Component');
+
+        expect(modal).toBeInTheDocument();
+        expect(editModalTitle).toBeInTheDocument();
+      });
+    });
   });
 });
