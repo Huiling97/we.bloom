@@ -93,9 +93,13 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
 
-    if (!dropdownOption) {
-      setIsDropdownInvalid(true);
-      return;
+    if (isEditModal) {
+      setIsDropdownInvalid(false);
+    } else {
+      if (!dropdownOption) {
+        setIsDropdownInvalid(true);
+        return;
+      }
     }
     if (form.checkValidity() === false) {
       e.stopPropagation();
@@ -113,31 +117,33 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     setValidated(true);
   };
 
-  const { id, name, description } = formData;
-
   useEffect(() => {
+    const { id, name, description } = formData;
     let updatedData;
     const data = {
       id,
-      category: dropdownOption,
+      category: isEditModal ? service.category : dropdownOption,
       name,
       description,
-      details: allDetailsData,
+      details: isEditModal ? service.details : allDetailsData,
     };
 
-    if (dropdownOption && name && description) {
-      if (isEditModal) {
-        const selectedCategory = services[dropdownOption];
+    if (isEditModal) {
+      if (name && description) {
+        const selectedCategory = services[service.category];
         const serviceIndex = selectedCategory.findIndex(
           (s) => s.id === service.id
         );
-
-        updateService(service, data);
-        set(
-          ref(database, 'services/' + dropdownOption + `/${serviceIndex}`),
-          data
-        );
-      } else {
+        if (serviceIndex !== -1) {
+          updateService(service, data);
+          set(
+            ref(database, 'services/' + service.category + `/${serviceIndex}`),
+            data
+          );
+        }
+      }
+    } else {
+      if (dropdownOption && name && description) {
         if (services[dropdownOption] && services[dropdownOption].length !== 0) {
           const existingData = services[dropdownOption];
           updatedData = [...existingData, data];
@@ -145,14 +151,12 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
           updatedData = [data];
         }
         set(ref(database, 'services/' + dropdownOption), updatedData);
+        setShowModal(false);
+        setIsFormCompleted(false);
+        setIsEditModal(false);
       }
-      setShowModal(false);
-      setIsFormCompleted(false);
-      setIsEditModal(false);
     }
   }, [isFormCompleted]);
-
-  console.log('services', services);
 
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>
@@ -160,15 +164,18 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
         <Form.Label>Select a category:</Form.Label>
         <Form.Select
           onChange={onDropdownChangeHandler}
-          value={dropdownOption}
+          value={isEditModal ? service.category : dropdownOption}
           isInvalid={isDropdownInvalid}
           disabled={isEditModal}
         >
-          <option value={isEditModal ? formInput.category : ''} disabled={true}>
+          <option value='' disabled={true}>
             Open this select menu
           </option>
           {displayCategoryOptions(categories)}
         </Form.Select>
+        <Form.Control.Feedback type='invalid'>
+          Please select a category
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId='name'>
         <Form.Label>Name</Form.Label>
