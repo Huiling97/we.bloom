@@ -1,7 +1,8 @@
 @import 'src/app/assets/style/_color.scss';
+@import 'src/app/assets/style/_media-query.scss';
 
 .footer-container {
-  background-color: $grey-medium-light-color;
+  background-color: $grey-light-color;
   color: $grey-medium-dark-color;
   padding: 20px 0 10px 0;
 }
@@ -14,6 +15,10 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   padding-left: 20px;
+
+  @include media('<=mobile') {
+    display: flex;
+  }
 }
 
 .bottom-padding {
