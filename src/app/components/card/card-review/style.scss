@@ -6,7 +6,7 @@
 }
 
 .card-review-container {
-  color: $grey-color;
+  color: $grey-dark-color;
   padding: 25px 35px;
   width: 80%;
   margin: 0 auto;
@@ -25,13 +25,16 @@
 }
 
 .card-review-description {
+  color: $grey-medium-dark-color;
   text-align: center;
 }
 
 .slick-next::before {
   content: '>';
+  color: $grey-medium-dark-color;
 }
 
 .slick-prev:before {
   content: '<';
+  color: $grey-medium-dark-color;
 }

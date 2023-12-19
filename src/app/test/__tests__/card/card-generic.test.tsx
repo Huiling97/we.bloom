@@ -5,7 +5,7 @@ import CardGeneric from '../../../components/card/card-generic/index.tsx';
 describe('CardGeneric', () => {
   it('should render component with title', () => {
     render(<CardGeneric {...cardGenericProps} />);
-    const title = screen.getByText('Mock Title');
+    const title = screen.getByText('MOCK TITLE');
 
     expect(title).toBeInTheDocument();
   });
