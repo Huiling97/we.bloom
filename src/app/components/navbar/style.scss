@@ -1,19 +1,40 @@
 @import 'src/app/assets/style/_color.scss';
+@import 'src/app/assets/style/_media-query.scss';
 
 .navbar {
-  display: flex;
-  flex-direction: row;
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: #fff;
+  padding: 20px 0 0;
+  margin-bottom: 1px;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-list {
   position: relative;
-  left: 75%;
+  left: 70%;
+
+  @include media('<=mobile') {
+    left: 100%;
+    left: 0%;
+  }
 }
 
 .navbar-list-item {
   list-style-type: none;
   display: inline-block;
-  margin-right: 40px;
+  margin-left: 40px;
   color: $grey-color;
+}
+
+.navbar-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.navbar-link.active {
+  color: $secondary-color;
 }
