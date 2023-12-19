@@ -16,7 +16,7 @@ import NavBar from './app/components/navbar/index.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Manage from './app/routes/manage.tsx';
 
-import './App.css';
+import './App.scss';
 
 function App() {
   const router = createBrowserRouter([
@@ -80,13 +80,15 @@ function App() {
   ]);
 
   return (
-    <ModalContextProvider>
-      <CategoriesContextProvider>
-        <ServicesContextProvider>
-          <RouterProvider router={router} />
-        </ServicesContextProvider>
-      </CategoriesContextProvider>
-    </ModalContextProvider>
+    <div className='page'>
+      <ModalContextProvider>
+        <CategoriesContextProvider>
+          <ServicesContextProvider>
+            <RouterProvider router={router} />
+          </ServicesContextProvider>
+        </CategoriesContextProvider>
+      </ModalContextProvider>
+    </div>
   );
 }
 

@@ -1,0 +1,11 @@
+@import 'src/app/assets/style/_media-query.scss';
+
+.page {
+  width: 96%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include media('<=mobile') {
+    width: 100%;
+  }
+}
