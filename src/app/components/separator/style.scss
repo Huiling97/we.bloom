@@ -1,0 +1,18 @@
+@import 'src/app/assets/style/_color.scss';
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 30px 30px 0;
+}
+
+.separator-text {
+  padding-right: 10px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.separator-line {
+  flex-grow: 1;
+  border-top: 1px solid $grey-medium-dark-color;
+}
