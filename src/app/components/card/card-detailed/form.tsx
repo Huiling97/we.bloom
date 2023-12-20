@@ -51,6 +51,7 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
   const [dropdownOption, setDropdownOption] = useState<string>('');
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
+  const [isEditingCompleted, setIsEditingCompleted] = useState(false);
 
   const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -115,6 +116,13 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
 
     setIsFormCompleted(true);
     setValidated(true);
+    if (isEditModal) setIsEditingCompleted(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setIsFormCompleted(false);
+    setIsEditModal(false);
   };
 
   useEffect(() => {
@@ -125,11 +133,11 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
       category: isEditModal ? service.category : dropdownOption,
       name,
       description,
-      details: isEditModal ? service.details : allDetailsData,
+      details: allDetailsData,
     };
 
     if (isEditModal) {
-      if (name && description) {
+      if (name && description && isEditingCompleted) {
         const selectedCategory = services[service.category];
         const serviceIndex = selectedCategory.findIndex(
           (s) => s.id === service.id
@@ -141,6 +149,7 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
             data
           );
         }
+        closeModal();
       }
     } else {
       if (dropdownOption && name && description) {
@@ -151,9 +160,7 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
           updatedData = [data];
         }
         set(ref(database, 'services/' + dropdownOption), updatedData);
-        setShowModal(false);
-        setIsFormCompleted(false);
-        setIsEditModal(false);
+        closeModal();
       }
     }
   }, [isFormCompleted]);
