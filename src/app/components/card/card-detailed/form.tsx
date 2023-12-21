@@ -12,13 +12,13 @@ import {
 } from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { ref, set } from 'firebase/database';
-import { database } from '../../../../main';
-import ServiceDetailsForm from './details/form';
+import ServiceDetailsForm from './details/form.tsx';
 import { displayCategoryOptions } from './helpers.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
 import { ServicesContext } from '../../../store/services-context.tsx';
 import { DetailsContext } from '../../../store/details-context.tsx';
+import { ref, set } from 'firebase/database';
+import { database } from '../../../../main';
 
 type CardDetailedFormProps = {
   formId: string;
@@ -76,8 +76,8 @@ const CardDetailedForm = ({
   };
 
   const onDetailsChangeHandler = (
-    e: ChangeEvent<HTMLInputElement>,
-    id: string
+    id: string,
+    e: ChangeEvent<HTMLInputElement>
   ) => {
     const { value, name } = e.target;
     const updatedData = {
@@ -87,18 +87,12 @@ const CardDetailedForm = ({
     setDetailsData((prevValue) => ({ ...prevValue, ...updatedData }));
   };
 
-  const onDetailsBlurHandler = (
-    e: ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {};
-
   const addDetailsHandler = () => {
     setAdditionalDetailsForm([
       ...additionalDetailsForm,
       <ServiceDetailsForm
         id={formInput.id}
         onDetailsChange={onDetailsChangeHandler}
-        onDetailsBlur={onDetailsBlurHandler}
       />,
     ]);
 
@@ -118,7 +112,6 @@ const CardDetailedForm = ({
             id={formInput.id}
             data={d}
             onDetailsChange={onDetailsChangeHandler}
-            onDetailsBlur={onDetailsBlurHandler}
           />
         );
       });
@@ -129,7 +122,6 @@ const CardDetailedForm = ({
         <ServiceDetailsForm
           id={formInput.id}
           onDetailsChange={onDetailsChangeHandler}
-          onDetailsBlur={onDetailsBlurHandler}
         />,
       ]);
     }

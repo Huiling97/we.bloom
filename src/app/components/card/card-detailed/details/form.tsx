@@ -1,4 +1,4 @@
-import { type ReactNode, type ChangeEvent, type FocusEvent } from 'react';
+import { type ReactNode, type ChangeEvent, useState } from 'react';
 import { type CardDetailsProps } from '../../../../types/card';
 import Form from 'react-bootstrap/Form';
 import './style.scss';
@@ -6,28 +6,37 @@ import './style.scss';
 type ServiceDetailsFormProps = {
   id?: string;
   data?: CardDetailsProps;
-  onDetailsChange: (event: ChangeEvent<HTMLInputElement>, key: string) => void;
-  onDetailsBlur: (event: FocusEvent<HTMLInputElement>, key: string) => void;
+  onDetailsChange: (key: string, event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const ServiceDetailsForm = ({
   id,
+  data,
   onDetailsChange,
-  onDetailsBlur,
 }: ServiceDetailsFormProps): ReactNode => {
+  const [input, setInput] = useState<CardDetailsProps | undefined>(data);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInput((prevData) => {
+      if (prevData) {
+        return { ...prevData, [name]: value };
+      }
+    });
+    onDetailsChange(id as string, e);
+  };
+
   return (
     <div className='service-details-container'>
       <Form.Group className='mb-3' controlId={`duration_${id}`}>
         <Form.Label>Duration</Form.Label>
         <Form.Control
           type='text'
+          value={input?.duration}
           required
           name='duration'
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            onDetailsChange(event, id as string)
-          }
-          onBlur={(event: FocusEvent<HTMLInputElement>) =>
-            onDetailsBlur(event, id as string)
+            handleChange(event)
           }
         />
         <Form.Control.Feedback type='invalid'>
@@ -38,13 +47,11 @@ const ServiceDetailsForm = ({
         <Form.Label>Price</Form.Label>
         <Form.Control
           type='text'
+          value={input?.price}
           required
           name='price'
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            onDetailsChange(event, id as string)
-          }
-          onBlur={(event: FocusEvent<HTMLInputElement>) =>
-            onDetailsBlur(event, id as string)
+            handleChange(event)
           }
         />
         <Form.Control.Feedback type='invalid'>
