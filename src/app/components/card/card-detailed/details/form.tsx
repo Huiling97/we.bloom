@@ -1,36 +1,51 @@
-import { type ReactNode } from 'react';
+import { type ReactNode, type ChangeEvent, type FocusEvent } from 'react';
+import { type CardDetailsProps } from '../../../../types/card';
 import Form from 'react-bootstrap/Form';
-
 import './style.scss';
 
 type ServiceDetailsFormProps = {
-  onDetailsChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  id?: string;
+  data?: CardDetailsProps;
+  onDetailsChange: (event: ChangeEvent<HTMLInputElement>, key: string) => void;
+  onDetailsBlur: (event: FocusEvent<HTMLInputElement>, key: string) => void;
 };
 
 const ServiceDetailsForm = ({
+  id,
   onDetailsChange,
+  onDetailsBlur,
 }: ServiceDetailsFormProps): ReactNode => {
   return (
     <div className='service-details-container'>
-      <Form.Group className='mb-3' controlId='duration'>
+      <Form.Group className='mb-3' controlId={`duration_${id}`}>
         <Form.Label>Duration</Form.Label>
         <Form.Control
           type='text'
           required
           name='duration'
-          onChange={onDetailsChange}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            onDetailsChange(event, id as string)
+          }
+          onBlur={(event: FocusEvent<HTMLInputElement>) =>
+            onDetailsBlur(event, id as string)
+          }
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a duration
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className='mb-3' controlId='price'>
+      <Form.Group className='mb-3' controlId={`price_${id}`}>
         <Form.Label>Price</Form.Label>
         <Form.Control
           type='text'
           required
           name='price'
-          onChange={onDetailsChange}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            onDetailsChange(event, id as string)
+          }
+          onBlur={(event: FocusEvent<HTMLInputElement>) =>
+            onDetailsBlur(event, id as string)
+          }
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a price

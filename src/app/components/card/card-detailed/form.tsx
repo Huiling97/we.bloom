@@ -6,7 +6,6 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   type CardDetailedFormInputProps,
   type CardDetailsProps,
@@ -19,13 +18,19 @@ import ServiceDetailsForm from './details/form';
 import { displayCategoryOptions } from './helpers.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
 import { ServicesContext } from '../../../store/services-context.tsx';
+import { DetailsContext } from '../../../store/details-context.tsx';
 
 type CardDetailedFormProps = {
+  formId: string;
   categories: string[];
   service: CardDetailedFormInputProps;
 };
 
-const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
+const CardDetailedForm = ({
+  formId,
+  categories,
+  service,
+}: CardDetailedFormProps) => {
   const {
     setShowModal,
     isEditModal,
@@ -34,9 +39,10 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     setIsFormCompleted,
   } = useContext(ModalContext);
   const { services, setServices, updateService } = useContext(ServicesContext);
+  const { details, addDetails } = useContext(DetailsContext);
 
   const formInput = {
-    id: uuidv4(),
+    id: formId,
     category: isEditModal ? service.category : '',
     name: isEditModal ? service.name : '',
     description: isEditModal ? service.description : '',
@@ -47,23 +53,14 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     formInput as CardDetailedFormInputProps
   );
   const [detailsData, setDetailsData] = useState({});
-  const [allDetailsData, setAllDetailsData] = useState<CardDetailsProps[]>([]);
+  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
+    ReactNode[]
+  >([]);
+
   const [dropdownOption, setDropdownOption] = useState<string>('');
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
-
-  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const detail = {
-      [name]: value,
-    };
-    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
-  };
-
-  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
-    ReactNode[]
-  >([<ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />]);
 
   const onDropdownChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setDropdownOption(e.target.value);
@@ -78,17 +75,65 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     }));
   };
 
+  const onDetailsChangeHandler = (
+    e: ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
+    const { value, name } = e.target;
+    const updatedData = {
+      [name]: value,
+    };
+
+    setDetailsData((prevValue) => ({ ...prevValue, ...updatedData }));
+  };
+
+  const onDetailsBlurHandler = (
+    e: ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {};
+
   const addDetailsHandler = () => {
     setAdditionalDetailsForm([
       ...additionalDetailsForm,
-      <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
+      <ServiceDetailsForm
+        id={formInput.id}
+        onDetailsChange={onDetailsChangeHandler}
+        onDetailsBlur={onDetailsBlurHandler}
+      />,
     ]);
-    setAllDetailsData((prevValue) => [
-      ...prevValue,
-      detailsData as CardDetailsProps,
-    ]);
+
+    addDetails(formInput.id, detailsData as CardDetailsProps);
+
+    setDetailsData({});
     setIsFormCompleted(false);
   };
+
+  useEffect(() => {
+    if (isEditModal) {
+      const { details } = service;
+
+      const formsToAdd = details.map((d) => {
+        return (
+          <ServiceDetailsForm
+            id={formInput.id}
+            data={d}
+            onDetailsChange={onDetailsChangeHandler}
+            onDetailsBlur={onDetailsBlurHandler}
+          />
+        );
+      });
+      setAdditionalDetailsForm((prevForm) => [...prevForm, ...formsToAdd]);
+    } else {
+      setAdditionalDetailsForm([
+        ...additionalDetailsForm,
+        <ServiceDetailsForm
+          id={formInput.id}
+          onDetailsChange={onDetailsChangeHandler}
+          onDetailsBlur={onDetailsBlurHandler}
+        />,
+      ]);
+    }
+  }, [isEditModal]);
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -108,12 +153,10 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
       return;
     }
 
-    setAllDetailsData((prevValue) => [
-      ...prevValue,
-      detailsData as CardDetailsProps,
-    ]);
+    addDetails(formInput.id, detailsData as CardDetailsProps);
     setServices(services);
 
+    setDetailsData({});
     setIsFormCompleted(true);
     setValidated(true);
     if (isEditModal) setIsEditingCompleted(true);
@@ -133,7 +176,7 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
       category: isEditModal ? service.category : dropdownOption,
       name,
       description,
-      details: allDetailsData,
+      details: details[id],
     };
 
     if (isEditModal) {
