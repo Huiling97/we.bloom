@@ -29,7 +29,6 @@ type CardDetailsObjectProps = {
 };
 
 export type CardDetailsProps = {
-  id: string;
   duration: string;
   price: string;
 };
