@@ -10,6 +10,7 @@ import { ModalContext } from '../../store/modal-context.tsx';
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
   form: FormComponent,
+  formId,
   show,
   isEditing,
   catgeoryData,
@@ -31,6 +32,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
         </Modal.Header>
         <Modal.Body>
           <FormComponent
+            formId={formId as string}
             categories={categories as string[]}
             service={service as CardDetailedFormInputProps}
             isEditing={isEditing}
