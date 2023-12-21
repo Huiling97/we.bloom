@@ -29,6 +29,7 @@ type CardDetailsObjectProps = {
 };
 
 export type CardDetailsProps = {
+  id: string;
   duration: string;
   price: string;
 };
@@ -39,4 +40,8 @@ export type CardDetailedFormInputProps = {
   name: string;
   description: string;
   details: CardDetailsProps[];
+};
+
+export type DetailsProps = {
+  [id: string]: CardDetailsProps[];
 };
