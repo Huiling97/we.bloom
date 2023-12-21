@@ -40,3 +40,7 @@ export type CardDetailedFormInputProps = {
   description: string;
   details: CardDetailsProps[];
 };
+
+export type DetailsProps = {
+  [id: string]: CardDetailsProps[];
+};

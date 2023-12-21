@@ -8,6 +8,7 @@ import { FormComponentProps } from './form.ts';
 export type ShowModalProps = {
   heading: string;
   form: FunctionComponent<FormComponentProps>;
+  formId?: string;
   show: boolean;
   isEditing: boolean;
   catgeoryData?: CardGenericProps;

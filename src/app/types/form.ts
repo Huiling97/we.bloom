@@ -4,6 +4,7 @@ import {
 } from './card.ts';
 
 export type FormComponentProps = {
+  formId: string;
   categories: string[];
   service: CardDetailedFormInputProps;
   isEditing: boolean;

@@ -6,26 +6,31 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   type CardDetailedFormInputProps,
   type CardDetailsProps,
 } from '../../../types/card.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { ref, set } from 'firebase/database';
-import { database } from '../../../../main';
-import ServiceDetailsForm from './details/form';
+import ServiceDetailsForm from './details/form.tsx';
 import { displayCategoryOptions } from './helpers.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
 import { ServicesContext } from '../../../store/services-context.tsx';
+import { DetailsContext } from '../../../store/details-context.tsx';
+import { ref, set } from 'firebase/database';
+import { database } from '../../../../main';
 
 type CardDetailedFormProps = {
+  formId: string;
   categories: string[];
   service: CardDetailedFormInputProps;
 };
 
-const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
+const CardDetailedForm = ({
+  formId,
+  categories,
+  service,
+}: CardDetailedFormProps) => {
   const {
     setShowModal,
     isEditModal,
@@ -34,9 +39,10 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     setIsFormCompleted,
   } = useContext(ModalContext);
   const { services, setServices, updateService } = useContext(ServicesContext);
+  const { details, addDetails } = useContext(DetailsContext);
 
   const formInput = {
-    id: uuidv4(),
+    id: formId,
     category: isEditModal ? service.category : '',
     name: isEditModal ? service.name : '',
     description: isEditModal ? service.description : '',
@@ -47,22 +53,14 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     formInput as CardDetailedFormInputProps
   );
   const [detailsData, setDetailsData] = useState({});
-  const [allDetailsData, setAllDetailsData] = useState<CardDetailsProps[]>([]);
+  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
+    ReactNode[]
+  >([]);
+
   const [dropdownOption, setDropdownOption] = useState<string>('');
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
-
-  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const detail = {
-      [name]: value,
-    };
-    setDetailsData((prevValue) => ({ ...prevValue, ...detail }));
-  };
-
-  const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
-    ReactNode[]
-  >([<ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />]);
+  const [isEditingCompleted, setIsEditingCompleted] = useState(false);
 
   const onDropdownChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setDropdownOption(e.target.value);
@@ -77,25 +75,69 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
     }));
   };
 
+  const onDetailsChangeHandler = (
+    id: string,
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value, name } = e.target;
+    const updatedData = {
+      [name]: value,
+    };
+
+    setDetailsData((prevValue) => ({ ...prevValue, ...updatedData }));
+  };
+
   const addDetailsHandler = () => {
     setAdditionalDetailsForm([
       ...additionalDetailsForm,
-      <ServiceDetailsForm onDetailsChange={onDetailsChangeHandler} />,
+      <ServiceDetailsForm
+        id={formInput.id}
+        onDetailsChange={onDetailsChangeHandler}
+      />,
     ]);
-    setAllDetailsData((prevValue) => [
-      ...prevValue,
-      detailsData as CardDetailsProps,
-    ]);
+
+    addDetails(formInput.id, detailsData as CardDetailsProps);
+
+    setDetailsData({});
     setIsFormCompleted(false);
   };
+
+  useEffect(() => {
+    if (isEditModal) {
+      const { details } = service;
+
+      const formsToAdd = details.map((d) => {
+        return (
+          <ServiceDetailsForm
+            id={formInput.id}
+            data={d}
+            onDetailsChange={onDetailsChangeHandler}
+          />
+        );
+      });
+      setAdditionalDetailsForm((prevForm) => [...prevForm, ...formsToAdd]);
+    } else {
+      setAdditionalDetailsForm([
+        ...additionalDetailsForm,
+        <ServiceDetailsForm
+          id={formInput.id}
+          onDetailsChange={onDetailsChangeHandler}
+        />,
+      ]);
+    }
+  }, [isEditModal]);
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
 
-    if (!dropdownOption) {
-      setIsDropdownInvalid(true);
-      return;
+    if (isEditModal) {
+      setIsDropdownInvalid(false);
+    } else {
+      if (!dropdownOption) {
+        setIsDropdownInvalid(true);
+        return;
+      }
     }
     if (form.checkValidity() === false) {
       e.stopPropagation();
@@ -103,41 +145,49 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
       return;
     }
 
-    setAllDetailsData((prevValue) => [
-      ...prevValue,
-      detailsData as CardDetailsProps,
-    ]);
+    addDetails(formInput.id, detailsData as CardDetailsProps);
     setServices(services);
 
+    setDetailsData({});
     setIsFormCompleted(true);
     setValidated(true);
+    if (isEditModal) setIsEditingCompleted(true);
   };
 
-  const { id, name, description } = formData;
+  const closeModal = () => {
+    setShowModal(false);
+    setIsFormCompleted(false);
+    setIsEditModal(false);
+  };
 
   useEffect(() => {
+    const { id, name, description } = formData;
     let updatedData;
     const data = {
       id,
-      category: dropdownOption,
+      category: isEditModal ? service.category : dropdownOption,
       name,
       description,
-      details: allDetailsData,
+      details: details[id],
     };
 
-    if (dropdownOption && name && description) {
-      if (isEditModal) {
-        const selectedCategory = services[dropdownOption];
+    if (isEditModal) {
+      if (name && description && isEditingCompleted) {
+        const selectedCategory = services[service.category];
         const serviceIndex = selectedCategory.findIndex(
           (s) => s.id === service.id
         );
-
-        updateService(service, data);
-        set(
-          ref(database, 'services/' + dropdownOption + `/${serviceIndex}`),
-          data
-        );
-      } else {
+        if (serviceIndex !== -1) {
+          updateService(service, data);
+          set(
+            ref(database, 'services/' + service.category + `/${serviceIndex}`),
+            data
+          );
+        }
+        closeModal();
+      }
+    } else {
+      if (dropdownOption && name && description) {
         if (services[dropdownOption] && services[dropdownOption].length !== 0) {
           const existingData = services[dropdownOption];
           updatedData = [...existingData, data];
@@ -145,14 +195,10 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
           updatedData = [data];
         }
         set(ref(database, 'services/' + dropdownOption), updatedData);
+        closeModal();
       }
-      setShowModal(false);
-      setIsFormCompleted(false);
-      setIsEditModal(false);
     }
   }, [isFormCompleted]);
-
-  console.log('services', services);
 
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>
@@ -160,15 +206,18 @@ const CardDetailedForm = ({ categories, service }: CardDetailedFormProps) => {
         <Form.Label>Select a category:</Form.Label>
         <Form.Select
           onChange={onDropdownChangeHandler}
-          value={dropdownOption}
+          value={isEditModal ? service.category : dropdownOption}
           isInvalid={isDropdownInvalid}
           disabled={isEditModal}
         >
-          <option value={isEditModal ? formInput.category : ''} disabled={true}>
+          <option value='' disabled={true}>
             Open this select menu
           </option>
           {displayCategoryOptions(categories)}
         </Form.Select>
+        <Form.Control.Feedback type='invalid'>
+          Please select a category
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId='name'>
         <Form.Label>Name</Form.Label>

@@ -37,7 +37,7 @@ const Home = () => {
 
   return (
     <div>
-      {!isMobile && <CarouselBanner />}
+      {!isMobile() && <CarouselBanner />}
       <CardGrid type='generic' cards={categories} />
       <Separator title='Review' />
       <CardReview reviews={REVIEWS_LIST} />

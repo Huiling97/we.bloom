@@ -19,6 +19,7 @@ import fetchServicesData from '../util/fetch-services.ts';
 import { ModalContext } from '../store/modal-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { ServicesContext } from '../store/services-context.tsx';
+import { v4 as uuidv4 } from 'uuid';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
 
@@ -103,6 +104,8 @@ const Manage = () => {
     }
   }, []);
 
+  const formId = uuidv4();
+
   return (
     <div>
       {isLoading ? (
@@ -136,6 +139,7 @@ const Manage = () => {
               <ShowModal
                 heading={isEditModal ? 'Edit service' : 'Add new service'}
                 form={CardDetailedForm}
+                formId={formId}
                 show={showModal}
                 isEditing={isEditModal}
                 categories={categoryType}
