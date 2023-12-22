@@ -5,7 +5,7 @@ import './style.scss';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const Map = () => {
+const AddressMap = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const marker = useRef<mapboxgl.Marker | null>(null);
@@ -42,4 +42,4 @@ const Map = () => {
   return <div ref={mapContainer} className='map-container' />;
 };
 
-export default Map;
+export default AddressMap;
