@@ -1,4 +1,5 @@
 @import 'src/app/assets/style/_color.scss';
+@import 'src/app/assets/style/_media-query.scss';
 
 .separator {
   display: flex;
@@ -10,6 +11,10 @@
   padding-right: 10px;
   font-size: 24px;
   font-weight: 500;
+
+  @include media('<=mobile') {
+    font-size: 18px;
+  }
 }
 
 .separator-line {
