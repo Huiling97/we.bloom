@@ -1,19 +1,36 @@
-import { type ReactNode, type ChangeEvent, useState } from 'react';
+import {
+  type ReactNode,
+  type ChangeEvent,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import { type CardDetailsProps } from '../../../../types/card';
+import { ModalContext } from '../../../../store/modal-context';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import './style.scss';
 
 type ServiceDetailsFormProps = {
   id?: string;
+  index: number;
   data?: CardDetailsProps;
-  onDetailsChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onDetailsChange: (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => void;
+  onDetailsDelete: (index: number) => void;
 };
 
 const ServiceDetailsForm = ({
   id,
+  index,
   data,
   onDetailsChange,
+  onDetailsDelete,
 }: ServiceDetailsFormProps): ReactNode => {
+  const { isEditModal } = useContext(ModalContext);
+
   const [input, setInput] = useState<CardDetailsProps | undefined>(data);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,8 +40,14 @@ const ServiceDetailsForm = ({
         return { ...prevData, [name]: value };
       }
     });
-    onDetailsChange(e);
+    onDetailsChange(index, e);
   };
+
+  useEffect(() => {
+    if (isEditModal) {
+      setInput(data);
+    }
+  }, [data]);
 
   return (
     <div className='service-details-container'>
@@ -58,6 +81,14 @@ const ServiceDetailsForm = ({
           Please provide a price
         </Form.Control.Feedback>
       </Form.Group>
+      <Button
+        variant='danger'
+        onClick={() => {
+          onDetailsDelete(index);
+        }}
+      >
+        Delete
+      </Button>
     </div>
   );
 };
