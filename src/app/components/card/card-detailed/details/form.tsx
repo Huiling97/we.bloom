@@ -3,7 +3,7 @@ import { type CardDetailsProps } from '../../../../types/card';
 import Form from 'react-bootstrap/Form';
 import './style.scss';
 
-export type ServiceDetailsFormProps = {
+type ServiceDetailsFormProps = {
   id?: string;
   data?: CardDetailsProps;
   onDetailsChange: (event: ChangeEvent<HTMLInputElement>) => void;
