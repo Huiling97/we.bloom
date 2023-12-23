@@ -94,9 +94,9 @@ const CardDetailedForm = ({
   };
 
   const onDetailsDeleteHandler = (index: number) => {
-    setAdditionalDetailsForm((prevForm) => {
-      return prevForm.filter((form) => form.props.index !== index);
-    });
+    setAdditionalDetailsForm((prevForm) =>
+      prevForm.filter((form) => form.props.index !== index)
+    );
 
     deleteDetails(index);
   };
@@ -168,11 +168,11 @@ const CardDetailedForm = ({
         />,
       ];
     } else {
-      formsToAdd = details.map((detailData, index) => {
+      formsToAdd = details.map((detailData) => {
         return (
           <ServiceDetailsForm
             id={formInput.id}
-            index={index}
+            index={detailData.index}
             data={detailData}
             onDetailsChange={onDetailsChangeHandler}
             onDetailsDelete={onDetailsDeleteHandler}
