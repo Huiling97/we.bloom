@@ -14,7 +14,12 @@ const displayCardDetails = (details: CardDetailsProps[]): ReactNode => {
   return (
     <>
       {details.map(({ duration, price }, index) => (
-        <CardDetails key={index} duration={duration} price={price} />
+        <CardDetails
+          index={index}
+          key={index}
+          duration={duration}
+          price={price}
+        />
       ))}
     </>
   );
