@@ -18,10 +18,6 @@
   color: $grey-medium-dark-color;
   font-size: 18px;
 
-  @include media('<=mobile') {
-    font-size: 16px;
-  }
-
   .contact-text {
     margin-left: 10px;
   }
@@ -37,9 +33,5 @@
     text-align: center;
     font-size: 18px;
     padding: 20px 0;
-
-    @include media('<=mobile') {
-      font-size: 16px;
-    }
   }
 }
