@@ -39,7 +39,8 @@ const CardDetailedForm = ({
     setIsFormCompleted,
   } = useContext(ModalContext);
   const { services, setServices, updateService } = useContext(ServicesContext);
-  const { details, setDetails, addDetails } = useContext(DetailsContext);
+  const { details, setDetails, addDetails, deleteDetails } =
+    useContext(DetailsContext);
 
   const formInput = {
     id: formId,
@@ -52,7 +53,11 @@ const CardDetailedForm = ({
   const [formData, setFormData] = useState(
     formInput as CardDetailedFormInputProps
   );
-  const [detailsData, setDetailsData] = useState({ duration: '', price: '' });
+  const [detailsData, setDetailsData] = useState({
+    index: 0,
+    duration: '',
+    price: '',
+  });
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
     ReactElement[]
   >([]);
@@ -75,25 +80,39 @@ const CardDetailedForm = ({
     }));
   };
 
-  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onDetailsChangeHandler = (
+    index: number,
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
     const { value, name } = e.target;
     const updatedData = {
+      index,
       [name]: value,
     };
 
     setDetailsData((prevValue) => ({ ...prevValue, ...updatedData }));
   };
 
+  const onDetailsDeleteHandler = (index: number) => {
+    setAdditionalDetailsForm((prevForm) =>
+      prevForm.filter((form) => form.props.index !== index)
+    );
+
+    deleteDetails(index);
+  };
+
   const addDetailsHandler = () => {
+    const formIndex = additionalDetailsForm.length;
     setAdditionalDetailsForm([
       ...additionalDetailsForm,
       <ServiceDetailsForm
         id={formInput.id}
+        index={formIndex}
         onDetailsChange={onDetailsChangeHandler}
+        onDetailsDelete={onDetailsDeleteHandler}
       />,
     ]);
 
-    setDetailsData({ duration: '', price: '' });
     setIsFormCompleted(false);
   };
 
@@ -116,7 +135,7 @@ const CardDetailedForm = ({
     }
 
     setServices(services);
-    setDetailsData({ duration: '', price: '' });
+    setDetailsData({ index: 0, duration: '', price: '' });
 
     setIsFormCompleted(true);
     setValidated(true);
@@ -133,6 +152,7 @@ const CardDetailedForm = ({
   useEffect(() => {
     if (detailsData.duration && detailsData.price) {
       addDetails(detailsData as CardDetailsProps);
+      setDetailsData({ index: 0, duration: '', price: '' });
     }
   }, [detailsData]);
 
@@ -142,7 +162,9 @@ const CardDetailedForm = ({
       formsToAdd = [
         <ServiceDetailsForm
           id={formInput.id}
+          index={0}
           onDetailsChange={onDetailsChangeHandler}
+          onDetailsDelete={onDetailsDeleteHandler}
         />,
       ];
     } else {
@@ -150,8 +172,10 @@ const CardDetailedForm = ({
         return (
           <ServiceDetailsForm
             id={formInput.id}
+            index={detailData.index}
             data={detailData}
             onDetailsChange={onDetailsChangeHandler}
+            onDetailsDelete={onDetailsDeleteHandler}
           />
         );
       });

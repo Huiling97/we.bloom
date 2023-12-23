@@ -17,6 +17,7 @@ export const cardGenericArrayProps = {
 };
 
 export const cardDetailsProps: CardDetailsProps = {
+  index: 1,
   duration: '60',
   price: '85',
 };
