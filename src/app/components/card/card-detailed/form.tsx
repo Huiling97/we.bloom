@@ -1,7 +1,7 @@
 import {
   useState,
   type FormEvent,
-  type ReactNode,
+  type ReactElement,
   type ChangeEvent,
   useEffect,
   useContext,
@@ -39,22 +39,22 @@ const CardDetailedForm = ({
     setIsFormCompleted,
   } = useContext(ModalContext);
   const { services, setServices, updateService } = useContext(ServicesContext);
-  const { details, addDetails } = useContext(DetailsContext);
+  const { details, setDetails, addDetails } = useContext(DetailsContext);
 
   const formInput = {
     id: formId,
     category: isEditModal ? service.category : '',
     name: isEditModal ? service.name : '',
     description: isEditModal ? service.description : '',
-    details: isEditModal ? service.details : [],
+    details: isEditModal ? details : [],
   };
 
   const [formData, setFormData] = useState(
     formInput as CardDetailedFormInputProps
   );
-  const [detailsData, setDetailsData] = useState({});
+  const [detailsData, setDetailsData] = useState({ duration: '', price: '' });
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
-    ReactNode[]
+    ReactElement[]
   >([]);
 
   const [dropdownOption, setDropdownOption] = useState<string>('');
@@ -67,7 +67,7 @@ const CardDetailedForm = ({
     setIsDropdownInvalid(false);
   };
 
-  const onChangeHandler = (e: FormEvent) => {
+  const onTextChangeHandler = (e: FormEvent) => {
     const { name, value } = e.target as HTMLInputElement;
     setFormData((prevData) => ({
       ...prevData,
@@ -75,10 +75,7 @@ const CardDetailedForm = ({
     }));
   };
 
-  const onDetailsChangeHandler = (
-    id: string,
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
+  const onDetailsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     const updatedData = {
       [name]: value,
@@ -96,36 +93,9 @@ const CardDetailedForm = ({
       />,
     ]);
 
-    addDetails(formInput.id, detailsData as CardDetailsProps);
-
-    setDetailsData({});
+    setDetailsData({ duration: '', price: '' });
     setIsFormCompleted(false);
   };
-
-  useEffect(() => {
-    if (isEditModal) {
-      const { details } = service;
-
-      const formsToAdd = details.map((d) => {
-        return (
-          <ServiceDetailsForm
-            id={formInput.id}
-            data={d}
-            onDetailsChange={onDetailsChangeHandler}
-          />
-        );
-      });
-      setAdditionalDetailsForm((prevForm) => [...prevForm, ...formsToAdd]);
-    } else {
-      setAdditionalDetailsForm([
-        ...additionalDetailsForm,
-        <ServiceDetailsForm
-          id={formInput.id}
-          onDetailsChange={onDetailsChangeHandler}
-        />,
-      ]);
-    }
-  }, [isEditModal]);
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -145,10 +115,9 @@ const CardDetailedForm = ({
       return;
     }
 
-    addDetails(formInput.id, detailsData as CardDetailsProps);
     setServices(services);
+    setDetailsData({ duration: '', price: '' });
 
-    setDetailsData({});
     setIsFormCompleted(true);
     setValidated(true);
     if (isEditModal) setIsEditingCompleted(true);
@@ -158,7 +127,37 @@ const CardDetailedForm = ({
     setShowModal(false);
     setIsFormCompleted(false);
     setIsEditModal(false);
+    setDetails([]);
   };
+
+  useEffect(() => {
+    if (detailsData.duration && detailsData.price) {
+      addDetails(detailsData as CardDetailsProps);
+    }
+  }, [detailsData]);
+
+  useEffect(() => {
+    let formsToAdd: ReactElement[] = [];
+    if (details.length === 0) {
+      formsToAdd = [
+        <ServiceDetailsForm
+          id={formInput.id}
+          onDetailsChange={onDetailsChangeHandler}
+        />,
+      ];
+    } else {
+      formsToAdd = details.map((detailData) => {
+        return (
+          <ServiceDetailsForm
+            id={formInput.id}
+            data={detailData}
+            onDetailsChange={onDetailsChangeHandler}
+          />
+        );
+      });
+    }
+    setAdditionalDetailsForm((prevForm) => [...prevForm, ...formsToAdd]);
+  }, [isEditModal]);
 
   useEffect(() => {
     const { id, name, description } = formData;
@@ -168,7 +167,7 @@ const CardDetailedForm = ({
       category: isEditModal ? service.category : dropdownOption,
       name,
       description,
-      details: details[id],
+      details: details,
     };
 
     if (isEditModal) {
@@ -226,7 +225,7 @@ const CardDetailedForm = ({
           name='name'
           value={formData.name}
           required
-          onChange={onChangeHandler}
+          onChange={onTextChangeHandler}
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a name
@@ -239,16 +238,17 @@ const CardDetailedForm = ({
           name='description'
           value={formData.description}
           required
-          onChange={onChangeHandler}
+          onChange={onTextChangeHandler}
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a description
         </Form.Control.Feedback>
       </Form.Group>
       <div>
-        {additionalDetailsForm.map((form, index) => (
-          <div key={index}>{form}</div>
-        ))}
+        {additionalDetailsForm &&
+          additionalDetailsForm.map((form, index) => (
+            <div key={index}>{form}</div>
+          ))}
       </div>
       <Button variant='primary' onClick={addDetailsHandler}>
         Add additional price and duration

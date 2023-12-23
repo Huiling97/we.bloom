@@ -6,7 +6,7 @@ import './style.scss';
 type ServiceDetailsFormProps = {
   id?: string;
   data?: CardDetailsProps;
-  onDetailsChange: (key: string, event: ChangeEvent<HTMLInputElement>) => void;
+  onDetailsChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const ServiceDetailsForm = ({
@@ -23,7 +23,7 @@ const ServiceDetailsForm = ({
         return { ...prevData, [name]: value };
       }
     });
-    onDetailsChange(id as string, e);
+    onDetailsChange(e);
   };
 
   return (

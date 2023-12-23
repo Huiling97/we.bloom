@@ -2,38 +2,43 @@ import { createContext, useReducer, type ReactNode } from 'react';
 import {
   type DetailsContextProps,
   type DetailsActionProps,
-  type DetailsAddPayload,
 } from '../types/context/details.ts';
-import { type CardDetailsProps, type DetailsProps } from '../types/card';
+import { type CardDetailsProps } from '../types/card';
 
 const DetailsContext = createContext<DetailsContextProps>({
-  details: {},
+  details: [],
+  setDetails: () => {},
   addDetails: () => {},
 });
 
-const detailsReducer = (state: DetailsProps, action: DetailsActionProps) => {
+const detailsReducer = (
+  state: CardDetailsProps[],
+  action: DetailsActionProps
+): CardDetailsProps[] => {
   switch (action.type) {
+    case 'SET':
+      return action.payload as CardDetailsProps[];
     case 'ADD':
-      const { id, detailsData } = action.payload as DetailsAddPayload;
-      console.log('state[id]', state[id]);
-      if (state[id]) {
-        return { ...state, [id]: [...state[id], detailsData] };
-      }
-      return { ...state, [id]: [detailsData] };
+      return [...state, action.payload] as CardDetailsProps[];
     default:
       return state;
   }
 };
 
 const DetailsContextProvider = ({ children }: { children: ReactNode }) => {
-  const [detailsState, dispatch] = useReducer(detailsReducer, {});
+  const [detailsState, dispatch] = useReducer(detailsReducer, []);
 
-  const addDetails = (id: string, detailsData: CardDetailsProps) => {
-    dispatch({ type: 'ADD', payload: { id, detailsData } });
+  const setDetails = (allDetailsData: CardDetailsProps[]) => {
+    dispatch({ type: 'SET', payload: allDetailsData });
+  };
+
+  const addDetails = (detailsData: CardDetailsProps) => {
+    dispatch({ type: 'ADD', payload: detailsData });
   };
 
   const value = {
     details: detailsState,
+    setDetails: setDetails,
     addDetails: addDetails,
   };
 
