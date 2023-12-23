@@ -6,6 +6,7 @@ import {
 import { type ShowModalProps } from '../../types/modal.ts';
 import Modal from 'react-bootstrap/Modal';
 import { ModalContext } from '../../store/modal-context.tsx';
+import { DetailsContext } from '../../store/details-context.tsx';
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
@@ -18,10 +19,12 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   service,
 }: ShowModalProps) => {
   const { setShowModal, setIsEditModal } = useContext(ModalContext);
+  const { setDetails } = useContext(DetailsContext);
 
   const handleClose = () => {
     setIsEditModal(false);
     setShowModal(false);
+    setDetails([]);
   };
 
   return (
