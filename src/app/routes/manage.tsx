@@ -19,6 +19,7 @@ import fetchServicesData from '../util/fetch-services.ts';
 import { ModalContext } from '../store/modal-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { ServicesContext } from '../store/services-context.tsx';
+import { DetailsContext } from '../store/details-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
@@ -36,6 +37,7 @@ const Manage = () => {
     useContext(ModalContext);
   const categoriesCtx = useContext(CategoriesContext);
   const servicesCtx = useContext(ServicesContext);
+  const { setDetails } = useContext(DetailsContext);
 
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -53,7 +55,7 @@ const Manage = () => {
     details: [],
   });
 
-  const deleteModalHandler = (id: string) => {
+  const deleteCategoryModalHandler = (id: string) => {
     setShowDeleteModal(true);
     setDeleteCategoryId(id);
   };
@@ -96,6 +98,7 @@ const Manage = () => {
     setActiveForm('service');
     setShowModal(true);
     setServiceDate(data);
+    setDetails(data.details);
   };
 
   useEffect(() => {
@@ -149,7 +152,7 @@ const Manage = () => {
             {categories &&
               displayCategories(
                 categoriesCtx.categories as CardGenericObjectProps,
-                deleteModalHandler,
+                deleteCategoryModalHandler,
                 onEditCategoryHandler
               )}
             {services &&
