@@ -1,20 +1,17 @@
-import { type CardDetailsProps, type DetailsProps } from '../card.ts';
+import { type CardDetailsProps } from '../card.ts';
 
 export interface DetailsContextProps {
-  details: DetailsProps;
-  addDetails: (id: string, detailsData: CardDetailsProps) => void;
+  details: CardDetailsProps[];
+  setDetails: (allDetailsData: CardDetailsProps[]) => void;
+  addDetails: (detailsData: CardDetailsProps) => void;
 }
 
 enum DetailsActionType {
+  SET = 'SET',
   ADD = 'ADD',
 }
 
 export interface DetailsActionProps {
   type: DetailsActionType | string;
-  payload: CardDetailsProps | DetailsAddPayload;
-}
-
-export interface DetailsAddPayload {
-  id: string;
-  detailsData: CardDetailsProps;
+  payload: CardDetailsProps | CardDetailsProps[] | number;
 }
