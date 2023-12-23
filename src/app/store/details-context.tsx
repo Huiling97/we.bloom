@@ -9,6 +9,7 @@ const DetailsContext = createContext<DetailsContextProps>({
   details: [],
   setDetails: () => {},
   addDetails: () => {},
+  deleteDetails: () => {},
 });
 
 const detailsReducer = (
@@ -20,6 +21,8 @@ const detailsReducer = (
       return action.payload as CardDetailsProps[];
     case 'ADD':
       return [...state, action.payload] as CardDetailsProps[];
+    case 'DELETE':
+      return state.filter((detail) => detail.index !== action.payload);
     default:
       return state;
   }
@@ -36,10 +39,15 @@ const DetailsContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'ADD', payload: detailsData });
   };
 
+  const deleteDetails = (index: number) => {
+    dispatch({ type: 'DELETE', payload: index });
+  };
+
   const value = {
     details: detailsState,
     setDetails: setDetails,
     addDetails: addDetails,
+    deleteDetails: deleteDetails,
   };
 
   return (
