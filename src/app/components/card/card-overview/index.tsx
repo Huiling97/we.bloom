@@ -23,19 +23,26 @@ const displayCategories = (
       {Object.entries(data).map(([key, value]) => {
         const { id, image } = value;
         return (
-          <div key={id} role='listCategories'>
-            <div>{key}</div>
-            <img
-              src={image}
-              alt='category name'
-              className='card-overview-image'
-            />
-            <Button variant='danger' onClick={() => onEditHandler(value)}>
-              Edit
-            </Button>
-            <Button variant='danger' onClick={() => deleteModalHandler(id)}>
-              Delete
-            </Button>
+          <div key={id} role='listCategories' className='card-item-container'>
+            <div className='card-overview-image-container'>
+              <div className='card-overview-title'>{key.toUpperCase()}</div>
+              <img
+                src={image}
+                alt='category name'
+                className='card-overview-image'
+              />
+              <div className='buttons-container'>
+                <Button
+                  variant='secondary'
+                  onClick={() => onEditHandler(value)}
+                >
+                  Edit
+                </Button>
+                <Button variant='danger' onClick={() => deleteModalHandler(id)}>
+                  Delete
+                </Button>
+              </div>
+            </div>
           </div>
         );
       })}
@@ -57,15 +64,20 @@ const displayServiceCards = (
         className='card-overview-detailed-container'
       >
         <CardDetailed name={name} description={description} details={details} />
-        <Button variant='danger' onClick={() => onEditServiceHandler(service)}>
-          Edit
-        </Button>
-        <Button
-          variant='danger'
-          onClick={() => onDeleteServiceHandler(key, id)}
-        >
-          Delete
-        </Button>
+        <div className='buttons-container'>
+          <Button
+            variant='secondary'
+            onClick={() => onEditServiceHandler(service)}
+          >
+            Edit
+          </Button>
+          <Button
+            variant='danger'
+            onClick={() => onDeleteServiceHandler(key, id)}
+          >
+            Delete
+          </Button>
+        </div>
       </div>
     );
   });
@@ -80,7 +92,7 @@ const displayServices = (
     if (value.length !== 0) {
       return (
         <div key={index} role='listServices'>
-          <div className='card-overview-title'>{key}</div>
+          <div className='card-overview-title'>{key.toUpperCase()}</div>
           <div className='card-overview-container'>
             {displayServiceCards(
               key,

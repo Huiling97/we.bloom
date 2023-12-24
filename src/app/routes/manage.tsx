@@ -23,6 +23,7 @@ import { DetailsContext } from '../store/details-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
+import '../assets/style/_button.scss';
 
 const Manage = () => {
   const {
@@ -123,12 +124,14 @@ const Manage = () => {
                 setShowDeleteModal={setShowDeleteModal}
               />
             )}
-            <Button variant='primary' onClick={addCategoryHandler}>
-              Add new category
-            </Button>
-            <Button variant='primary' onClick={addServiceHandler}>
-              Add new service
-            </Button>
+            <div className='buttons-container left'>
+              <Button variant='primary' onClick={addCategoryHandler}>
+                Add new category
+              </Button>
+              <Button variant='primary' onClick={addServiceHandler}>
+                Add new service
+              </Button>
+            </div>
             {activeForm === 'category' && showModal && (
               <ShowModal
                 heading={isEditModal ? 'Edit category' : 'Add new category'}

@@ -28,8 +28,8 @@ describe('displayCategories', () => {
     expect(categoriesArr).toHaveLength(2);
   });
 
-  it('should render component with title', () => {
-    const title = screen.getByText('MockCategory1');
+  it('should render component with uppercase title', () => {
+    const title = screen.getByText('MOCKCATEGORY1');
 
     expect(title).toBeInTheDocument();
   });
@@ -84,8 +84,8 @@ describe('displayServices', () => {
     expect(titles).toHaveLength(2);
   });
 
-  it('should render component with category title', () => {
-    const title = screen.getByText('MockCategory1');
+  it('should render component with uppercase category title', () => {
+    const title = screen.getByText('MOCKCATEGORY1');
 
     expect(title).toBeInTheDocument();
   });

@@ -1,0 +1,16 @@
+@import 'src/app/assets/style/_color.scss';
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .trash-icon {
+    color: $red-color;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .trash-icon:hover {
+    transform: scale(1.2);
+  }
+}
