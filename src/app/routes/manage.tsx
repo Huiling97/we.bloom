@@ -23,7 +23,6 @@ import { DetailsContext } from '../store/details-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
-import '../assets/style/_button.scss';
 
 const Manage = () => {
   const {

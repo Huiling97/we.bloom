@@ -11,7 +11,6 @@ import { DetailsContext } from '../../../../store/details-context.tsx';
 import Form from 'react-bootstrap/Form';
 import { TrashAlt } from 'styled-icons/boxicons-solid';
 import './style.scss';
-import '../../../../assets/style/_icon.scss';
 
 type ServiceDetailsFormProps = {
   id?: string;

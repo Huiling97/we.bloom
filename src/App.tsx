@@ -17,8 +17,6 @@ import NavBar from './app/components/navbar/index.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Manage from './app/routes/manage.tsx';
 
-import './App.scss';
-
 function App() {
   const router = createBrowserRouter([
     {
