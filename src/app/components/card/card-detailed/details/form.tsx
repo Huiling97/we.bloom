@@ -31,8 +31,9 @@ const ServiceDetailsForm = ({
   onDetailsDelete,
 }: ServiceDetailsFormProps): ReactNode => {
   const { isEditModal } = useContext(ModalContext);
-
   const [input, setInput] = useState<CardDetailsProps | undefined>(data);
+
+  const isFirstInput = index === 0;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,14 +87,16 @@ const ServiceDetailsForm = ({
           Please provide a price
         </Form.Control.Feedback>
       </Form.Group>
-      <Button
-        variant='danger'
-        onClick={() => {
-          onDetailsDelete(index);
-        }}
-      >
-        Delete
-      </Button>
+      {!isFirstInput && (
+        <Button
+          variant='danger'
+          onClick={() => {
+            onDetailsDelete(index);
+          }}
+        >
+          Delete
+        </Button>
+      )}
     </div>
   );
 };
