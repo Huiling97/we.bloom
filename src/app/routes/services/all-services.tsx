@@ -1,13 +1,20 @@
+import { useContext } from 'react';
+import { isEmpty } from 'lodash';
+import { CategoriesContext } from '../../store/categories-context';
 import CardGrid from '../../components/card/card-grid';
 import fetchCategoriesData from '../../util/fetch-categories';
 import '../../assets/style/routes/_all-services.scss';
 
 const AllServices = () => {
-  const { isLoading, categories } = fetchCategoriesData();
+  const { categories } = useContext(CategoriesContext);
+
+  if (isEmpty(categories)) {
+    fetchCategoriesData();
+  }
 
   return (
     <div>
-      {isLoading || !categories ? (
+      {isEmpty(categories) ? (
         <p>Loading</p>
       ) : (
         <div>

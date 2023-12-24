@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import {
   type CardServicesProps,
@@ -25,13 +26,8 @@ import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const Manage = () => {
-  const {
-    isLoading: isLoadingCategories,
-    categories,
-    categoryType,
-  } = fetchCategoriesData();
-  const { isLoading: isLoadingServices, services } = fetchServicesData('');
-  const isLoading = isLoadingCategories && isLoadingServices;
+  const { categories, categoryType } = fetchCategoriesData();
+  const { services } = fetchServicesData('');
 
   const { showModal, setShowModal, isEditModal, setIsEditModal } =
     useContext(ModalContext);
@@ -111,7 +107,7 @@ const Manage = () => {
 
   return (
     <div>
-      {isLoading ? (
+      {isEmpty(categories) || isEmpty(services) ? (
         <div>loading</div>
       ) : (
         <div>
