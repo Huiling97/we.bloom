@@ -46,11 +46,11 @@ const DeleteModal = ({
           Would you like to proceed to delete?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={onDeleteCategoryHandler}>
-            Delete
-          </Button>
           <Button variant='primary' onClick={handleClose}>
             Cancel
+          </Button>
+          <Button variant='danger' onClick={onDeleteCategoryHandler}>
+            Delete
           </Button>
         </Modal.Footer>
       </Modal>
