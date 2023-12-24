@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { useDropzone } from 'react-dropzone';
 import AlertDismissible from '../alert';
-
+import { TrashAlt } from 'styled-icons/boxicons-solid';
 import './style.scss';
+import '../../assets/style/_icon.scss';
 
 type DropZoneProps = {
   onAdd: (img: string) => void;
@@ -33,9 +33,11 @@ const DropZone = ({ onAdd }: DropZoneProps) => {
           <br />
           {file.name} - {file.size} bytes
         </div>
-        <Button variant='danger' onClick={deleteHandler}>
-          Delete
-        </Button>
+        <div className='icon-container'>
+          <TrashAlt size='28' className='trash-icon' onClick={deleteHandler}>
+            Delete
+          </TrashAlt>
+        </div>
       </div>
       <img src={`${preview}`} className='preview-image' />
     </div>
