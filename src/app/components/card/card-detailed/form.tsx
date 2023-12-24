@@ -42,6 +42,11 @@ const CardDetailedForm = ({
   const { details, setDetails, addDetails, deleteDetails } =
     useContext(DetailsContext);
 
+  const defaultDetails = {
+    index: 0,
+    duration: '',
+    price: '',
+  };
   const formInput = {
     id: formId,
     category: isEditModal ? service.category : '',
@@ -53,11 +58,7 @@ const CardDetailedForm = ({
   const [formData, setFormData] = useState(
     formInput as CardDetailedFormInputProps
   );
-  const [detailsData, setDetailsData] = useState({
-    index: 0,
-    duration: '',
-    price: '',
-  });
+  const [detailsData, setDetailsData] = useState(defaultDetails);
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
     ReactElement[]
   >([]);
@@ -115,12 +116,15 @@ const CardDetailedForm = ({
       <ServiceDetailsForm
         id={formInput.id}
         index={formIndex}
+        data={defaultDetails}
         onDetailsChange={onDetailsChangeHandler}
         onDetailsDelete={onDetailsDeleteHandler}
       />,
     ]);
 
-    setDetailsData({ index: 0, duration: '', price: '' });
+    const detailsIndex = details.length;
+    addDetails({ index: detailsIndex, duration: '', price: '' });
+    setDetailsData(defaultDetails);
     setIsFormCompleted(false);
   };
 
@@ -143,7 +147,7 @@ const CardDetailedForm = ({
     }
 
     setServices(services);
-    setDetailsData({ index: 0, duration: '', price: '' });
+    setDetailsData(defaultDetails);
 
     setIsFormCompleted(true);
     setValidated(true);
