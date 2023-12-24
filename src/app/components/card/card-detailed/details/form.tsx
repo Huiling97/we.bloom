@@ -9,7 +9,7 @@ import { type CardDetailsProps } from '../../../../types/card';
 import { ModalContext } from '../../../../store/modal-context';
 import { DetailsContext } from '../../../../store/details-context.tsx';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { TrashAlt } from 'styled-icons/boxicons-solid';
 import './style.scss';
 
 type ServiceDetailsFormProps = {
@@ -92,14 +92,17 @@ const ServiceDetailsForm = ({
         </Form.Control.Feedback>
       </Form.Group>
       {enableDeleteBtn && (
-        <Button
-          variant='danger'
-          onClick={() => {
-            onDetailsDelete(index);
-          }}
-        >
-          Delete
-        </Button>
+        <div className='icon-container'>
+          <TrashAlt
+            size='28'
+            className='trash-icon'
+            onClick={() => {
+              onDetailsDelete(index);
+            }}
+          >
+            Delete
+          </TrashAlt>
+        </div>
       )}
     </div>
   );
