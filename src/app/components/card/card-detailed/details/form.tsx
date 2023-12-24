@@ -17,7 +17,8 @@ type ServiceDetailsFormProps = {
   data?: CardDetailsProps;
   onDetailsChange: (
     index: number,
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
+    input?: CardDetailsProps
   ) => void;
   onDetailsDelete: (index: number) => void;
 };
@@ -40,11 +41,15 @@ const ServiceDetailsForm = ({
         return { ...prevData, [name]: value };
       }
     });
-    onDetailsChange(index, e);
+    if (input) {
+      onDetailsChange(index, e, input);
+    } else {
+      onDetailsChange(index, e);
+    }
   };
 
   useEffect(() => {
-    if (isEditModal) {
+    if (isEditModal && data?.duration && data?.price) {
       setInput(data);
     }
   }, [data]);
