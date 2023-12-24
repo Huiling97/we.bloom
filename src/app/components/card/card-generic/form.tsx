@@ -6,9 +6,9 @@ import { CategoriesContext } from '../../../store/categories-context';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import DropZone from '../../dropzone';
-
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
+import '../../../assets/style/_button.scss';
 
 const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
   const formInput = {
@@ -91,9 +91,11 @@ const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
       <Form.Group controlId='image'>
         <DropZone onAdd={onAddHandler} />
       </Form.Group>
-      <Button variant='primary' type='submit'>
-        Add
-      </Button>
+      <div className='buttons-container'>
+        <Button variant='primary' type='submit'>
+          Add
+        </Button>
+      </div>
     </Form>
   );
 };
