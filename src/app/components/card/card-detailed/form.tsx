@@ -66,6 +66,7 @@ const CardDetailedForm = ({
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
+  const [enableAddDetailsBtn, setEnableAddDetailsBtn] = useState(false);
 
   const onDropdownChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setDropdownOption(e.target.value);
@@ -99,10 +100,11 @@ const CardDetailedForm = ({
   };
 
   const onDetailsDeleteHandler = (index: number) => {
-    setAdditionalDetailsForm((prevForm) =>
-      prevForm.filter((form) => form.props.index !== index)
-    );
+    setAdditionalDetailsForm((prevForm) => {
+      return prevForm.filter((form) => form.props.index !== index);
+    });
 
+    setEnableAddDetailsBtn(true);
     deleteDetails(index);
   };
 
@@ -118,6 +120,7 @@ const CardDetailedForm = ({
       />,
     ]);
 
+    setDetailsData({ index: 0, duration: '', price: '' });
     setIsFormCompleted(false);
   };
 
@@ -161,8 +164,10 @@ const CardDetailedForm = ({
         setDetailsData(detailsData);
       } else {
         addDetails(detailsData as CardDetailsProps);
-        setDetailsData({ index: 0, duration: '', price: '' });
       }
+      setEnableAddDetailsBtn(true);
+    } else {
+      setEnableAddDetailsBtn(false);
     }
   }, [detailsData]);
 
@@ -189,6 +194,7 @@ const CardDetailedForm = ({
           />
         );
       });
+      setEnableAddDetailsBtn(true);
     }
     setAdditionalDetailsForm((prevForm) => [...prevForm, ...formsToAdd]);
   }, [isEditModal]);
@@ -284,7 +290,11 @@ const CardDetailedForm = ({
             <div key={index}>{form}</div>
           ))}
       </div>
-      <Button variant='primary' onClick={addDetailsHandler}>
+      <Button
+        variant='primary'
+        disabled={!enableAddDetailsBtn}
+        onClick={addDetailsHandler}
+      >
         Add additional price and duration
       </Button>
       <Button variant='primary' type='submit'>
