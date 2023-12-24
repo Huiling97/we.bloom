@@ -7,6 +7,7 @@ import { type ShowModalProps } from '../../types/modal.ts';
 import Modal from 'react-bootstrap/Modal';
 import { ModalContext } from '../../store/modal-context.tsx';
 import { DetailsContext } from '../../store/details-context.tsx';
+import './style.scss';
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,
@@ -29,7 +30,12 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} role='modal'>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        role='modal'
+        contentClassName='modal-content-container'
+      >
         <Modal.Header closeButton>
           <Modal.Title>{heading}</Modal.Title>
         </Modal.Header>

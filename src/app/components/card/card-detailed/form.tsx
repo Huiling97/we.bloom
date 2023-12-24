@@ -19,6 +19,7 @@ import { ServicesContext } from '../../../store/services-context.tsx';
 import { DetailsContext } from '../../../store/details-context.tsx';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
+import './style.scss';
 
 type CardDetailedFormProps = {
   formId: string;
@@ -42,6 +43,11 @@ const CardDetailedForm = ({
   const { details, setDetails, addDetails, deleteDetails } =
     useContext(DetailsContext);
 
+  const defaultDetails = {
+    index: 0,
+    duration: '',
+    price: '',
+  };
   const formInput = {
     id: formId,
     category: isEditModal ? service.category : '',
@@ -53,11 +59,7 @@ const CardDetailedForm = ({
   const [formData, setFormData] = useState(
     formInput as CardDetailedFormInputProps
   );
-  const [detailsData, setDetailsData] = useState({
-    index: 0,
-    duration: '',
-    price: '',
-  });
+  const [detailsData, setDetailsData] = useState(defaultDetails);
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
     ReactElement[]
   >([]);
@@ -66,6 +68,7 @@ const CardDetailedForm = ({
   const [validated, setValidated] = useState(false);
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
+  const [enableAddDetailsBtn, setEnableAddDetailsBtn] = useState(false);
 
   const onDropdownChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setDropdownOption(e.target.value);
@@ -99,10 +102,11 @@ const CardDetailedForm = ({
   };
 
   const onDetailsDeleteHandler = (index: number) => {
-    setAdditionalDetailsForm((prevForm) =>
-      prevForm.filter((form) => form.props.index !== index)
-    );
+    setAdditionalDetailsForm((prevForm) => {
+      return prevForm.filter((form) => form.props.index !== index);
+    });
 
+    setEnableAddDetailsBtn(true);
     deleteDetails(index);
   };
 
@@ -113,11 +117,15 @@ const CardDetailedForm = ({
       <ServiceDetailsForm
         id={formInput.id}
         index={formIndex}
+        data={defaultDetails}
         onDetailsChange={onDetailsChangeHandler}
         onDetailsDelete={onDetailsDeleteHandler}
       />,
     ]);
 
+    const detailsIndex = details.length;
+    addDetails({ index: detailsIndex, duration: '', price: '' });
+    setDetailsData(defaultDetails);
     setIsFormCompleted(false);
   };
 
@@ -140,7 +148,7 @@ const CardDetailedForm = ({
     }
 
     setServices(services);
-    setDetailsData({ index: 0, duration: '', price: '' });
+    setDetailsData(defaultDetails);
 
     setIsFormCompleted(true);
     setValidated(true);
@@ -161,8 +169,10 @@ const CardDetailedForm = ({
         setDetailsData(detailsData);
       } else {
         addDetails(detailsData as CardDetailsProps);
-        setDetailsData({ index: 0, duration: '', price: '' });
       }
+      setEnableAddDetailsBtn(true);
+    } else {
+      setEnableAddDetailsBtn(false);
     }
   }, [detailsData]);
 
@@ -189,6 +199,7 @@ const CardDetailedForm = ({
           />
         );
       });
+      setEnableAddDetailsBtn(true);
     }
     setAdditionalDetailsForm((prevForm) => [...prevForm, ...formsToAdd]);
   }, [isEditModal]);
@@ -235,61 +246,69 @@ const CardDetailedForm = ({
 
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>
-      <Form.Group controlId='category'>
-        <Form.Label>Select a category:</Form.Label>
-        <Form.Select
-          onChange={onDropdownChangeHandler}
-          value={isEditModal ? service.category : dropdownOption}
-          isInvalid={isDropdownInvalid}
-          disabled={isEditModal}
-        >
-          <option value='' disabled={true}>
-            Open this select menu
-          </option>
-          {displayCategoryOptions(categories)}
-        </Form.Select>
-        <Form.Control.Feedback type='invalid'>
-          Please select a category
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group controlId='name'>
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type='text'
-          name='name'
-          value={formData.name}
-          required
-          onChange={onTextChangeHandler}
-        />
-        <Form.Control.Feedback type='invalid'>
-          Please provide a name
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group controlId='description'>
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          type='text'
-          name='description'
-          value={formData.description}
-          required
-          onChange={onTextChangeHandler}
-        />
-        <Form.Control.Feedback type='invalid'>
-          Please provide a description
-        </Form.Control.Feedback>
-      </Form.Group>
-      <div>
+      <div className='form-container'>
+        <Form.Group controlId='category'>
+          <Form.Label>Select a category:</Form.Label>
+          <Form.Select
+            onChange={onDropdownChangeHandler}
+            value={isEditModal ? service.category : dropdownOption}
+            isInvalid={isDropdownInvalid}
+            disabled={isEditModal}
+          >
+            <option value='' disabled={true}>
+              Open this select menu
+            </option>
+            {displayCategoryOptions(categories)}
+          </Form.Select>
+          <Form.Control.Feedback type='invalid'>
+            Please select a category
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group controlId='name'>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type='text'
+            name='name'
+            value={formData.name}
+            required
+            onChange={onTextChangeHandler}
+          />
+          <Form.Control.Feedback type='invalid'>
+            Please provide a name
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group controlId='description'>
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            type='text'
+            name='description'
+            value={formData.description}
+            required
+            onChange={onTextChangeHandler}
+          />
+          <Form.Control.Feedback type='invalid'>
+            Please provide a description
+          </Form.Control.Feedback>
+        </Form.Group>
+      </div>
+      <div className='additional-details-container'>
         {additionalDetailsForm &&
           additionalDetailsForm.map((form, index) => (
             <div key={index}>{form}</div>
           ))}
       </div>
-      <Button variant='primary' onClick={addDetailsHandler}>
-        Add additional price and duration
-      </Button>
-      <Button variant='primary' type='submit'>
-        Add
-      </Button>
+      <div className='buttons-container'>
+        <Button
+          variant='outline-primary'
+          disabled={!enableAddDetailsBtn}
+          onClick={addDetailsHandler}
+        >
+          Add additional price and duration
+        </Button>
+        <Button variant='primary' type='submit'>
+          {isEditModal ? 'Update' : 'Add'}
+        </Button>
+      </div>
     </Form>
   );
 };

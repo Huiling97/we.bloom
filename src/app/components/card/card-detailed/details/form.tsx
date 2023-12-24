@@ -7,8 +7,9 @@ import {
 } from 'react';
 import { type CardDetailsProps } from '../../../../types/card';
 import { ModalContext } from '../../../../store/modal-context';
+import { DetailsContext } from '../../../../store/details-context.tsx';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { TrashAlt } from 'styled-icons/boxicons-solid';
 import './style.scss';
 
 type ServiceDetailsFormProps = {
@@ -31,8 +32,12 @@ const ServiceDetailsForm = ({
   onDetailsDelete,
 }: ServiceDetailsFormProps): ReactNode => {
   const { isEditModal } = useContext(ModalContext);
-
+  const { details } = useContext(DetailsContext);
   const [input, setInput] = useState<CardDetailsProps | undefined>(data);
+
+  const isFirstInput = index === 0;
+  const isLastInput = index === details.length - 1;
+  const enableDeleteBtn = !isFirstInput && isLastInput;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,14 +91,19 @@ const ServiceDetailsForm = ({
           Please provide a price
         </Form.Control.Feedback>
       </Form.Group>
-      <Button
-        variant='danger'
-        onClick={() => {
-          onDetailsDelete(index);
-        }}
-      >
-        Delete
-      </Button>
+      {enableDeleteBtn && (
+        <div className='icon-container'>
+          <TrashAlt
+            size='28'
+            className='trash-icon'
+            onClick={() => {
+              onDetailsDelete(index);
+            }}
+          >
+            Delete
+          </TrashAlt>
+        </div>
+      )}
     </div>
   );
 };
