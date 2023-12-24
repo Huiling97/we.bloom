@@ -4,34 +4,11 @@ import {
   type CardGenericObjectProps,
 } from '../types/card.ts';
 
-export interface CategoriesContextProps {
-  categories: CardGenericObjectProps;
-  setCategories: (categoriesData: CardGenericObjectProps | null) => void;
-  addCategory: (categoryData: CardGenericObjectProps) => void;
-  updateCategory: (id: string, image: string) => void;
-  deleteCategory: (id: string) => void;
-}
-
-enum CategoryActionType {
-  SET = 'SET',
-  ADD = 'ADD',
-  UPDATE = 'UPDATE',
-  DELETE = 'DELETE',
-}
-
-export interface CategoryActionProps {
-  type: CategoryActionType | string;
-  payload:
-    | CardGenericProps
-    | Partial<CardGenericProps>
-    | CardGenericObjectProps
-    | null;
-}
-
-export interface CategoryUpdatePayload {
-  id: string;
-  image: string;
-}
+import {
+  type CategoriesContextProps,
+  type CategoryActionProps,
+  type CategoryUpdatePayload,
+} from '../types/context/categories.ts';
 
 const CategoriesContext = createContext<CategoriesContextProps>({
   categories: {},

@@ -10,6 +10,17 @@ enum ServiceActionType {
   DELETE = 'DELETE',
 }
 
+export interface ServicesContextProps {
+  services: CardServicesProps;
+  setServices: (servicesData: CardServicesProps) => void;
+  addService: (categoryData: CardDetailedFormInputProps) => void;
+  updateService: (
+    serviceData: CardDetailedFormInputProps,
+    updatedServiceData: CardDetailedFormInputProps
+  ) => void;
+  deleteService: (categoryKey: string, id: string) => void;
+}
+
 export interface ServiceActionProps {
   type: ServiceActionType | string;
   payload:
