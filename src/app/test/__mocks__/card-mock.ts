@@ -12,8 +12,16 @@ export const cardGenericProps: CardGenericProps = {
 };
 
 export const cardGenericArrayProps = {
-  MockCategory1: cardGenericProps,
-  MockCategory2: cardGenericProps,
+  MockCategory1: {
+    id: '123',
+    name: 'Mock Title 1',
+    image: 'mock-image-1',
+  },
+  MockCategory2: {
+    id: '456',
+    name: 'Mock Title 2',
+    image: 'mock-image-2',
+  },
 };
 
 export const cardDetailsProps: CardDetailsProps = {
@@ -23,9 +31,21 @@ export const cardDetailsProps: CardDetailsProps = {
 };
 
 const cardDetailsArrayProps = [
-  cardDetailsProps,
-  cardDetailsProps,
-  cardDetailsProps,
+  {
+    index: 0,
+    duration: '60',
+    price: '85',
+  },
+  {
+    index: 1,
+    duration: '60',
+    price: '85',
+  },
+  {
+    index: 2,
+    duration: '60',
+    price: '85',
+  },
 ];
 
 export const cardDetailedProps: CardDetailedFormInputProps = {
