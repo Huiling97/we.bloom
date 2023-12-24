@@ -1,11 +1,39 @@
 .card-overview-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
-.card-overview-image {
-  width: 20vw;
-  height: 200px;
+.card-item-container {
+  display: flex;
+  flex-direction: column;
+
+  .buttons-container {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-top-left-radius: 10px;
+    padding: 10px;
+  }
+}
+
+.card-overview-image-container {
+  position: relative;
+
+  .card-overview-title {
+    position: absolute;
+    left: 10px;
+  }
+
+  .card-overview-image {
+    width: 20vw;
+    height: 200px;
+  }
 }
 
 .card-overview-detailed-container {
