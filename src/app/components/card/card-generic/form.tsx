@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import DropZone from '../../dropzone';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
-import '../../../assets/style/_button.scss';
 
 const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
   const formInput = {

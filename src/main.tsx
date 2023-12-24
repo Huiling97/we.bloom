@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
-import './index.scss';
+import './app/assets/style/index.scss';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
