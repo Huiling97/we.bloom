@@ -20,7 +20,20 @@ const detailsReducer = (
     case 'SET':
       return action.payload as CardDetailsProps[];
     case 'ADD':
-      return [...state, action.payload] as CardDetailsProps[];
+      const { index, ...otherData } = action.payload as CardDetailsProps;
+
+      const existingDetailIndex = state.findIndex(
+        (detail) => detail.index === index
+      );
+
+      if (existingDetailIndex !== -1) {
+        const updatedState = state.map((detail) =>
+          detail.index === index ? { ...detail, ...otherData } : detail
+        );
+        return updatedState;
+      } else {
+        return [...state, action.payload] as CardDetailsProps[];
+      }
     case 'DELETE':
       return state.filter((detail) => detail.index !== action.payload);
     default:

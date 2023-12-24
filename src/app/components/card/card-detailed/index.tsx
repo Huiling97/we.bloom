@@ -30,7 +30,7 @@ const CardDetailed = ({ name, description, details }: CardDetailedProps) => {
     <div className='card-detailed-container'>
       <div className='card-detailed-title'>{name.toUpperCase()}</div>
       <p className='card-detailed-description'>{description}</p>
-      {displayCardDetails(details)}
+      {details && displayCardDetails(details)}
     </div>
   );
 };

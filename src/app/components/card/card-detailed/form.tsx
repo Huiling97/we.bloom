@@ -81,16 +81,21 @@ const CardDetailedForm = ({
   };
 
   const onDetailsChangeHandler = (
-    index: number,
-    e: ChangeEvent<HTMLInputElement>
+    detailIndex: number,
+    e: ChangeEvent<HTMLInputElement>,
+    input?: CardDetailsProps
   ) => {
     const { value, name } = e.target;
     const updatedData = {
-      index,
+      index: detailIndex,
       [name]: value,
     };
 
-    setDetailsData((prevValue) => ({ ...prevValue, ...updatedData }));
+    if (isEditModal && input?.duration && input?.price) {
+      setDetailsData({ ...input, ...updatedData });
+    } else {
+      setDetailsData((prevValue) => ({ ...prevValue, ...updatedData }));
+    }
   };
 
   const onDetailsDeleteHandler = (index: number) => {
@@ -151,8 +156,13 @@ const CardDetailedForm = ({
 
   useEffect(() => {
     if (detailsData.duration && detailsData.price) {
-      addDetails(detailsData as CardDetailsProps);
-      setDetailsData({ index: 0, duration: '', price: '' });
+      if (isEditModal) {
+        addDetails(detailsData as CardDetailsProps);
+        setDetailsData(detailsData);
+      } else {
+        addDetails(detailsData as CardDetailsProps);
+        setDetailsData({ index: 0, duration: '', price: '' });
+      }
     }
   }, [detailsData]);
 
