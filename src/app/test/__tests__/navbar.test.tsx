@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar from '../../components/navbar/index.tsx';
+import NavBar, { TABS_LIST } from '../../components/navbar/index.tsx';
 
 window.matchMedia = jest.fn().mockImplementation(() => ({
   matches: false,
@@ -16,6 +16,7 @@ describe('NavBar', () => {
       </BrowserRouter>
     );
   });
+
   it('should render as many tabs as provided in the TABS_LIST', () => {
     const homeLink = screen.getByText('HOME');
     const servicesLink = screen.getByText('SERVICES');
@@ -25,18 +26,30 @@ describe('NavBar', () => {
     expect(homeLink).toBeInTheDocument();
     expect(servicesLink).toBeInTheDocument();
     expect(contactLink).toBeInTheDocument();
-    expect(linkElements).toHaveLength(3);
+    expect(linkElements).toHaveLength(Object.keys(TABS_LIST).length);
   });
 
-  it('should open the offcanvas when toggled', () => {
+  it('should open and close the offcanvas when toggled', async () => {
     const menuBtn = screen.getByRole('button', {
       name: 'Toggle navigation',
     });
-
     fireEvent.click(menuBtn);
 
-    const offcanvas = screen.getByRole('dialog');
+    let offcanvas: HTMLElement | null = screen.getByRole('dialog');
 
     expect(offcanvas).toBeInTheDocument();
+
+    const closeBtn = screen.getByRole('button', {
+      name: 'Close',
+    });
+    fireEvent.click(closeBtn);
+
+    await waitFor(
+      () => {
+        offcanvas = screen.queryByRole('dialog');
+        expect(offcanvas).not.toBeInTheDocument();
+      },
+      { timeout: 1000 }
+    );
   });
 });

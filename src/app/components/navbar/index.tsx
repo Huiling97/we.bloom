@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { isMobile } from '../../util/screen-size-helper';
 
-const TABS_LIST = {
+export const TABS_LIST = {
   home: '/',
   services: '/services',
   contact: '/contact',
