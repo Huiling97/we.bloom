@@ -137,7 +137,6 @@ const Manage = () => {
                 heading={isEditModal ? 'Edit category' : 'Add new category'}
                 form={CardGenericForm}
                 show={showModal}
-                isEditing={isEditModal}
                 catgeoryData={catgeoryData}
               />
             )}
@@ -147,7 +146,6 @@ const Manage = () => {
                 form={CardDetailedForm}
                 formId={formId}
                 show={showModal}
-                isEditing={isEditModal}
                 categories={categoryType}
                 service={serviceData as CardDetailedFormInputProps}
               />

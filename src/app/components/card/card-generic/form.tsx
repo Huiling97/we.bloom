@@ -9,19 +9,20 @@ import DropZone from '../../dropzone';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
 
-const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
+const CardGenericForm = ({ catgeoryData }: CardGenericFormProps) => {
+  const categoriesCtx = useContext(CategoriesContext);
+  const { isEditModal, setShowModal, isFormCompleted, setIsFormCompleted } =
+    useContext(ModalContext);
+
   const formInput = {
     id: uuidv4(),
-    name: isEditing ? catgeoryData.name : '',
+    name: isEditModal ? catgeoryData.name : '',
     image: '',
   };
 
-  const categoriesCtx = useContext(CategoriesContext);
-  const { setShowModal, isFormCompleted, setIsFormCompleted } =
-    useContext(ModalContext);
-
   const [formData, setFormData] = useState(formInput);
   const [validated, setValidated] = useState(false);
+  const [hasNoImage, setHasNoImage] = useState(true);
 
   const onChangeHandler = (e: FormEvent) => {
     const { name, value } = e.target as HTMLInputElement;
@@ -37,7 +38,7 @@ const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
       image: img,
     }));
 
-    if (isEditing) {
+    if (isEditModal) {
       const { id } = catgeoryData;
       categoriesCtx.updateCategory(id, img);
     }
@@ -46,7 +47,7 @@ const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false && !hasNoImage) {
       e.stopPropagation();
       setValidated(true);
       return;
@@ -81,18 +82,19 @@ const CardGenericForm = ({ isEditing, catgeoryData }: CardGenericFormProps) => {
           value={formData.name}
           required
           onChange={onChangeHandler}
-          disabled={isEditing}
+          disabled={isEditModal}
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a name
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId='image'>
-        <DropZone onAdd={onAddHandler} />
+        <DropZone onAdd={onAddHandler} setHasNoImage={setHasNoImage} />
+        {!hasNoImage && <div className='error'>Please upload an image</div>}
       </Form.Group>
       <div className='buttons-container'>
         <Button variant='primary' type='submit'>
-          Add
+          {isEditModal ? 'Update' : 'Add'}
         </Button>
       </div>
     </Form>

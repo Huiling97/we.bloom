@@ -1,19 +1,22 @@
+import { Dispatch, type SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
 import { useDropzone } from 'react-dropzone';
 import AlertDismissible from '../alert';
 import { TrashAlt } from 'styled-icons/boxicons-solid';
-import './style.scss';
 
 type DropZoneProps = {
   onAdd: (img: string) => void;
+  setHasNoImage: Dispatch<SetStateAction<boolean>>;
 };
 
-const DropZone = ({ onAdd }: DropZoneProps) => {
+const DropZone = ({ onAdd, setHasNoImage }: DropZoneProps) => {
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
     useDropzone({
       maxFiles: 1,
       accept: {
         'image/jpeg': [],
+        'image/jpg': [],
         'image/png': [],
       },
     });
@@ -21,7 +24,8 @@ const DropZone = ({ onAdd }: DropZoneProps) => {
   const [preview, setPreview] = useState<string | null>(null);
 
   const deleteHandler = () => {
-    setFiles((prevFile) => prevFile.filter((file) => prevFile[0] !== file));
+    setFiles([]);
+    setHasNoImage(false);
   };
 
   const acceptedFileItems = acceptedFiles.map((file) => (
@@ -63,16 +67,16 @@ const DropZone = ({ onAdd }: DropZoneProps) => {
 
   return (
     <div className='dropzone-container'>
-      {!hasFileItems && (
+      {isEmpty(files) && (
         <section>
           <AlertDismissible
-            text='Only *.jpeg and *.png images will be accepted'
+            text='Only *.jpeg, *.jpg and *.png images will be accepted'
             showAlert={isFileRejected}
           />
           <div {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
             <p>Drag 'n' drop an image here, or click to select an image</p>
-            <em>(Only *.jpeg and *.png images will be accepted)</em>
+            <em>(Only *.jpeg, *.jpg and *.png images will be accepted)</em>
           </div>
         </section>
       )}
