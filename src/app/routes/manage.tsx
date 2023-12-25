@@ -26,8 +26,14 @@ import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const Manage = () => {
-  const { categories, categoryType } = fetchCategoriesData();
-  const { services } = fetchServicesData('');
+  const formId = uuidv4();
+
+  const {
+    isLoading: isLoadingCategories,
+    categories,
+    categoryType,
+  } = fetchCategoriesData();
+  const { isLoading: isLoadingServices, services } = fetchServicesData('');
 
   const { showModal, setShowModal, isEditModal, setIsEditModal } =
     useContext(ModalContext);
@@ -103,11 +109,9 @@ const Manage = () => {
     }
   }, []);
 
-  const formId = uuidv4();
-
   return (
     <div>
-      {isEmpty(categories) || isEmpty(services) ? (
+      {isLoadingCategories || isLoadingServices ? (
         <div>loading</div>
       ) : (
         <div>
@@ -127,6 +131,7 @@ const Manage = () => {
                 Add new service
               </Button>
             </div>
+            {isEmpty(categories) && <div>No data yet</div>}
             {activeForm === 'category' && showModal && (
               <ShowModal
                 heading={isEditModal ? 'Edit category' : 'Add new category'}
