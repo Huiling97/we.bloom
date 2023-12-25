@@ -28,7 +28,7 @@ describe('NavBar', () => {
     expect(linkElements).toHaveLength(3);
   });
 
-  it('opens when toggled', () => {
+  it('should open the offcanvas when toggled', () => {
     const menuBtn = screen.getByRole('button', {
       name: 'Toggle navigation',
     });
