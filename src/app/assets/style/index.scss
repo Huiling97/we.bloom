@@ -4,6 +4,11 @@
 @import 'icon';
 @import 'media-query';
 
+//routes
+@import 'routes/all-services';
+@import 'routes/contact';
+@import 'routes/service';
+
 :root {
   font-family: 'Source Sans 3';
   line-height: 1.5;

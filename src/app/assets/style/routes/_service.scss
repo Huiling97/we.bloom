@@ -1,0 +1,13 @@
+@import 'src/app/assets/style/_color.scss';
+
+.content-container {
+  margin: 0 140px;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  color: $grey-color;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
