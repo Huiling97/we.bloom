@@ -21,48 +21,47 @@ const NavBar = () => {
   const expand = isMobile() ? false : true;
 
   return (
-    <>
-      <Navbar expand={expand} sticky='top'>
-        <Container fluid>
-          <Navbar.Brand href='#'></Navbar.Brand>
-          <Navbar.Toggle
-            aria-controls={`offcanvasNavbar-false-${expand}`}
-            onClick={showHandler}
-          />
-          <Navbar.Offcanvas
-            show={show}
-            onHide={closeHandler}
-            id={`offcanvasNavbar-expand-${expand}`}
-            aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-            placement='end'
-          >
-            <Offcanvas.Header closeButton></Offcanvas.Header>
-            <Offcanvas.Body>
-              <Nav className='justify-content-end flex-grow-1 pe-3'>
-                <div className='navbar-container'>
-                  {Object.entries(TABS_LIST).map(([key, value]) => {
-                    return (
-                      <div
-                        className='navbar-list-item '
-                        key={key}
-                        onClick={closeHandler}
+    <Navbar expand={expand} sticky='top'>
+      <Container fluid>
+        <Navbar.Brand href='#'></Navbar.Brand>
+        <Navbar.Toggle
+          aria-controls={`offcanvasNavbar-false-${expand}`}
+          onClick={showHandler}
+        />
+        <Navbar.Offcanvas
+          show={show}
+          onHide={closeHandler}
+          id={`offcanvasNavbar-expand-${expand}`}
+          aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+          placement='end'
+        >
+          <Offcanvas.Header closeButton></Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className='justify-content-end flex-grow-1 pe-3'>
+              <div className='navbar-container'>
+                {Object.entries(TABS_LIST).map(([key, value]) => {
+                  return (
+                    <div
+                      className='navbar-list-item '
+                      key={key}
+                      onClick={closeHandler}
+                      data-testid='navbar-tab-item'
+                    >
+                      <NavLink
+                        to={`${value}`}
+                        className='navbar-link link-no-decoration'
                       >
-                        <NavLink
-                          to={`${value}`}
-                          className='navbar-link link-no-decoration'
-                        >
-                          {key.toUpperCase()}
-                        </NavLink>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Nav>
-            </Offcanvas.Body>
-          </Navbar.Offcanvas>
-        </Container>
-      </Navbar>
-    </>
+                        {key.toUpperCase()}
+                      </NavLink>
+                    </div>
+                  );
+                })}
+              </div>
+            </Nav>
+          </Offcanvas.Body>
+        </Navbar.Offcanvas>
+      </Container>
+    </Navbar>
   );
 };
 
