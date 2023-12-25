@@ -1,7 +1,6 @@
-@import 'src/app/assets/style/_color.scss';
-@import 'src/app/assets/style/_media-query.scss';
-
 .footer-container {
+  position: absolute;
+  bottom: 0;
   background-color: $grey-light-color;
   color: $grey-medium-dark-color;
   padding: 20px 0 10px 0;

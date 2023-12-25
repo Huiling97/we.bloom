@@ -6,7 +6,9 @@
 
 @import 'carousel';
 @import 'dropzone';
+@import 'footer';
 @import 'navbar';
+@import 'spinner';
 
 //routes
 @import 'routes/all-services';
@@ -24,7 +26,6 @@
 }
 
 .page {
-  width: 96%;
   max-width: 1200px;
   margin: 0 auto;
 

@@ -1,5 +1,3 @@
-import './style.scss';
-
 const Footer = () => {
   return (
     <div className='footer-container'>
