@@ -1,8 +1,39 @@
+@import 'src/app/assets/style/_color.scss';
+@import 'src/app/assets/style/_media-query.scss';
+
 .carousel-container {
   height: 300px;
   width: 80%;
   margin: 0 auto;
   margin-bottom: 25px;
+}
+
+.link-container {
+  background-color: #25d366;
+
+  @include media('>=mobile') {
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  @include media('<=mobile') {
+    width: fit-content;
+    border-radius: 100px;
+    padding: 10px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    text-align: center;
+  }
+}
+
+.link-text {
+  color: $white-color;
+  font-weight: 500;
 }
 
 .carousel-image-container {

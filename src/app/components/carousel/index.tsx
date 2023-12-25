@@ -1,14 +1,13 @@
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
-import './style.scss';
+import { Whatsapp } from '@styled-icons/boxicons-logos';
 
 const CarouselBanner = () => {
   return (
     <div className='carousel-container'>
       <Carousel
         showThumbs={false}
-        autoPlay={true}
+        autoPlay={false}
         showStatus={false}
         infiniteLoop={true}
       >
@@ -23,6 +22,15 @@ const CarouselBanner = () => {
             <p className='text--small'>
               Achieve total well-being and empower yourself today
             </p>
+            <a
+              href='https://wa.me/15551234567'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='link-container link-text link-no-decoration'
+            >
+              <Whatsapp size='28' />
+              Whatsapp Us
+            </a>
           </div>
         </div>
         <div className='carousel-image-container'>
