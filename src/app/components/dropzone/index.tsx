@@ -4,7 +4,6 @@ import { isEmpty } from 'lodash';
 import { useDropzone } from 'react-dropzone';
 import AlertDismissible from '../alert';
 import { TrashAlt } from 'styled-icons/boxicons-solid';
-import './style.scss';
 
 type DropZoneProps = {
   onAdd: (img: string) => void;
