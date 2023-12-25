@@ -68,7 +68,7 @@ describe('ShowModal', () => {
             setIsFormCompleted: setIsFormCompletedMock,
           }}
         >
-          <ShowModal {...formModalProps} show={true} isEditing={false} />
+          <ShowModal {...formModalProps} show={true} />
         </ModalContext.Provider>
       );
 
@@ -85,13 +85,13 @@ describe('ShowModal', () => {
           value={{
             showModal: false,
             setShowModal: setShowModalMock,
-            isEditModal: false,
+            isEditModal: true,
             setIsEditModal: setIsEditModalMock,
             isFormCompleted: true,
             setIsFormCompleted: setIsFormCompletedMock,
           }}
         >
-          <ShowModal {...formModalProps} show={true} isEditing={true} />
+          <ShowModal {...formModalProps} show={true} />
         </ModalContext.Provider>
       );
 
