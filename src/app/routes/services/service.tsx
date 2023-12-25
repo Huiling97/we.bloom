@@ -27,7 +27,7 @@ const Service = () => {
                         Treatments available for all skin types.'
           />
           <div className='content-container'>
-            <Link to={'/services'} className='back-button'>
+            <Link to={'/services'} className='back-button link-no-decoration'>
               <ChevronBack size='28' className='back-button-icon' />
               <div>Back to all services</div>
             </Link>

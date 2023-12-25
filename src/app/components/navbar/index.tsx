@@ -15,7 +15,10 @@ const NavBar = () => {
         {Object.entries(TABS_LIST).map(([key, value]) => {
           return (
             <li className='navbar-list-item' key={key}>
-              <NavLink to={`${value}`} className='navbar-link'>
+              <NavLink
+                to={`${value}`}
+                className='navbar-link link-no-decoration'
+              >
                 {key.toUpperCase()}
               </NavLink>
             </li>
