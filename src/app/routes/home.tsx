@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { isEmpty } from 'lodash';
+import { CategoriesContext } from '../store/categories-context.tsx';
 import CarouselBanner from '../components/carousel/index.tsx';
 import CardGrid from '../components/card/card-grid/index.tsx';
 import CardReview from '../components/card/card-review/index.tsx';
@@ -33,7 +36,11 @@ const REVIEWS_LIST = [
 ];
 
 const Home = () => {
-  const { categories } = fetchCategoriesData();
+  const { categories } = useContext(CategoriesContext);
+
+  if (isEmpty(categories)) {
+    fetchCategoriesData();
+  }
 
   return (
     <div>

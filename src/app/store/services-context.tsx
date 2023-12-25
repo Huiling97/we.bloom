@@ -4,21 +4,11 @@ import {
   type CardDetailedFormInputProps,
 } from '../types/card';
 import {
+  ServicesContextProps,
   ServiceActionProps,
   ServiceUpdatePayload,
   ServiceDeletePayload,
 } from '../types/context/services.ts';
-
-export interface ServicesContextProps {
-  services: CardServicesProps;
-  setServices: (servicesData: CardServicesProps) => void;
-  addService: (categoryData: CardDetailedFormInputProps) => void;
-  updateService: (
-    serviceData: CardDetailedFormInputProps,
-    updatedServiceData: CardDetailedFormInputProps
-  ) => void;
-  deleteService: (categoryKey: string, id: string) => void;
-}
 
 const ServicesContext = createContext<ServicesContextProps>({
   services: {},

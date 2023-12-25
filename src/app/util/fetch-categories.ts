@@ -8,8 +8,6 @@ const fetchCategoriesData = () => {
   const [categoryType, setCategoryType] = useState<string[]>([]);
   const { categories, setCategories } = useContext(CategoriesContext);
 
-  const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const categoriesRef = ref(database, 'categories');
 
@@ -25,15 +23,13 @@ const fetchCategoriesData = () => {
         } else {
           throw new Error('Unable to fetch categories');
         }
-        setIsLoading(false);
       });
     } catch (e) {
-      setIsLoading(false);
       throw new Error('Unable to fetch categories');
     }
   }, []);
 
-  return { isLoading, categories, categoryType };
+  return { categories, categoryType };
 };
 
 export default fetchCategoriesData;

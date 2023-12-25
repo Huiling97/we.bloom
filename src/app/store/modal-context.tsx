@@ -1,19 +1,5 @@
-import {
-  createContext,
-  useState,
-  Dispatch,
-  type ReactNode,
-  type SetStateAction,
-} from 'react';
-
-type ModalContextProps = {
-  showModal: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  isEditModal: boolean;
-  setIsEditModal: Dispatch<SetStateAction<boolean>>;
-  isFormCompleted: boolean;
-  setIsFormCompleted: Dispatch<SetStateAction<boolean>>;
-};
+import { createContext, useState, type ReactNode } from 'react';
+import { ModalContextProps } from '../types/context/modal';
 
 const ModalContext = createContext<ModalContextProps>({
   showModal: false,
