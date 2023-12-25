@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { isEmpty } from 'lodash';
+import LoadingSpinner from '../../components/spinner/index.tsx';
 import { ChevronBack } from 'styled-icons/ionicons-solid';
 import { type CardServicesProps } from '../../types/card.ts';
 import { ServicesContext } from '../../store/services-context.tsx';
@@ -17,7 +18,7 @@ const Service = () => {
   return (
     <div>
       {isEmpty(services) ? (
-        <div>Loading</div>
+        <LoadingSpinner />
       ) : (
         <div>
           <Banner
