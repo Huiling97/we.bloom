@@ -10,7 +10,6 @@ export type ShowModalProps = {
   form: FunctionComponent<FormComponentProps>;
   formId?: string;
   show: boolean;
-  isEditing: boolean;
   catgeoryData?: CardGenericProps;
   categories?: string[];
   service?: CardDetailedFormInputProps;

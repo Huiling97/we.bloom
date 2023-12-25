@@ -14,7 +14,6 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   form: FormComponent,
   formId,
   show,
-  isEditing,
   catgeoryData,
   categories,
   service,
@@ -44,7 +43,6 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
             formId={formId as string}
             categories={categories as string[]}
             service={service as CardDetailedFormInputProps}
-            isEditing={isEditing}
             catgeoryData={catgeoryData as CardGenericProps}
           />
         </Modal.Body>
