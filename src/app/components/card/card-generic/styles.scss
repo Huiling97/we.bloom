@@ -1,3 +1,5 @@
+@import 'src/app/assets/style/_color.scss';
+
 .card-container {
   position: relative;
 }
@@ -28,4 +30,8 @@
   width: 100%;
   height: 100%;
   color: white;
+}
+
+.error {
+  color: $red-color;
 }
