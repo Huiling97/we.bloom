@@ -13,7 +13,7 @@ import CardDetailed from '../card-detailed/index.tsx';
 type CardTypeProps = 'generic' | 'detailed';
 type CardProps<T extends CardTypeProps> = T extends 'generic'
   ? CardGenericObjectProps
-  : CardServicesProps[];
+  : CardServicesProps;
 
 type CardGridProps<T extends CardTypeProps> = {
   type: T;

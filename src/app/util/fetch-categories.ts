@@ -5,6 +5,7 @@ import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const fetchCategoriesData = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [categoryType, setCategoryType] = useState<string[]>([]);
   const { categories, setCategories } = useContext(CategoriesContext);
 
@@ -23,13 +24,15 @@ const fetchCategoriesData = () => {
         } else {
           throw new Error('Unable to fetch categories');
         }
+        setIsLoading(false);
       });
     } catch (e) {
+      setIsLoading(false);
       throw new Error('Unable to fetch categories');
     }
   }, []);
 
-  return { categories, categoryType };
+  return { isLoading, categories, categoryType };
 };
 
 export default fetchCategoriesData;
