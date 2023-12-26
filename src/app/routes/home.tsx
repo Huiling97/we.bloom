@@ -61,6 +61,7 @@ const Home = () => {
               </a>
             </div>
           )}
+          <Separator title='Our Services' />
           <CardGrid type='generic' cards={categories} />
           <Separator title='Review' />
           <CardReview reviews={REVIEWS_LIST} />

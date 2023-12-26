@@ -20,8 +20,10 @@ const AllServices = () => {
         <div>
           <div className='service-title'>SERVICES</div>
           <div className='service-description'>
-            Your one stop beauty salon equipped with both Oriental TCM and
-            Western Technology to bring you the best results
+            Discover the true essence of beauty with our exclusive range of
+            personalized services. From head-turning hair transformations to
+            rejuvenating skin therapies, indulge in a world of bespoke beauty
+            treatments tailored just for you.
           </div>
           <CardGrid type='generic' cards={categories} />
         </div>
