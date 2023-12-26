@@ -7,7 +7,6 @@ import { type ShowModalProps } from '../../types/modal.ts';
 import Modal from 'react-bootstrap/Modal';
 import { ModalContext } from '../../store/modal-context.tsx';
 import { DetailsContext } from '../../store/details-context.tsx';
-import './style.scss';
 
 const ShowModal: FunctionComponent<ShowModalProps> = ({
   heading,

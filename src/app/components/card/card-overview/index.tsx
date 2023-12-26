@@ -6,7 +6,6 @@ import {
   type CardServicesProps,
 } from '../../../types/card.ts';
 import CardDetailed from '../card-detailed/index.tsx';
-import './style.scss';
 
 type onDeleteHandlerProps = (id: string) => void;
 type onDeleteServiceHandlerProps = (key: string, id: string) => void;

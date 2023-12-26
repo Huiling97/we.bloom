@@ -114,55 +114,53 @@ const Manage = () => {
       {isLoadingCategories || isLoadingServices ? (
         <div>loading</div>
       ) : (
-        <div>
-          <div>
-            {showDeleteModal && (
-              <DeleteModal
-                id={deleteCategoryId}
-                showDeleteModal={showDeleteModal}
-                setShowDeleteModal={setShowDeleteModal}
-              />
-            )}
-            <div className='buttons-container left'>
-              <Button variant='primary' onClick={addCategoryHandler}>
-                Add new category
-              </Button>
-              <Button variant='primary' onClick={addServiceHandler}>
-                Add new service
-              </Button>
-            </div>
-            {isEmpty(categories) && <div>No data yet</div>}
-            {activeForm === 'category' && showModal && (
-              <ShowModal
-                heading={isEditModal ? 'Edit category' : 'Add new category'}
-                form={CardGenericForm}
-                show={showModal}
-                catgeoryData={catgeoryData}
-              />
-            )}
-            {activeForm === 'service' && showModal && (
-              <ShowModal
-                heading={isEditModal ? 'Edit service' : 'Add new service'}
-                form={CardDetailedForm}
-                formId={formId}
-                show={showModal}
-                categories={categoryType}
-                service={serviceData as CardDetailedFormInputProps}
-              />
-            )}
-            {categories &&
-              displayCategories(
-                categoriesCtx.categories as CardGenericObjectProps,
-                deleteCategoryModalHandler,
-                onEditCategoryHandler
-              )}
-            {services &&
-              displayServices(
-                services as CardServicesProps,
-                onDeleteServiceHandler,
-                onEditServiceHandler
-              )}
+        <div className='manage-page-container'>
+          {showDeleteModal && (
+            <DeleteModal
+              id={deleteCategoryId}
+              showDeleteModal={showDeleteModal}
+              setShowDeleteModal={setShowDeleteModal}
+            />
+          )}
+          <div className='buttons-container left'>
+            <Button variant='primary' onClick={addCategoryHandler}>
+              Add new category
+            </Button>
+            <Button variant='primary' onClick={addServiceHandler}>
+              Add new service
+            </Button>
           </div>
+          {isEmpty(categories) && <div>No data yet</div>}
+          {activeForm === 'category' && showModal && (
+            <ShowModal
+              heading={isEditModal ? 'Edit category' : 'Add new category'}
+              form={CardGenericForm}
+              show={showModal}
+              catgeoryData={catgeoryData}
+            />
+          )}
+          {activeForm === 'service' && showModal && (
+            <ShowModal
+              heading={isEditModal ? 'Edit service' : 'Add new service'}
+              form={CardDetailedForm}
+              formId={formId}
+              show={showModal}
+              categories={categoryType}
+              service={serviceData as CardDetailedFormInputProps}
+            />
+          )}
+          {categories &&
+            displayCategories(
+              categoriesCtx.categories as CardGenericObjectProps,
+              deleteCategoryModalHandler,
+              onEditCategoryHandler
+            )}
+          {services &&
+            displayServices(
+              services as CardServicesProps,
+              onDeleteServiceHandler,
+              onEditServiceHandler
+            )}
         </div>
       )}
     </div>

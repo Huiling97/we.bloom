@@ -10,7 +10,6 @@ import { ModalContext } from '../../../../store/modal-context';
 import { DetailsContext } from '../../../../store/details-context.tsx';
 import Form from 'react-bootstrap/Form';
 import { TrashAlt } from 'styled-icons/boxicons-solid';
-import './style.scss';
 
 type ServiceDetailsFormProps = {
   id?: string;
