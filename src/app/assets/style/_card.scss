@@ -1,0 +1,63 @@
+// card grid
+.grid-container {
+  display: flex;
+  justify-content: center;
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+
+  @include media('<=mobile') {
+    grid-template-columns: 1fr;
+    margin: 0 40px;
+  }
+}
+
+// card review
+.slider-container {
+  width: 65vw;
+  margin: 20px auto;
+}
+
+.card-review-container {
+  color: $grey-dark-color;
+  width: 80%;
+  margin: 0 auto;
+  max-height: 600px;
+  background-color: white;
+  border: $grey-light-color 1px solid;
+  border-radius: 5px;
+
+  .card-review-header {
+    background-color: $secondary-light-color;
+    padding: 20px;
+
+    .card-review-title {
+      font-size: 24px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .card-review-user {
+      text-align: right;
+    }
+  }
+
+  .card-review-description {
+    color: $grey-medium-dark-color;
+    text-align: center;
+    padding: 25px 35px;
+  }
+}
+
+.slick-next::before {
+  content: '>';
+  color: $grey-medium-dark-color;
+}
+
+.slick-prev:before {
+  content: '<';
+  color: $grey-medium-dark-color;
+}
