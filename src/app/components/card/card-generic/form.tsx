@@ -18,6 +18,7 @@ const CardGenericForm = ({ catgeoryData }: CardGenericFormProps) => {
     id: uuidv4(),
     name: isEditModal ? catgeoryData.name : '',
     image: '',
+    description: isEditModal ? catgeoryData.description : '',
   };
 
   const [formData, setFormData] = useState(formInput);
@@ -62,9 +63,10 @@ const CardGenericForm = ({ catgeoryData }: CardGenericFormProps) => {
       id: formData.id,
       name: formData.name,
       image: formData.image,
+      description: formData.description,
     };
 
-    if ((formData.name, formData.image)) {
+    if (formData.name && formData.description && formData.image) {
       categoriesCtx.addCategory({ [formData.name]: data });
       set(ref(database, 'categories/' + formData.name), data);
       setShowModal(false);
@@ -83,6 +85,19 @@ const CardGenericForm = ({ catgeoryData }: CardGenericFormProps) => {
           required
           onChange={onChangeHandler}
           disabled={isEditModal}
+        />
+        <Form.Control.Feedback type='invalid'>
+          Please provide a name
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId='description'>
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          type='text'
+          name='description'
+          value={formData.description}
+          required
+          onChange={onChangeHandler}
         />
         <Form.Control.Feedback type='invalid'>
           Please provide a name
