@@ -26,7 +26,7 @@ const Service = () => {
       ) : (
         <div>
           <Banner
-            image={`/src/app/assets/images/${id}.jpg`}
+            image={`${categories[id!].image}`}
             title={`${id?.toUpperCase()}`}
             description={`${categories[id!].description}`}
           />
