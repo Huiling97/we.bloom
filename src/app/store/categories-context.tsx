@@ -31,6 +31,7 @@ const categoriesReducer = (state: {}, action: CategoryActionProps) => {
         (category) => (category as CardGenericProps).id === id
       ) as CardGenericProps;
       editedCategory.image = image;
+      return { ...state };
     case 'DELETE':
       const categories = Object.values(state);
       return categories.filter(
