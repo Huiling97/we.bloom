@@ -4,15 +4,19 @@ import { isEmpty } from 'lodash';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 import { ChevronBack } from 'styled-icons/ionicons-solid';
 import { type CardServicesProps } from '../../types/card.ts';
+import { CategoriesContext } from '../../store/categories-context.tsx';
 import { ServicesContext } from '../../store/services-context.tsx';
 import fetchServicesData from '../../util/fetch-services.ts';
 import Banner from '../../components/banner/index.tsx';
 import CardGrid from '../../components/card/card-grid/index.tsx';
+import fetchCategoriesData from '../../util/fetch-categories.ts';
 
 const Service = () => {
   const { id } = useParams();
+  const { categories } = useContext(CategoriesContext);
   const { services } = useContext(ServicesContext);
 
+  fetchCategoriesData();
   fetchServicesData(`${id}`);
 
   return (
@@ -24,8 +28,7 @@ const Service = () => {
           <Banner
             image={`/src/app/assets/images/${id}.jpg`}
             title={`${id?.toUpperCase()}`}
-            description='Equipped with the latest technology and only using the quality products from Germany, achieve healthy, elastic, wrinkle-free and young-looking skin for yourself. 
-                        Treatments available for all skin types.'
+            description={`${categories[id!].description}`}
           />
           <div className='content-container'>
             <Link to={'/services'} className='back-button link-no-decoration'>
