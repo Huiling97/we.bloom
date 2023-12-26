@@ -15,6 +15,65 @@
   }
 }
 
+// card service
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.additional-details-container {
+  margin: 20px 0;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.card-detailed-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ede0df;
+  color: $grey-color;
+  border: $grey-medium-light-color 1px solid;
+  padding: 20px 25px;
+  margin-bottom: 10px;
+}
+
+.card-detailed-title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.card-detailed-description {
+  margin: 10px 0;
+  height: 200px;
+}
+
+.card-details-item {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-bottom: 5px;
+
+  .price-details {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+.service-details-container {
+  display: flex;
+  gap: 16px;
+}
+
 // card review
 .slider-container {
   width: 65vw;
