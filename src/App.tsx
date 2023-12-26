@@ -42,7 +42,12 @@ function App() {
         },
         {
           path: ':id',
-          element: <Service />,
+          element: (
+            <div>
+              <Service />
+              <Footer />
+            </div>
+          ),
         },
       ],
     },
