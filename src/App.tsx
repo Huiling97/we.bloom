@@ -33,7 +33,6 @@ function App() {
         <div>
           <NavBar />
           <DisplayServices />
-          <Footer />
         </div>
       ),
       children: [

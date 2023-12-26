@@ -1,5 +1,4 @@
 import { type BannerProps } from '../../types/banner.ts';
-import './style.scss';
 
 const Banner = ({ image, title, description }: BannerProps) => {
   return (

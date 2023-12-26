@@ -6,8 +6,6 @@ import {
   type CardDetailedFormInputProps,
 } from '../../../types/card.ts';
 import CardGeneric from '../card-generic/index.tsx';
-
-import './style.scss';
 import CardDetailed from '../card-detailed/index.tsx';
 
 type CardTypeProps = 'generic' | 'detailed';
@@ -26,28 +24,30 @@ const CardGrid = <T extends CardTypeProps>({
 }: CardGridProps<T>): ReactNode => {
   return (
     <div className='grid-container'>
-      {Object.entries(cards as CardProps<T>).map(([key, value], index) => {
-        if (type === 'detailed') {
-          const { name, description, details } =
-            value as CardDetailedFormInputProps;
+      <div className='grid-list'>
+        {Object.entries(cards as CardProps<T>).map(([key, value], index) => {
+          if (type === 'detailed') {
+            const { name, description, details } =
+              value as CardDetailedFormInputProps;
+            return (
+              <CardDetailed
+                key={index}
+                name={name}
+                description={description}
+                details={details}
+              />
+            );
+          }
           return (
-            <CardDetailed
+            <CardGeneric
               key={index}
-              name={name}
-              description={description}
-              details={details}
+              id={(value as CardGenericProps).id}
+              name={key}
+              image={(value as CardGenericProps).image}
             />
           );
-        }
-        return (
-          <CardGeneric
-            key={index}
-            id={(value as CardGenericProps).id}
-            name={key}
-            image={(value as CardGenericProps).image}
-          />
-        );
-      })}
+        })}
+      </div>
     </div>
   );
 };

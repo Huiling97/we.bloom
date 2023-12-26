@@ -4,10 +4,13 @@
 @import 'icon';
 @import 'media-query';
 
+@import 'banner';
+@import 'card';
 @import 'carousel';
 @import 'dropzone';
 @import 'footer';
 @import 'navbar';
+@import 'separator';
 @import 'spinner';
 
 //routes
@@ -26,8 +29,13 @@
 }
 
 .page {
+  display: flex;
+  flex-direction: column;
+  background-color: $primary-light-color;
+  min-height: 100vh;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 10px;
 
   @include media('<=mobile') {
     width: 100%;
