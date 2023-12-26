@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { isEmpty } from 'lodash';
+import LoadingSpinner from '../components/spinner/index.tsx';
 import { Whatsapp } from '@styled-icons/boxicons-logos';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import CarouselBanner from '../components/carousel/index.tsx';
@@ -45,20 +46,26 @@ const Home = () => {
 
   return (
     <div>
-      {!isMobile() && <CarouselBanner />}
-      {isMobile() && (
-        <div className='link-container'>
-          <a
-            href='https://wa.me/15551234567'
-            className='link-text link-no-decoration'
-          >
-            <Whatsapp size='28' />
-          </a>
+      {isEmpty(categories) ? (
+        <LoadingSpinner />
+      ) : (
+        <div>
+          {!isMobile() && <CarouselBanner />}
+          {isMobile() && (
+            <div className='link-container'>
+              <a
+                href='https://wa.me/15551234567'
+                className='link-text link-no-decoration'
+              >
+                <Whatsapp size='28' />
+              </a>
+            </div>
+          )}
+          <CardGrid type='generic' cards={categories} />
+          <Separator title='Review' />
+          <CardReview reviews={REVIEWS_LIST} />
         </div>
       )}
-      <CardGrid type='generic' cards={categories} />
-      <Separator title='Review' />
-      <CardReview reviews={REVIEWS_LIST} />
     </div>
   );
 };
