@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { type ReactNode } from 'react';
 import { type CardGenericProps } from '../../../types/card';
-import './styles.scss';
 
 const CardGeneric = ({ name, image }: CardGenericProps): ReactNode => {
   return (

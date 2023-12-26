@@ -19,7 +19,6 @@ import { ServicesContext } from '../../../store/services-context.tsx';
 import { DetailsContext } from '../../../store/details-context.tsx';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../../main';
-import './style.scss';
 
 type CardDetailedFormProps = {
   formId: string;
