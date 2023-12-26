@@ -11,7 +11,7 @@
 .footer-details-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  padding-left: 20px;
+  padding: 0 10px;
 
   @include media('<=mobile') {
     display: flex;
