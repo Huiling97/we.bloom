@@ -1,3 +1,5 @@
+@import 'src/app/assets/style/_color.scss';
+
 .buttons-container {
   display: flex;
   justify-content: flex-end;
@@ -7,4 +9,8 @@
     justify-content: flex-start;
     margin: 20px 0;
   }
+}
+
+.button-white {
+  color: $white-color;
 }
