@@ -10,7 +10,7 @@ const Contact = () => {
     <div>
       <div>
         <Banner
-          image='/src/app/assets/images/contact.jpg'
+          image='contact.jpg'
           title='Contact Us'
           description='General enquiries and Booking of appointments '
         />

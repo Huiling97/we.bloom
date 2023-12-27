@@ -13,7 +13,7 @@ const CarouselBanner = () => {
       >
         <div className='carousel-image-container'>
           <div className='image-overlay'></div>
-          <img src='src/app/assets/images/image1.jpg' className='image' />
+          <img src='image1.jpg' className='image' />
           <div className='text'>
             <p className='text--large'>
               There is beauty in everyone,<br></br>
@@ -35,7 +35,7 @@ const CarouselBanner = () => {
         </div>
         <div className='carousel-image-container'>
           <div className='image-overlay'></div>
-          <img src='src/app/assets/images/image2.jpg' className='image' />
+          <img src='image2.jpg' className='image' />
           <div className='text'>
             <p className='text--large'>Indulge in Relaxation</p>
             <p className='text--small'>
@@ -46,7 +46,7 @@ const CarouselBanner = () => {
         </div>
         <div className='carousel-image-container'>
           <div className='image-overlay'></div>
-          <img src='src/app/assets/images/image3.jpg' className='image' />
+          <img src='image3.jpg' className='image' />
           <div className='text'>
             <p className='text--large'>Revitalize Your Hair</p>
             <p className='text--small'>
@@ -56,7 +56,7 @@ const CarouselBanner = () => {
         </div>
         <div className='carousel-image-container'>
           <div className='image-overlay'></div>
-          <img src='src/app/assets/images/image4.jpg' className='image' />
+          <img src='image4.jpg' className='image' />
           <div className='text'>
             <p className='text--large'>Transform Yourself</p>
             <p className='text--small'>
