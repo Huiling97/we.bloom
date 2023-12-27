@@ -1,8 +1,12 @@
+import { NavLink } from 'react-router-dom';
+
 const Footer = () => {
   return (
     <div className='footer-container'>
       <div className='footer-details-container bottom-padding'>
-        <div></div>
+        <NavLink to='/manage' className='link-no-decoration footer-link'>
+          Admin Login
+        </NavLink>
         <div>
           <div>Blk 203 Hougang Street 21 #01-69 Singapore 530203 </div>
           <div>Whatsapp: +65 6282 1083</div>
