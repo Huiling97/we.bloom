@@ -11,11 +11,7 @@ const Footer = () => {
       <div className='footer-details-container top-padding'>
         <div>Copyright 2023</div>
         <a href='https://google.com' target='_blank' rel='noopener noreferrer'>
-          <img
-            src='/src/app/assets/svg/facebook-logo.svg'
-            alt='facebook'
-            className='footer-logo'
-          />
+          <img src='facebook-logo.svg' alt='facebook' className='footer-logo' />
         </a>
       </div>
     </div>
