@@ -2,6 +2,7 @@
   background-color: $grey-light-color;
   color: $grey-medium-dark-color;
   padding: 20px 0 10px 0;
+  margin-top: auto;
 }
 
 .footer-container > div:first-child {
@@ -28,9 +29,8 @@
 }
 
 .footer-logo {
-  width: 24px;
-  height: 24px;
   margin-right: 50px;
+  color: $grey-medium-dark-color;
 }
 
 .footer-link {

@@ -19,58 +19,53 @@ function App() {
     {
       path: '/',
       element: (
-        <div>
+        <>
           <NavBar />
           <Home />
           <Footer />
-        </div>
+        </>
       ),
       errorElement: <Error />,
     },
     {
       path: '/services',
       element: (
-        <div>
+        <>
           <NavBar />
           <DisplayServices />
-        </div>
+          <Footer />
+        </>
       ),
+      errorElement: <Error />,
       children: [
         {
           path: '',
           element: <AllServices />,
-          errorElement: <Error />,
         },
         {
           path: ':id',
-          element: (
-            <div>
-              <Service />
-              <Footer />
-            </div>
-          ),
-          errorElement: <Error />,
+          element: <Service />,
         },
       ],
     },
     {
       path: '/contact',
       element: (
-        <div>
+        <>
           <NavBar />
           <Contact />
           <Footer />
-        </div>
+        </>
       ),
       errorElement: <Error />,
     },
     {
       path: '/manage',
       element: (
-        <div>
+        <>
           <NavBar />
           <Manage />
-        </div>
+        </>
       ),
     },
   ]);
