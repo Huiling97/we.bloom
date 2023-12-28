@@ -1,3 +1,30 @@
+export const REVIEWS_LIST = [
+  {
+    title: 'My skin is finally able to breathe again',
+    description:
+      'I have sensitive skin and the beautician Jean has been very detailed about my facial service, every session was very skilful and relaxing for me. Overall, I received professional services and would recommend Xiu House! ',
+    user: 'April',
+  },
+  {
+    title: 'Absolutely thrilled with my experience at this beauty shop!',
+    description:
+      'The staff was incredibly knowledgeable and friendly, guiding me through a personalized skincare routine that has truly transformed my complexion. The serene atmosphere and top-notch service made me feel pampered and rejuvenated. Highly recommended!',
+    user: 'Joan',
+  },
+  {
+    title: 'Detailed service and kind staffs',
+    description:
+      'I have finally found my hair sanctuary! The hairstylists at this beauty shop are true artists. They took the time to understand my vision and transformed my hair into a masterpiece.',
+    user: 'Madeline',
+  },
+  {
+    title: 'Game changer',
+    description:
+      'The tranquil ambiance and skilled therapists make it my go-to place for relaxation and self-care. The trendy vibe and friendly staff make every visit an enjoyable experience. My go to place for a good service.',
+    user: 'Alicia',
+  },
+];
+
 export const PROTECTED_CATEGORY_IDS = [
   '88bbfe85-a9ca-4424-a2b8-3487ae933b5e',
   '0bfb209f-fe46-4959-9841-138c3791aa2d',
