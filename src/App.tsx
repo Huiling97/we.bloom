@@ -1,8 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ModalContextProvider } from './app/store/modal-context.tsx';
-import { CategoriesContextProvider } from './app/store/categories-context.tsx';
-import { ServicesContextProvider } from './app/store/services-context.tsx';
-import { DetailsContextProvider } from './app/store/details-context.tsx';
+import AllProviders from './app/store/index.tsx';
 
 import Home from './app/routes/home.tsx';
 import Contact from './app/routes/contact.tsx';
@@ -72,15 +69,9 @@ function App() {
 
   return (
     <div className='page'>
-      <ModalContextProvider>
-        <CategoriesContextProvider>
-          <ServicesContextProvider>
-            <DetailsContextProvider>
-              <RouterProvider router={router} />
-            </DetailsContextProvider>
-          </ServicesContextProvider>
-        </CategoriesContextProvider>
-      </ModalContextProvider>
+      <AllProviders>
+        <RouterProvider router={router} />
+      </AllProviders>
     </div>
   );
 }
