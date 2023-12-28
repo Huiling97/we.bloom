@@ -13,3 +13,7 @@ export type FormComponentProps = {
 export type CardGenericFormProps = {
   catgeoryData: CardGenericProps;
 };
+
+export type AuthFormProps = {
+  formId: string;
+};

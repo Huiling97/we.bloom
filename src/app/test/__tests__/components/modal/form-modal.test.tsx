@@ -1,11 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { formModalProps } from '../../__mocks__/modal-mock';
-import ShowModal from '../../../components/modal/form-modal';
-import { ModalContext } from '../../../store/modal-context';
+import { formModalProps } from '../../../__mocks__/modal-mock';
+import ShowModal from '../../../../components/modal/form-modal';
+import { ModalContext } from '../../../../store/modal-context';
 
 describe('ShowModal', () => {
   const setShowModalMock = jest.fn();
   const setIsEditModalMock = jest.fn();
+  const setIsAuthModalMock = jest.fn();
   const setIsFormCompletedMock = jest.fn();
 
   describe('Hide modal', () => {
@@ -17,6 +18,8 @@ describe('ShowModal', () => {
             setShowModal: setShowModalMock,
             isEditModal: false,
             setIsEditModal: setIsEditModalMock,
+            isAuthModal: false,
+            setIsAuthModal: setIsAuthModalMock,
             isFormCompleted: true,
             setIsFormCompleted: setIsFormCompletedMock,
           }}
@@ -34,10 +37,12 @@ describe('ShowModal', () => {
       render(
         <ModalContext.Provider
           value={{
-            showModal: false,
+            showModal: true,
             setShowModal: setShowModalMock,
             isEditModal: false,
             setIsEditModal: setIsEditModalMock,
+            isAuthModal: false,
+            setIsAuthModal: setIsAuthModalMock,
             isFormCompleted: true,
             setIsFormCompleted: setIsFormCompletedMock,
           }}
@@ -64,6 +69,8 @@ describe('ShowModal', () => {
             setShowModal: setShowModalMock,
             isEditModal: false,
             setIsEditModal: setIsEditModalMock,
+            isAuthModal: false,
+            setIsAuthModal: setIsAuthModalMock,
             isFormCompleted: true,
             setIsFormCompleted: setIsFormCompletedMock,
           }}
@@ -87,6 +94,8 @@ describe('ShowModal', () => {
             setShowModal: setShowModalMock,
             isEditModal: true,
             setIsEditModal: setIsEditModalMock,
+            isAuthModal: false,
+            setIsAuthModal: setIsAuthModalMock,
             isFormCompleted: true,
             setIsFormCompleted: setIsFormCompletedMock,
           }}

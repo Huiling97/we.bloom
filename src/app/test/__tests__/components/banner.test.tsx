@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { bannerProps } from '../__mocks__/banner-mock.ts';
-import Banner from '../../components/banner';
+import { bannerProps } from '../../__mocks__/banner-mock.ts';
+import Banner from '../../../components/banner/index.tsx';
 
 describe('Banner', () => {
   it('should render component with image', () => {

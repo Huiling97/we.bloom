@@ -6,6 +6,8 @@ const ModalContext = createContext<ModalContextProps>({
   setShowModal: () => {},
   isEditModal: false,
   setIsEditModal: () => {},
+  isAuthModal: false,
+  setIsAuthModal: () => {},
   isFormCompleted: false,
   setIsFormCompleted: () => {},
 });
@@ -13,6 +15,7 @@ const ModalContext = createContext<ModalContextProps>({
 const ModalContextProvider = ({ children }: { children: ReactNode }) => {
   const [showModal, setShowModal] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
+  const [isAuthModal, setIsAuthModal] = useState(false);
   const [isFormCompleted, setIsFormCompleted] = useState(false);
 
   return (
@@ -22,6 +25,8 @@ const ModalContextProvider = ({ children }: { children: ReactNode }) => {
         setShowModal,
         isEditModal,
         setIsEditModal,
+        isAuthModal,
+        setIsAuthModal,
         isFormCompleted,
         setIsFormCompleted,
       }}

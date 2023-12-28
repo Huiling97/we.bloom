@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Router, BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { cardGenericProps } from '../../__mocks__/card-mock.ts';
-import CardGeneric from '../../../components/card/card-generic/index.tsx';
+import { cardGenericProps } from '../../../__mocks__/card-mock.ts';
+import CardGeneric from '../../../../components/card/card-generic/index.tsx';
 
 describe('CardGeneric', () => {
   it('should render component with title', () => {

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar, { TABS_LIST } from '../../components/navbar/index.tsx';
+import NavBar, { TABS_LIST } from '../../../components/navbar/index.tsx';
 
 window.matchMedia = jest.fn().mockImplementation(() => ({
   matches: false,

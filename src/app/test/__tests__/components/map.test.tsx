@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { cleanup } from '@testing-library/react';
-import Map from '../../components/map';
+import Map from '../../../components/map';
 
 jest.mock('mapbox-gl', () => ({
   Map: jest.fn(() => ({

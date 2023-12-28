@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { cardDetailedProps } from '../../__mocks__/card-mock.ts';
-import CardDetailed from '../../../components/card/card-detailed/index.tsx';
+import { cardDetailedProps } from '../../../__mocks__/card-mock.ts';
+import CardDetailed from '../../../../components/card/card-detailed/index.tsx';
 
 describe('CardDetailed', () => {
   it('should render component with uppercase title', () => {

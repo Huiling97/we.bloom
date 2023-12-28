@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
+import { type AlertDismissibleProps } from '../../types/alert';
 import Alert from 'react-bootstrap/Alert';
-
-type AlertDismissibleProps = {
-  text: string;
-  showAlert: boolean;
-};
 
 function AlertDismissible({ text, showAlert }: AlertDismissibleProps) {
   const [show, setShow] = useState(showAlert);
@@ -16,7 +12,7 @@ function AlertDismissible({ text, showAlert }: AlertDismissibleProps) {
   if (show) {
     return (
       <Alert variant='danger' onClose={() => setShow(false)} dismissible>
-        <p>{text}</p>
+        <div>{text}</div>
       </Alert>
     );
   }

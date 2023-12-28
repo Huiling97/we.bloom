@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { cardDetailsProps } from '../../__mocks__/card-mock.ts';
-import CardDetails from '../../../components/card/card-detailed/details/index.tsx';
+import { cardDetailsProps } from '../../../__mocks__/card-mock.ts';
+import CardDetails from '../../../../components/card/card-detailed/details/index.tsx';
 
 describe('CardDetails', () => {
   it('should render component with duration', () => {

@@ -6,6 +6,7 @@ import {
   type CardServicesProps,
 } from '../../../types/card.ts';
 import CardDetailed from '../card-detailed/index.tsx';
+import { isProtectedService } from '../../../util/auth-helper.ts';
 
 type onDeleteHandlerProps = (id: string) => void;
 type onDeleteServiceHandlerProps = (key: string, id: string) => void;
@@ -57,6 +58,9 @@ const displayServiceCards = (
 ) => {
   return serviceData.map((service, index) => {
     const { id, name, description, details } = service;
+
+    const shouldDisableBtn = isProtectedService(key, id);
+
     return (
       <div
         key={`${name}-${index}`}
@@ -67,12 +71,14 @@ const displayServiceCards = (
           <Button
             variant='secondary'
             onClick={() => onEditServiceHandler(service)}
+            disabled={shouldDisableBtn}
           >
             Edit
           </Button>
           <Button
             variant='danger'
             onClick={() => onDeleteServiceHandler(key, id)}
+            disabled={shouldDisableBtn}
           >
             Delete
           </Button>
