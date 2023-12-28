@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { type CardGenericObjectProps } from '../../types/card';
 import { type DeleteModalProps } from '../../types/modal.ts';
 import { CategoriesContext } from '../../store/categories-context';
+import { getCategoryById } from '../../util/category-helper.ts';
 import { ref, set } from 'firebase/database';
 import { database } from '../../../main.tsx';
 
@@ -16,10 +16,6 @@ const DeleteModal = ({
 
   const handleClose = () => {
     setShowDeleteModal(false);
-  };
-
-  const getCategoryById = (categories: CardGenericObjectProps, id: string) => {
-    return Object.values(categories).find((category) => category.id === id);
   };
 
   const onDeleteCategoryHandler = () => {
