@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Error from '../../../routes/error.tsx';
+import Error from '../../../../routes/error.tsx';
 
 describe('Erorr', () => {
   beforeEach(() => {

@@ -2,11 +2,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   displayCategories,
   displayServices,
-} from '../../../components/card/card-overview/index.tsx';
+} from '../../../../components/card/card-overview/index.tsx';
 import {
   cardGenericArrayProps,
   cardDetailedArrayProps,
-} from '../../__mocks__/card-mock.ts';
+} from '../../../__mocks__/card-mock.ts';
 
 describe('displayCategories', () => {
   const mockOnDeleteHandler = jest.fn();
