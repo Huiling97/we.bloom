@@ -1,11 +1,27 @@
-@import 'src/app/assets/style/_color.scss';
-@import 'src/app/assets/style/_media-query.scss';
+.navbar-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  @include media('>mobile') {
+    margin-left: 31px;
+  }
+}
+
+.navbar-logo {
+  width: 48px;
+}
+
+.logo-text {
+  font-size: 36px;
+  color: $secondary-color;
+}
 
 .navbar {
   padding-top: 0;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1),
     -4px 0 6px -4px rgba(0, 0, 0, 0.1), 4px 0 6px -4px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  background-color: $white-color;
   padding-bottom: 10px;
   margin-bottom: 10px;
 
@@ -18,7 +34,7 @@
 .navbar-container {
   display: flex;
   width: 100%;
-  background-color: #fff;
+  background-color: $white-color;
 
   @include media('>mobile') {
     justify-content: flex-end;

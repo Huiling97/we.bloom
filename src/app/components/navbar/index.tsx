@@ -23,7 +23,16 @@ const NavBar = () => {
   return (
     <Navbar expand={expand} sticky='top'>
       <Container fluid>
-        <Navbar.Brand href='#'></Navbar.Brand>
+        <Navbar.Brand>
+          <NavLink to='/' className='navbar-logo-container link-no-decoration'>
+            <img
+              src='/logo/flower-gold.svg'
+              alt='Logo'
+              className='navbar-logo'
+            />
+            <div className='logo-text'>we.bloom</div>
+          </NavLink>
+        </Navbar.Brand>
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-false-${expand}`}
           onClick={showHandler}
