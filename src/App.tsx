@@ -39,6 +39,7 @@ function App() {
         {
           path: '',
           element: <AllServices />,
+          errorElement: <Error />,
         },
         {
           path: ':id',
@@ -48,6 +49,7 @@ function App() {
               <Footer />
             </div>
           ),
+          errorElement: <Error />,
         },
       ],
     },
@@ -60,10 +62,16 @@ function App() {
           <Footer />
         </div>
       ),
+      errorElement: <Error />,
     },
     {
       path: '/manage',
-      element: <Manage />,
+      element: (
+        <div>
+          <NavBar />
+          <Manage />
+        </div>
+      ),
     },
   ]);
 
