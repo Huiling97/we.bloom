@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { CategoriesContext } from '../../store/categories-context';
 import CardGrid from '../../components/card/card-grid';
 import fetchCategoriesData from '../../util/fetch-categories';
-import '../../assets/style/routes/_all-services.scss';
+import LoadingSpinner from '../../components/spinner/index.tsx';
 
 const AllServices = () => {
   const { categories } = useContext(CategoriesContext);
@@ -15,7 +15,7 @@ const AllServices = () => {
   return (
     <div>
       {isEmpty(categories) ? (
-        <p>Loading</p>
+        <LoadingSpinner />
       ) : (
         <div>
           <div className='service-title'>SERVICES</div>
