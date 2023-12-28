@@ -1,11 +1,18 @@
 import { get } from 'lodash';
-import { PROTECTED_IDS } from './constants.ts';
+import { type ProtectedService } from '../types/util.ts';
+import { PROTECTED_CATEGORY_IDS, PROTECTED_SERVICE_IDS } from './constants.ts';
 
 const users: { [key: string]: string } = {
   [import.meta.env.VITE_LOGIN_USERNAME]: import.meta.env.VITE_LOGIN_PASSWORD,
 };
 
-const isProtectedCategory = (id: string) => PROTECTED_IDS.includes(id);
+const isProtectedCategory = (id: string) => PROTECTED_CATEGORY_IDS.includes(id);
+
+const isProtectedService = (category: string, id: string) => {
+  const selectedCategory: string[] =
+    PROTECTED_SERVICE_IDS[category as ProtectedService];
+  return selectedCategory && selectedCategory.includes(id);
+};
 
 const checkCredentials = (username: string, password: string) => {
   if (users[username]) {
@@ -15,4 +22,4 @@ const checkCredentials = (username: string, password: string) => {
   return false;
 };
 
-export { isProtectedCategory, checkCredentials };
+export { isProtectedCategory, isProtectedService, checkCredentials };
