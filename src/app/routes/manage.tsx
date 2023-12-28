@@ -11,12 +11,14 @@ import DeleteModal from '../components/modal/delete-modal.tsx';
 import ShowModal from '../components/modal/form-modal.tsx';
 import CardGenericForm from '../components/card/card-generic/form.tsx';
 import CardDetailedForm from '../components/card/card-detailed/form.tsx';
+import AuthForm from '../components/form/auth-form.tsx';
 import {
   displayCategories,
   displayServices,
 } from '../components/card/card-overview/index.tsx';
 import fetchCategoriesData from '../util/fetch-categories.ts';
 import fetchServicesData from '../util/fetch-services.ts';
+import { isProtectedCategory } from '../util/auth-helper.ts';
 import { ModalContext } from '../store/modal-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { ServicesContext } from '../store/services-context.tsx';
@@ -35,8 +37,14 @@ const Manage = () => {
   } = fetchCategoriesData();
   const { isLoading: isLoadingServices, services } = fetchServicesData('');
 
-  const { showModal, setShowModal, isEditModal, setIsEditModal } =
-    useContext(ModalContext);
+  const {
+    showModal,
+    setShowModal,
+    isEditModal,
+    setIsEditModal,
+    isAuthModal,
+    setIsAuthModal,
+  } = useContext(ModalContext);
   const categoriesCtx = useContext(CategoriesContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
@@ -58,7 +66,11 @@ const Manage = () => {
   });
 
   const deleteCategoryModalHandler = (id: string) => {
-    setShowDeleteModal(true);
+    if (isProtectedCategory(id)) {
+      setIsAuthModal(true);
+    } else {
+      setShowDeleteModal(true);
+    }
     setDeleteCategoryId(id);
   };
 
@@ -115,13 +127,21 @@ const Manage = () => {
         <div>loading</div>
       ) : (
         <div className='manage-page-container'>
-          {showDeleteModal && (
+          {isAuthModal ? (
+            <ShowModal
+              heading='Please vaildate to continue'
+              form={AuthForm}
+              formId={deleteCategoryId}
+              show={isAuthModal}
+            />
+          ) : (
             <DeleteModal
               id={deleteCategoryId}
               showDeleteModal={showDeleteModal}
               setShowDeleteModal={setShowDeleteModal}
             />
           )}
+
           <div className='buttons-container left'>
             <Button variant='primary' onClick={addCategoryHandler}>
               Add new category
@@ -130,7 +150,9 @@ const Manage = () => {
               Add new service
             </Button>
           </div>
+
           {isEmpty(categories) && <div>No data yet</div>}
+
           {activeForm === 'category' && showModal && (
             <ShowModal
               heading={isEditModal ? 'Edit category' : 'Add new category'}

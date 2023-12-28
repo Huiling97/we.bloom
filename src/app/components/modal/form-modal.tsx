@@ -17,12 +17,14 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
   categories,
   service,
 }: ShowModalProps) => {
-  const { setShowModal, setIsEditModal } = useContext(ModalContext);
+  const { setShowModal, setIsEditModal, setIsAuthModal } =
+    useContext(ModalContext);
   const { setDetails } = useContext(DetailsContext);
 
   const handleClose = () => {
     setIsEditModal(false);
     setShowModal(false);
+    setIsAuthModal(false);
     setDetails([]);
   };
 
