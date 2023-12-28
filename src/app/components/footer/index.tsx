@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { Facebook } from '@styled-icons/fa-brands';
 
 const Footer = () => {
   return (
@@ -14,8 +15,12 @@ const Footer = () => {
       </div>
       <div className='footer-details-container top-padding'>
         <div>Copyright 2023</div>
-        <a href='https://google.com' target='_blank' rel='noopener noreferrer'>
-          <img src='facebook-logo.svg' alt='facebook' className='footer-logo' />
+        <a
+          href='https://facebook.com'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <Facebook size='24' className='footer-logo' />
         </a>
       </div>
     </div>
