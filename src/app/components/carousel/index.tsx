@@ -7,7 +7,7 @@ const CarouselBanner = () => {
     <div className='carousel-container'>
       <Carousel
         showThumbs={false}
-        autoPlay={false}
+        autoPlay={true}
         showStatus={false}
         infiniteLoop={true}
       >
