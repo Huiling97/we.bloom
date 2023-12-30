@@ -4,6 +4,6 @@ const PROTECTED_SERVICE_IDS_PROPS = {
   hair: [],
   'hair removal': [],
   nail: [],
-} as const;
+};
 
 export type ProtectedService = keyof typeof PROTECTED_SERVICE_IDS_PROPS;
