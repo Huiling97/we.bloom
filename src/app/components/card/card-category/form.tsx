@@ -2,14 +2,14 @@ import { useState, useContext, type FormEvent, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { type CardGenericFormProps } from '../../../types/form.ts';
 import { ModalContext } from '../../../store/modal-context.tsx';
-import { CategoriesContext } from '../../../store/categories-context';
+import { CategoriesContext } from '../../../store/categories-context.tsx';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import DropZone from '../../dropzone';
+import DropZone from '../../dropzone/index.tsx';
 import { ref, set } from 'firebase/database';
-import { database } from '../../../../main';
+import { database } from '../../../../main.tsx';
 
-const CardGenericForm = ({ catgeoryData }: CardGenericFormProps) => {
+const CardCategoryForm = ({ catgeoryData }: CardGenericFormProps) => {
   const categoriesCtx = useContext(CategoriesContext);
   const { isEditModal, setShowModal, isFormCompleted, setIsFormCompleted } =
     useContext(ModalContext);
@@ -116,4 +116,4 @@ const CardGenericForm = ({ catgeoryData }: CardGenericFormProps) => {
   );
 };
 
-export default CardGenericForm;
+export default CardCategoryForm;

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { type ReactNode } from 'react';
 import { type CardGenericProps } from '../../../types/card';
 
-const CardGeneric = ({ name, image }: CardGenericProps): ReactNode => {
+const CardCategory = ({ name, image }: CardGenericProps): ReactNode => {
   return (
     <div className='card-container'>
       <Link to={`/services/${name}`}>
@@ -14,4 +14,4 @@ const CardGeneric = ({ name, image }: CardGenericProps): ReactNode => {
   );
 };
 
-export default CardGeneric;
+export default CardCategory;

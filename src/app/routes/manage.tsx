@@ -9,7 +9,7 @@ import {
 } from '../types/card.ts';
 import DeleteModal from '../components/modal/delete-modal.tsx';
 import ShowModal from '../components/modal/form-modal.tsx';
-import CardGenericForm from '../components/card/card-generic/form.tsx';
+import CardCategoryForm from '../components/card/card-category/form.tsx';
 import CardDetailedForm from '../components/card/card-detailed/form.tsx';
 import AuthForm from '../components/form/auth-form.tsx';
 import {
@@ -156,7 +156,7 @@ const Manage = () => {
           {activeForm === 'category' && showModal && (
             <ShowModal
               heading={isEditModal ? 'Edit category' : 'Add new category'}
-              form={CardGenericForm}
+              form={CardCategoryForm}
               show={showModal}
               catgeoryData={catgeoryData}
             />

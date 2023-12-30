@@ -5,7 +5,7 @@ import {
   type CardServicesProps,
   type CardDetailedFormInputProps,
 } from '../../../types/card.ts';
-import CardGeneric from '../card-generic/index.tsx';
+import CardCategory from '../card-category/index.tsx';
 import CardDetailed from '../card-detailed/index.tsx';
 
 type CardTypeProps = 'generic' | 'detailed';
@@ -39,7 +39,7 @@ const CardGrid = <T extends CardTypeProps>({
             );
           }
           return (
-            <CardGeneric
+            <CardCategory
               key={index}
               id={(value as CardGenericProps).id}
               name={key}
