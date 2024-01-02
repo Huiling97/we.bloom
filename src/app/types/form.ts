@@ -1,6 +1,6 @@
 import { type ChangeEvent } from 'react';
 import { type CardCategoryProps } from './card/card-category.ts';
-import { type CardDetailsProps } from './card.ts';
+import { type CardDetailsProps } from './card/card-service-details.ts';
 
 export type FormComponentProps = {
   formId: string;

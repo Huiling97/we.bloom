@@ -1,5 +1,5 @@
 import { createContext, useReducer, type ReactNode } from 'react';
-import { type CardServicesProps } from '../types/card';
+import { type CardServiceObjectProps } from '../types/card/card-service.ts';
 import { type CardServiceFormInputProps } from '../types/form.ts';
 import {
   ServicesContextProps,
@@ -25,7 +25,9 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
     case 'UPDATE':
       let { serviceData, updatedServiceData } =
         action.payload as ServiceUpdatePayload;
-      const serviceList = (state as CardServicesProps)[serviceData.category];
+      const serviceList = (state as CardServiceObjectProps)[
+        serviceData.category
+      ];
       const serviceIndex = serviceList.findIndex(
         (service) => service.id === serviceData.id
       );
@@ -42,7 +44,7 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
       }
     case 'DELETE':
       const { categoryKey, id } = action.payload as ServiceDeletePayload;
-      const categoryServices = (state as CardServicesProps)[categoryKey];
+      const categoryServices = (state as CardServiceObjectProps)[categoryKey];
       if (categoryServices) {
         const updatedServices = categoryServices.filter(
           (service: CardServiceFormInputProps) => service.id !== id
@@ -61,7 +63,7 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
 const ServicesContextProvider = ({ children }: { children: ReactNode }) => {
   const [servicesState, dispatch] = useReducer(servicesReducer, {});
 
-  const setServices = (servicesData: CardServicesProps) => {
+  const setServices = (servicesData: CardServiceObjectProps) => {
     dispatch({ type: 'SET', payload: servicesData });
   };
 

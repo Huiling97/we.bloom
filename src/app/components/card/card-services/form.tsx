@@ -6,7 +6,7 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { type CardDetailsProps } from '../../../types/card.ts';
+import { type CardDetailsProps } from '../../../types/card/card-service-details.ts';
 import {
   type CardServiceFormProps,
   type CardServiceFormInputProps,

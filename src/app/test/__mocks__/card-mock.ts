@@ -1,7 +1,5 @@
-import {
-  type CardDetailsProps,
-  type CardServicesProps,
-} from '../../types/card.ts';
+import { type CardDetailsProps } from '../../types/card/card-service-details.ts';
+import { type CardServiceObjectProps } from '../../types/card/card-service.ts';
 import { type CardServiceFormInputProps } from '../../types/form.ts';
 import { type CardCategoryProps } from '../../types/card/card-category.ts';
 
@@ -56,7 +54,7 @@ export const cardDetailedProps: CardServiceFormInputProps = {
   details: cardDetailsArrayProps,
 };
 
-export const cardDetailedArrayProps: CardServicesProps = {
+export const cardDetailedArrayProps: CardServiceObjectProps = {
   MockCategory1: [cardDetailedProps, cardDetailedProps],
   MockCategory2: [cardDetailedProps],
 };

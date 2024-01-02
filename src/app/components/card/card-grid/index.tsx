@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { type CardServicesProps } from '../../../types/card.ts';
+import { type CardServiceObjectProps } from '../../../types/card/card-service.ts';
 import { type CardServiceFormInputProps } from '../../../types/form.ts';
 import {
   type CardCategoryProps,
@@ -11,7 +11,7 @@ import CardService from '../card-services/index.tsx';
 type CardTypeProps = 'generic' | 'detailed';
 type CardProps<T extends CardTypeProps> = T extends 'generic'
   ? CardCategoryObjectProps
-  : CardServicesProps;
+  : CardServiceObjectProps;
 
 type CardGridProps<T extends CardTypeProps> = {
   type: T;

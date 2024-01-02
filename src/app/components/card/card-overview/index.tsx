@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import { type CardServicesProps } from '../../../types/card.ts';
+import { type CardServiceObjectProps } from '../../../types/card/card-service.ts';
 import { type CardServiceFormInputProps } from '../../../types/form.ts';
 import {
   type CardCategoryProps,
@@ -89,7 +89,7 @@ const displayServiceCards = (
 };
 
 const displayServices = (
-  services: CardServicesProps,
+  services: CardServiceObjectProps,
   onDeleteServiceHandler: onDeleteServiceHandlerProps,
   onEditServiceHandler: onEditServiceHandlerProps
 ) => {

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 import { ChevronBack } from 'styled-icons/ionicons-solid';
-import { type CardServicesProps } from '../../types/card.ts';
+import { type CardServiceObjectProps } from '../../types/card/card-service.ts';
 import { CategoriesContext } from '../../store/categories-context.tsx';
 import { ServicesContext } from '../../store/services-context.tsx';
 import fetchServicesData from '../../util/fetch-services.ts';
@@ -35,7 +35,10 @@ const Service = () => {
               <ChevronBack size='28' className='back-button-icon' />
               <div>Back to all services</div>
             </Link>
-            <CardGrid type='detailed' cards={services as CardServicesProps} />
+            <CardGrid
+              type='detailed'
+              cards={services as CardServiceObjectProps}
+            />
           </div>
         </div>
       )}

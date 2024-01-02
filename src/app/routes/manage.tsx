@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
-import { type CardServicesProps } from '../types/card.ts';
+import { type CardServiceObjectProps } from '../types/card/card-service.ts';
 import { type CardServiceFormInputProps } from '../types/form.ts';
 import {
   type CardCategoryProps,
@@ -179,7 +179,7 @@ const Manage = () => {
             )}
           {services &&
             displayServices(
-              services as CardServicesProps,
+              services as CardServiceObjectProps,
               onDeleteServiceHandler,
               onEditServiceHandler
             )}
