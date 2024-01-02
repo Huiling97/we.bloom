@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
+import { type CardServiceObjectProps } from '../types/card/card-service.ts';
+import { type CardServiceFormInputProps } from '../types/form.ts';
 import {
-  type CardServicesProps,
-  type CardGenericProps,
-  type CardGenericObjectProps,
-  type CardDetailedFormInputProps,
-} from '../types/card.ts';
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../types/card/card-category.ts';
 import DeleteModal from '../components/modal/delete-modal.tsx';
 import ShowModal from '../components/modal/form-modal.tsx';
-import CardGenericForm from '../components/card/card-generic/form.tsx';
-import CardDetailedForm from '../components/card/card-detailed/form.tsx';
+import CardCategoryForm from '../components/card/card-category/form.tsx';
+import CardServiceForm from '../components/card/card-services/form.tsx';
 import AuthForm from '../components/form/auth-form.tsx';
 import {
   displayCategories,
@@ -52,12 +52,12 @@ const Manage = () => {
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeForm, setActiveForm] = useState<string>('');
-  const [catgeoryData, setCategoryData] = useState<CardGenericProps>({
+  const [catgeoryData, setCategoryData] = useState<CardCategoryProps>({
     id: '',
     name: '',
     image: '',
   });
-  const [serviceData, setServiceDate] = useState<CardDetailedFormInputProps>({
+  const [serviceData, setServiceDate] = useState<CardServiceFormInputProps>({
     id: '',
     category: '',
     name: '',
@@ -74,7 +74,7 @@ const Manage = () => {
     setDeleteCategoryId(id);
   };
 
-  const onEditCategoryHandler = (data: CardGenericProps) => {
+  const onEditCategoryHandler = (data: CardCategoryProps) => {
     setIsEditModal(true);
     setActiveForm('category');
     setShowModal(true);
@@ -96,18 +96,18 @@ const Manage = () => {
       servicesCtx.deleteService(categoryKey, id);
       const categoryServices = services[
         categoryKey
-      ] as CardDetailedFormInputProps[];
+      ] as CardServiceFormInputProps[];
 
       if (categoryServices) {
         const remainingServices = categoryServices.filter(
-          (service: CardDetailedFormInputProps) => service.id !== id
+          (service: CardServiceFormInputProps) => service.id !== id
         );
         set(ref(database, 'services/' + categoryKey), remainingServices);
       }
     }
   };
 
-  const onEditServiceHandler = (data: CardDetailedFormInputProps) => {
+  const onEditServiceHandler = (data: CardServiceFormInputProps) => {
     setIsEditModal(true);
     setActiveForm('service');
     setShowModal(true);
@@ -156,7 +156,7 @@ const Manage = () => {
           {activeForm === 'category' && showModal && (
             <ShowModal
               heading={isEditModal ? 'Edit category' : 'Add new category'}
-              form={CardGenericForm}
+              form={CardCategoryForm}
               show={showModal}
               catgeoryData={catgeoryData}
             />
@@ -164,22 +164,22 @@ const Manage = () => {
           {activeForm === 'service' && showModal && (
             <ShowModal
               heading={isEditModal ? 'Edit service' : 'Add new service'}
-              form={CardDetailedForm}
+              form={CardServiceForm}
               formId={formId}
               show={showModal}
               categories={categoryType}
-              service={serviceData as CardDetailedFormInputProps}
+              service={serviceData as CardServiceFormInputProps}
             />
           )}
           {categories &&
             displayCategories(
-              categoriesCtx.categories as CardGenericObjectProps,
+              categoriesCtx.categories as CardCategoryObjectProps,
               deleteCategoryModalHandler,
               onEditCategoryHandler
             )}
           {services &&
             displayServices(
-              services as CardServicesProps,
+              services as CardServiceObjectProps,
               onDeleteServiceHandler,
               onEditServiceHandler
             )}

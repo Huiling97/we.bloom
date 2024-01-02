@@ -1,8 +1,8 @@
 import { createContext, useReducer, type ReactNode } from 'react';
 import {
-  type CardGenericProps,
-  type CardGenericObjectProps,
-} from '../types/card.ts';
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../types/card/card-category.ts';
 
 import {
   type CategoriesContextProps,
@@ -28,14 +28,14 @@ const categoriesReducer = (state: {}, action: CategoryActionProps) => {
       const { id, image } = action.payload as CategoryUpdatePayload;
       const allCategories = Object.values(state);
       let editedCategory = allCategories.find(
-        (category) => (category as CardGenericProps).id === id
-      ) as CardGenericProps;
+        (category) => (category as CardCategoryProps).id === id
+      ) as CardCategoryProps;
       editedCategory.image = image;
       return { ...state };
     case 'DELETE':
       const categories = Object.values(state);
       return categories.filter(
-        (category) => (category as CardGenericProps).id !== action.payload!.id
+        (category) => (category as CardCategoryProps).id !== action.payload!.id
       );
     default:
       return state;
@@ -45,11 +45,11 @@ const categoriesReducer = (state: {}, action: CategoryActionProps) => {
 const CategoriesContextProvider = ({ children }: { children: ReactNode }) => {
   const [categoriesState, dispatch] = useReducer(categoriesReducer, {});
 
-  const setCategories = (categoriesData: CardGenericObjectProps | null) => {
+  const setCategories = (categoriesData: CardCategoryObjectProps | null) => {
     dispatch({ type: 'SET', payload: categoriesData });
   };
 
-  const addCategory = (categoryData: CardGenericObjectProps) => {
+  const addCategory = (categoryData: CardCategoryObjectProps) => {
     dispatch({ type: 'ADD', payload: categoryData });
   };
 

@@ -1,7 +1,7 @@
 import {
-  type CardGenericProps,
-  type CardGenericObjectProps,
-} from '../../types/card.ts';
+  type CardCategoryProps,
+  CardCategoryObjectProps,
+} from '../../types/card/card-category.ts';
 
 enum CategoryActionType {
   SET = 'SET',
@@ -11,9 +11,9 @@ enum CategoryActionType {
 }
 
 export interface CategoriesContextProps {
-  categories: CardGenericObjectProps;
-  setCategories: (categoriesData: CardGenericObjectProps | null) => void;
-  addCategory: (categoryData: CardGenericObjectProps) => void;
+  categories: CardCategoryObjectProps;
+  setCategories: (categoriesData: CardCategoryObjectProps | null) => void;
+  addCategory: (categoryData: CardCategoryObjectProps) => void;
   updateCategory: (id: string, image: string) => void;
   deleteCategory: (id: string) => void;
 }
@@ -21,9 +21,9 @@ export interface CategoriesContextProps {
 export interface CategoryActionProps {
   type: CategoryActionType | string;
   payload:
-    | CardGenericProps
-    | Partial<CardGenericProps>
-    | CardGenericObjectProps
+    | CardCategoryProps
+    | Partial<CardCategoryProps>
+    | CardCategoryObjectProps
     | null;
 }
 

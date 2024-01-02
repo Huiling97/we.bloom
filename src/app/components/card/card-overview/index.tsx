@@ -1,20 +1,20 @@
 import Button from 'react-bootstrap/Button';
+import { type CardServiceObjectProps } from '../../../types/card/card-service.ts';
+import { type CardServiceFormInputProps } from '../../../types/form.ts';
 import {
-  type CardGenericProps,
-  type CardGenericObjectProps,
-  type CardDetailedFormInputProps,
-  type CardServicesProps,
-} from '../../../types/card.ts';
-import CardDetailed from '../card-detailed/index.tsx';
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../../../types/card/card-category.ts';
+import CardService from '../card-services/index.tsx';
 import { isProtectedService } from '../../../util/auth-helper.ts';
 
 type onDeleteHandlerProps = (id: string) => void;
 type onDeleteServiceHandlerProps = (key: string, id: string) => void;
-type onEditHandlerProps = (value: CardGenericProps) => void;
-type onEditServiceHandlerProps = (service: CardDetailedFormInputProps) => void;
+type onEditHandlerProps = (value: CardCategoryProps) => void;
+type onEditServiceHandlerProps = (service: CardServiceFormInputProps) => void;
 
 const displayCategories = (
-  data: CardGenericObjectProps,
+  data: CardCategoryObjectProps,
   deleteModalHandler: onDeleteHandlerProps,
   onEditHandler: onEditHandlerProps
 ) => {
@@ -52,7 +52,7 @@ const displayCategories = (
 
 const displayServiceCards = (
   key: string,
-  serviceData: CardDetailedFormInputProps[],
+  serviceData: CardServiceFormInputProps[],
   onDeleteServiceHandler: onDeleteServiceHandlerProps,
   onEditServiceHandler: onEditServiceHandlerProps
 ) => {
@@ -66,7 +66,7 @@ const displayServiceCards = (
         key={`${name}-${index}`}
         className='card-overview-detailed-container'
       >
-        <CardDetailed name={name} description={description} details={details} />
+        <CardService name={name} description={description} details={details} />
         <div className='buttons-container'>
           <Button
             variant='secondary'
@@ -89,7 +89,7 @@ const displayServiceCards = (
 };
 
 const displayServices = (
-  services: CardServicesProps,
+  services: CardServiceObjectProps,
   onDeleteServiceHandler: onDeleteServiceHandlerProps,
   onEditServiceHandler: onEditServiceHandlerProps
 ) => {

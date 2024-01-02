@@ -1,6 +1,6 @@
-import { type CardGenericObjectProps } from '../types/card.ts';
+import { type CardCategoryObjectProps } from '../types/card/card-category';
 
-const getCategoryById = (categories: CardGenericObjectProps, id: string) => {
+const getCategoryById = (categories: CardCategoryObjectProps, id: string) => {
   return Object.values(categories).find((category) => category.id === id);
 };
 

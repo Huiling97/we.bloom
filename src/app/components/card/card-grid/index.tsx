@@ -1,17 +1,17 @@
 import { type ReactNode } from 'react';
+import { type CardServiceObjectProps } from '../../../types/card/card-service.ts';
+import { type CardServiceFormInputProps } from '../../../types/form.ts';
 import {
-  type CardGenericProps,
-  type CardGenericObjectProps,
-  type CardServicesProps,
-  type CardDetailedFormInputProps,
-} from '../../../types/card.ts';
-import CardGeneric from '../card-generic/index.tsx';
-import CardDetailed from '../card-detailed/index.tsx';
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../../../types/card/card-category.ts';
+import CardCategory from '../card-category/index.tsx';
+import CardService from '../card-services/index.tsx';
 
 type CardTypeProps = 'generic' | 'detailed';
 type CardProps<T extends CardTypeProps> = T extends 'generic'
-  ? CardGenericObjectProps
-  : CardServicesProps;
+  ? CardCategoryObjectProps
+  : CardServiceObjectProps;
 
 type CardGridProps<T extends CardTypeProps> = {
   type: T;
@@ -28,9 +28,9 @@ const CardGrid = <T extends CardTypeProps>({
         {Object.entries(cards as CardProps<T>).map(([key, value], index) => {
           if (type === 'detailed') {
             const { name, description, details } =
-              value as CardDetailedFormInputProps;
+              value as CardServiceFormInputProps;
             return (
-              <CardDetailed
+              <CardService
                 key={index}
                 name={name}
                 description={description}
@@ -39,11 +39,11 @@ const CardGrid = <T extends CardTypeProps>({
             );
           }
           return (
-            <CardGeneric
+            <CardCategory
               key={index}
-              id={(value as CardGenericProps).id}
+              id={(value as CardCategoryProps).id}
               name={key}
-              image={(value as CardGenericProps).image}
+              image={(value as CardCategoryProps).image}
             />
           );
         })}

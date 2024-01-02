@@ -1,7 +1,25 @@
-import { type CardDetailsProps } from '../card.ts';
+export type CardDetailsProps = {
+  index: number;
+  duration: string;
+  price: string;
+};
 
-export type CardServiceDetailsProps = {
-  name: string;
-  description: string;
-  details: CardDetailsProps[];
+type CardDetailsObjectProps = {
+  [details: string]: {
+    info: CardDetailsProps;
+  };
+};
+
+export type CardDetailedProps = {
+  [category: string]: {
+    [service: string]: {
+      title: string;
+      description: string;
+      details: CardDetailsObjectProps;
+    };
+  };
+};
+
+export type DetailsProps = {
+  [id: string]: CardDetailsProps[];
 };

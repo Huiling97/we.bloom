@@ -1,11 +1,9 @@
-import {
-  type CardGenericProps,
-  type CardDetailsProps,
-  type CardDetailedFormInputProps,
-  type CardServicesProps,
-} from '../../types/card.ts';
+import { type CardDetailsProps } from '../../types/card/card-service-details.ts';
+import { type CardServiceObjectProps } from '../../types/card/card-service.ts';
+import { type CardServiceFormInputProps } from '../../types/form.ts';
+import { type CardCategoryProps } from '../../types/card/card-category.ts';
 
-export const cardGenericProps: CardGenericProps = {
+export const cardGenericProps: CardCategoryProps = {
   id: '123',
   name: 'Mock Title',
   image: 'mock-image',
@@ -48,7 +46,7 @@ const cardDetailsArrayProps = [
   },
 ];
 
-export const cardDetailedProps: CardDetailedFormInputProps = {
+export const cardDetailedProps: CardServiceFormInputProps = {
   id: '123',
   category: 'mock category',
   name: 'mock title',
@@ -56,7 +54,7 @@ export const cardDetailedProps: CardDetailedFormInputProps = {
   details: cardDetailsArrayProps,
 };
 
-export const cardDetailedArrayProps: CardServicesProps = {
+export const cardDetailedArrayProps: CardServiceObjectProps = {
   MockCategory1: [cardDetailedProps, cardDetailedProps],
   MockCategory2: [cardDetailedProps],
 };
