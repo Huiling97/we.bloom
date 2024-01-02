@@ -2,11 +2,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   displayCategories,
   displayServices,
-} from '../../../../components/card/card-overview/index.tsx';
+} from '../../../components/tabs/helpers.tsx';
 import {
-  cardGenericArrayProps,
-  cardDetailedArrayProps,
-} from '../../../__mocks__/card-mock.ts';
+  categoryArrayProps,
+  serviceArrayProps,
+} from '../../__mocks__/tabs-mock.ts';
 
 describe('displayCategories', () => {
   const mockOnDeleteHandler = jest.fn();
@@ -15,7 +15,7 @@ describe('displayCategories', () => {
   beforeEach(() => {
     render(
       displayCategories(
-        cardGenericArrayProps,
+        categoryArrayProps,
         mockOnDeleteHandler,
         mockOnEditHandler
       )
@@ -70,7 +70,7 @@ describe('displayServices', () => {
     render(
       <>
         {displayServices(
-          cardDetailedArrayProps,
+          serviceArrayProps,
           mockOnDeleteServiceHandler,
           mockOnEditServiceHandler
         )}
@@ -85,7 +85,7 @@ describe('displayServices', () => {
   });
 
   it('should render component with uppercase category title', () => {
-    const title = screen.getByText('MOCKCATEGORY1');
+    const title = screen.getByText('MOCK TITLE 1');
 
     expect(title).toBeInTheDocument();
   });

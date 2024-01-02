@@ -1,0 +1,45 @@
+.tab-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.list-item-container {
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+  position: relative;
+
+  .buttons-container-fixed {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-top-left-radius: 10px;
+    padding: 10px;
+  }
+}
+
+.service-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-image-container {
+  position: relative;
+
+  .item-title {
+    position: absolute;
+    left: 10px;
+    font-size: 24px;
+  }
+
+  .item-image {
+    width: 20vw;
+    height: 200px;
+  }
+}
