@@ -1,3 +1,5 @@
+import { type CardServiceFormInputProps } from './form.ts';
+
 export interface CardDetailedProps {
   [category: string]: {
     [service: string]: {
@@ -9,7 +11,7 @@ export interface CardDetailedProps {
 }
 
 export interface CardServicesProps {
-  [category: string]: CardDetailedFormInputProps[];
+  [category: string]: CardServiceFormInputProps[];
 }
 
 type CardDetailsObjectProps = {
@@ -22,14 +24,6 @@ export type CardDetailsProps = {
   index: number;
   duration: string;
   price: string;
-};
-
-export type CardDetailedFormInputProps = {
-  id: string;
-  category: string;
-  name: string;
-  description: string;
-  details: CardDetailsProps[];
 };
 
 export type DetailsProps = {

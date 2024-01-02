@@ -1,7 +1,5 @@
-import {
-  type CardDetailedFormInputProps,
-  type CardServicesProps,
-} from '../card.ts';
+import { type CardServicesProps } from '../card.ts';
+import { type CardServiceFormInputProps } from '../form.ts';
 
 enum ServiceActionType {
   SET = 'SET',
@@ -13,10 +11,10 @@ enum ServiceActionType {
 export interface ServicesContextProps {
   services: CardServicesProps;
   setServices: (servicesData: CardServicesProps) => void;
-  addService: (categoryData: CardDetailedFormInputProps) => void;
+  addService: (categoryData: CardServiceFormInputProps) => void;
   updateService: (
-    serviceData: CardDetailedFormInputProps,
-    updatedServiceData: CardDetailedFormInputProps
+    serviceData: CardServiceFormInputProps,
+    updatedServiceData: CardServiceFormInputProps
   ) => void;
   deleteService: (categoryKey: string, id: string) => void;
 }
@@ -24,15 +22,15 @@ export interface ServicesContextProps {
 export interface ServiceActionProps {
   type: ServiceActionType | string;
   payload:
-    | CardDetailedFormInputProps
+    | CardServiceFormInputProps
     | ServiceDeletePayload
     | ServiceUpdatePayload
     | CardServicesProps;
 }
 
 export interface ServiceUpdatePayload {
-  serviceData: CardDetailedFormInputProps;
-  updatedServiceData: CardDetailedFormInputProps;
+  serviceData: CardServiceFormInputProps;
+  updatedServiceData: CardServiceFormInputProps;
 }
 
 export interface ServiceDeletePayload {

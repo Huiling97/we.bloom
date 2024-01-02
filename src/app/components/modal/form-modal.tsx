@@ -1,5 +1,5 @@
 import { useContext, type FunctionComponent } from 'react';
-import { type CardDetailedFormInputProps } from '../../types/card.ts';
+import { type CardServiceFormInputProps } from '../../types/form.ts';
 import { type CardCategoryProps } from '../../types/card/card-category.ts';
 import { type ShowModalProps } from '../../types/modal.ts';
 import Modal from 'react-bootstrap/Modal';
@@ -41,7 +41,7 @@ const ShowModal: FunctionComponent<ShowModalProps> = ({
           <FormComponent
             formId={formId as string}
             categories={categories as string[]}
-            service={service as CardDetailedFormInputProps}
+            service={service as CardServiceFormInputProps}
             catgeoryData={catgeoryData as CardCategoryProps}
           />
         </Modal.Body>

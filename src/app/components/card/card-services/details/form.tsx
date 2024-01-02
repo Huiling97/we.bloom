@@ -5,23 +5,12 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { type CardDetailsProps } from '../../../../types/card';
-import { ModalContext } from '../../../../store/modal-context';
+import { type ServiceDetailsFormProps } from '../../../../types/form.ts';
+import { type CardDetailsProps } from '../../../../types/card.ts';
+import { ModalContext } from '../../../../store/modal-context.tsx';
 import { DetailsContext } from '../../../../store/details-context.tsx';
 import Form from 'react-bootstrap/Form';
 import { TrashAlt } from 'styled-icons/boxicons-solid';
-
-type ServiceDetailsFormProps = {
-  id?: string;
-  index: number;
-  data?: CardDetailsProps;
-  onDetailsChange: (
-    index: number,
-    event: ChangeEvent<HTMLInputElement>,
-    input?: CardDetailsProps
-  ) => void;
-  onDetailsDelete: (index: number) => void;
-};
 
 const ServiceDetailsForm = ({
   id,

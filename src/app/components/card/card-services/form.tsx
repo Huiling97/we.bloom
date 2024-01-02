@@ -6,10 +6,11 @@ import {
   useEffect,
   useContext,
 } from 'react';
+import { type CardDetailsProps } from '../../../types/card.ts';
 import {
-  type CardDetailedFormInputProps,
-  type CardDetailsProps,
-} from '../../../types/card.ts';
+  type CardServiceFormProps,
+  type CardServiceFormInputProps,
+} from '../../../types/form.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ServiceDetailsForm from './details/form.tsx';
@@ -18,19 +19,13 @@ import { ModalContext } from '../../../store/modal-context.tsx';
 import { ServicesContext } from '../../../store/services-context.tsx';
 import { DetailsContext } from '../../../store/details-context.tsx';
 import { ref, set } from 'firebase/database';
-import { database } from '../../../../main';
+import { database } from '../../../../main.tsx';
 
-type CardDetailedFormProps = {
-  formId: string;
-  categories: string[];
-  service: CardDetailedFormInputProps;
-};
-
-const CardDetailedForm = ({
+const CardServiceForm = ({
   formId,
   categories,
   service,
-}: CardDetailedFormProps) => {
+}: CardServiceFormProps) => {
   const {
     setShowModal,
     isEditModal,
@@ -56,7 +51,7 @@ const CardDetailedForm = ({
   };
 
   const [formData, setFormData] = useState(
-    formInput as CardDetailedFormInputProps
+    formInput as CardServiceFormInputProps
   );
   const [detailsData, setDetailsData] = useState(defaultDetails);
   const [additionalDetailsForm, setAdditionalDetailsForm] = useState<
@@ -312,4 +307,4 @@ const CardDetailedForm = ({
   );
 };
 
-export default CardDetailedForm;
+export default CardServiceForm;

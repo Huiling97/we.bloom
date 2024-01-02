@@ -1,8 +1,6 @@
 import { createContext, useReducer, type ReactNode } from 'react';
-import {
-  type CardServicesProps,
-  type CardDetailedFormInputProps,
-} from '../types/card';
+import { type CardServicesProps } from '../types/card';
+import { type CardServiceFormInputProps } from '../types/form.ts';
 import {
   ServicesContextProps,
   ServiceActionProps,
@@ -47,7 +45,7 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
       const categoryServices = (state as CardServicesProps)[categoryKey];
       if (categoryServices) {
         const updatedServices = categoryServices.filter(
-          (service: CardDetailedFormInputProps) => service.id !== id
+          (service: CardServiceFormInputProps) => service.id !== id
         );
         return {
           ...state,
@@ -67,13 +65,13 @@ const ServicesContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'SET', payload: servicesData });
   };
 
-  const addService = (serviceData: CardDetailedFormInputProps) => {
+  const addService = (serviceData: CardServiceFormInputProps) => {
     dispatch({ type: 'ADD', payload: serviceData });
   };
 
   const updateService = (
-    serviceData: CardDetailedFormInputProps,
-    updatedServiceData: CardDetailedFormInputProps
+    serviceData: CardServiceFormInputProps,
+    updatedServiceData: CardServiceFormInputProps
   ) => {
     dispatch({ type: 'UPDATE', payload: { serviceData, updatedServiceData } });
   };

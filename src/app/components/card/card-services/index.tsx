@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { type CardDetailsProps } from '../../../types/card.ts';
-import { type CardServiceDetailsProps } from '../../../types/card/card-service-details.ts';
+import { type CardServiceProps } from '../../../types/card/card-service.ts';
 import CardDetails from './details/index.tsx';
 
 const displayCardDetails = (details: CardDetailsProps[]): ReactNode => {
@@ -18,20 +18,16 @@ const displayCardDetails = (details: CardDetailsProps[]): ReactNode => {
   );
 };
 
-const CardDetailed = ({
-  name,
-  description,
-  details,
-}: CardServiceDetailsProps) => {
+const CardService = ({ name, description, details }: CardServiceProps) => {
   return (
-    <div className='card-detailed-container'>
+    <div className='card-service-container'>
       <div>
-        <div className='card-detailed-title'>{name.toUpperCase()}</div>
-        <p className='card-detailed-description'>{description}</p>
+        <div className='card-service-title'>{name.toUpperCase()}</div>
+        <p className='card-service-description'>{description}</p>
       </div>
       {details && displayCardDetails(details)}
     </div>
   );
 };
 
-export default CardDetailed;
+export default CardService;

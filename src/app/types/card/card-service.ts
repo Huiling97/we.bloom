@@ -1,6 +1,6 @@
 import { type CardDetailsProps } from '../card.ts';
 
-export type CardServiceDetailsProps = {
+export type CardServiceProps = {
   name: string;
   description: string;
   details: CardDetailsProps[];

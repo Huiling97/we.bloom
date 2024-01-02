@@ -1,5 +1,5 @@
 import { Dispatch, type FunctionComponent, type SetStateAction } from 'react';
-import { type CardDetailedFormInputProps } from './card.ts';
+import { type CardServiceFormInputProps } from './form.ts';
 import { type CardCategoryProps } from './card/card-category.ts';
 import { FormComponentProps } from './form.ts';
 
@@ -10,7 +10,7 @@ export type ShowModalProps = {
   show: boolean;
   catgeoryData?: CardCategoryProps;
   categories?: string[];
-  service?: CardDetailedFormInputProps;
+  service?: CardServiceFormInputProps;
 };
 
 export type DeleteModalProps = {

@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
-import {
-  type CardServicesProps,
-  type CardDetailedFormInputProps,
-} from '../types/card.ts';
+import { type CardServicesProps } from '../types/card.ts';
+import { type CardServiceFormInputProps } from '../types/form.ts';
 import {
   type CardCategoryProps,
   type CardCategoryObjectProps,
@@ -12,7 +10,7 @@ import {
 import DeleteModal from '../components/modal/delete-modal.tsx';
 import ShowModal from '../components/modal/form-modal.tsx';
 import CardCategoryForm from '../components/card/card-category/form.tsx';
-import CardDetailedForm from '../components/card/card-detailed/form.tsx';
+import CardServiceForm from '../components/card/card-services/form.tsx';
 import AuthForm from '../components/form/auth-form.tsx';
 import {
   displayCategories,
@@ -59,7 +57,7 @@ const Manage = () => {
     name: '',
     image: '',
   });
-  const [serviceData, setServiceDate] = useState<CardDetailedFormInputProps>({
+  const [serviceData, setServiceDate] = useState<CardServiceFormInputProps>({
     id: '',
     category: '',
     name: '',
@@ -98,18 +96,18 @@ const Manage = () => {
       servicesCtx.deleteService(categoryKey, id);
       const categoryServices = services[
         categoryKey
-      ] as CardDetailedFormInputProps[];
+      ] as CardServiceFormInputProps[];
 
       if (categoryServices) {
         const remainingServices = categoryServices.filter(
-          (service: CardDetailedFormInputProps) => service.id !== id
+          (service: CardServiceFormInputProps) => service.id !== id
         );
         set(ref(database, 'services/' + categoryKey), remainingServices);
       }
     }
   };
 
-  const onEditServiceHandler = (data: CardDetailedFormInputProps) => {
+  const onEditServiceHandler = (data: CardServiceFormInputProps) => {
     setIsEditModal(true);
     setActiveForm('service');
     setShowModal(true);
@@ -166,11 +164,11 @@ const Manage = () => {
           {activeForm === 'service' && showModal && (
             <ShowModal
               heading={isEditModal ? 'Edit service' : 'Add new service'}
-              form={CardDetailedForm}
+              form={CardServiceForm}
               formId={formId}
               show={showModal}
               categories={categoryType}
-              service={serviceData as CardDetailedFormInputProps}
+              service={serviceData as CardServiceFormInputProps}
             />
           )}
           {categories &&

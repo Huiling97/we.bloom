@@ -1,8 +1,8 @@
 import {
   type CardDetailsProps,
-  type CardDetailedFormInputProps,
   type CardServicesProps,
 } from '../../types/card.ts';
+import { type CardServiceFormInputProps } from '../../types/form.ts';
 import { type CardCategoryProps } from '../../types/card/card-category.ts';
 
 export const cardGenericProps: CardCategoryProps = {
@@ -48,7 +48,7 @@ const cardDetailsArrayProps = [
   },
 ];
 
-export const cardDetailedProps: CardDetailedFormInputProps = {
+export const cardDetailedProps: CardServiceFormInputProps = {
   id: '123',
   category: 'mock category',
   name: 'mock title',
