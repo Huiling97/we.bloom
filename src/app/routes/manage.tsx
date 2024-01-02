@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../types/form.ts';
@@ -21,6 +22,7 @@ import { database } from '../../main.tsx';
 
 const Manage = () => {
   const formId = uuidv4();
+  const navigate = useNavigate();
 
   const {
     isLoading: isLoadingCategories,
@@ -40,6 +42,7 @@ const Manage = () => {
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeForm, setActiveForm] = useState<string>('');
@@ -107,8 +110,8 @@ const Manage = () => {
   };
 
   useEffect(() => {
-    if (services) {
-      servicesCtx.setServices(services);
+    if (!isAuthenticated) {
+      navigate('/login');
     }
   }, []);
 

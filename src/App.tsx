@@ -10,6 +10,7 @@ import Error from './app/routes/error.tsx';
 import NavBar from './app/components/navbar/index.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Manage from './app/routes/manage.tsx';
+import Login from './app/routes/login.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -64,6 +65,10 @@ function App() {
           <Manage />
         </>
       ),
+    },
+    {
+      path: '/login',
+      element: <Login />,
     },
   ]);
 
