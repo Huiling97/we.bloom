@@ -1,16 +1,18 @@
 import { type ReactNode } from 'react';
 import {
-  type CardGenericProps,
-  type CardGenericObjectProps,
   type CardServicesProps,
   type CardDetailedFormInputProps,
 } from '../../../types/card.ts';
-import CardGeneric from '../card-generic/index.tsx';
+import {
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../../../types/card/card-category.ts';
+import CardCategory from '../card-category/index.tsx';
 import CardDetailed from '../card-detailed/index.tsx';
 
 type CardTypeProps = 'generic' | 'detailed';
 type CardProps<T extends CardTypeProps> = T extends 'generic'
-  ? CardGenericObjectProps
+  ? CardCategoryObjectProps
   : CardServicesProps;
 
 type CardGridProps<T extends CardTypeProps> = {
@@ -39,11 +41,11 @@ const CardGrid = <T extends CardTypeProps>({
             );
           }
           return (
-            <CardGeneric
+            <CardCategory
               key={index}
-              id={(value as CardGenericProps).id}
+              id={(value as CardCategoryProps).id}
               name={key}
-              image={(value as CardGenericProps).image}
+              image={(value as CardCategoryProps).image}
             />
           );
         })}

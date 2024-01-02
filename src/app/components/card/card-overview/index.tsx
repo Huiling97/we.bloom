@@ -1,20 +1,22 @@
 import Button from 'react-bootstrap/Button';
 import {
-  type CardGenericProps,
-  type CardGenericObjectProps,
   type CardDetailedFormInputProps,
   type CardServicesProps,
 } from '../../../types/card.ts';
+import {
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../../../types/card/card-category.ts';
 import CardDetailed from '../card-detailed/index.tsx';
 import { isProtectedService } from '../../../util/auth-helper.ts';
 
 type onDeleteHandlerProps = (id: string) => void;
 type onDeleteServiceHandlerProps = (key: string, id: string) => void;
-type onEditHandlerProps = (value: CardGenericProps) => void;
+type onEditHandlerProps = (value: CardCategoryProps) => void;
 type onEditServiceHandlerProps = (service: CardDetailedFormInputProps) => void;
 
 const displayCategories = (
-  data: CardGenericObjectProps,
+  data: CardCategoryObjectProps,
   deleteModalHandler: onDeleteHandlerProps,
   onEditHandler: onEditHandlerProps
 ) => {

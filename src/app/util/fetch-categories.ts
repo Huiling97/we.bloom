@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { type CardGenericObjectProps } from '../../app/types/card.ts';
+import { type CardCategoryObjectProps } from '../../app/types/card/card-category.ts';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
@@ -15,7 +15,7 @@ const fetchCategoriesData = () => {
     try {
       onValue(categoriesRef, (snapshot) => {
         if (snapshot) {
-          const data = snapshot.val() as CardGenericObjectProps;
+          const data = snapshot.val() as CardCategoryObjectProps;
           if (data) {
             const updatedTypes = Object.keys(data);
             setCategoryType(updatedTypes);

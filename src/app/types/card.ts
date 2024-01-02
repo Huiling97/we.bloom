@@ -1,14 +1,3 @@
-export interface CardGenericProps {
-  id: string;
-  name: string;
-  image: string;
-  description?: string;
-}
-
-export interface CardGenericObjectProps {
-  [category: string]: CardGenericProps;
-}
-
 export interface CardDetailedProps {
   [category: string]: {
     [service: string]: {

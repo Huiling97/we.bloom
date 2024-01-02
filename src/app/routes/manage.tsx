@@ -3,13 +3,15 @@ import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import {
   type CardServicesProps,
-  type CardGenericProps,
-  type CardGenericObjectProps,
   type CardDetailedFormInputProps,
 } from '../types/card.ts';
+import {
+  type CardCategoryProps,
+  type CardCategoryObjectProps,
+} from '../types/card/card-category.ts';
 import DeleteModal from '../components/modal/delete-modal.tsx';
 import ShowModal from '../components/modal/form-modal.tsx';
-import CardGenericForm from '../components/card/card-generic/form.tsx';
+import CardCategoryForm from '../components/card/card-category/form.tsx';
 import CardDetailedForm from '../components/card/card-detailed/form.tsx';
 import AuthForm from '../components/form/auth-form.tsx';
 import {
@@ -52,7 +54,7 @@ const Manage = () => {
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeForm, setActiveForm] = useState<string>('');
-  const [catgeoryData, setCategoryData] = useState<CardGenericProps>({
+  const [catgeoryData, setCategoryData] = useState<CardCategoryProps>({
     id: '',
     name: '',
     image: '',
@@ -74,7 +76,7 @@ const Manage = () => {
     setDeleteCategoryId(id);
   };
 
-  const onEditCategoryHandler = (data: CardGenericProps) => {
+  const onEditCategoryHandler = (data: CardCategoryProps) => {
     setIsEditModal(true);
     setActiveForm('category');
     setShowModal(true);
@@ -156,7 +158,7 @@ const Manage = () => {
           {activeForm === 'category' && showModal && (
             <ShowModal
               heading={isEditModal ? 'Edit category' : 'Add new category'}
-              form={CardGenericForm}
+              form={CardCategoryForm}
               show={showModal}
               catgeoryData={catgeoryData}
             />
@@ -173,7 +175,7 @@ const Manage = () => {
           )}
           {categories &&
             displayCategories(
-              categoriesCtx.categories as CardGenericObjectProps,
+              categoriesCtx.categories as CardCategoryObjectProps,
               deleteCategoryModalHandler,
               onEditCategoryHandler
             )}

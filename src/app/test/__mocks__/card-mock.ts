@@ -1,11 +1,11 @@
 import {
-  type CardGenericProps,
   type CardDetailsProps,
   type CardDetailedFormInputProps,
   type CardServicesProps,
 } from '../../types/card.ts';
+import { type CardCategoryProps } from '../../types/card/card-category.ts';
 
-export const cardGenericProps: CardGenericProps = {
+export const cardGenericProps: CardCategoryProps = {
   id: '123',
   name: 'Mock Title',
   image: 'mock-image',

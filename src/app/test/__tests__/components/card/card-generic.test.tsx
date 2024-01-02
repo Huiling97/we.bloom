@@ -2,13 +2,13 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Router, BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { cardGenericProps } from '../../../__mocks__/card-mock.ts';
-import CardGeneric from '../../../../components/card/card-generic/index.tsx';
+import CardCategory from '../../../../components/card/card-category/index.tsx';
 
-describe('CardGeneric', () => {
+describe('CardCategory', () => {
   it('should render component with title', () => {
     render(
       <BrowserRouter>
-        <CardGeneric {...cardGenericProps} />
+        <CardCategory {...cardGenericProps} />
       </BrowserRouter>
     );
 
@@ -20,7 +20,7 @@ describe('CardGeneric', () => {
   it('should render component with image', () => {
     render(
       <BrowserRouter>
-        <CardGeneric {...cardGenericProps} />
+        <CardCategory {...cardGenericProps} />
       </BrowserRouter>
     );
 
@@ -36,7 +36,7 @@ describe('CardGeneric', () => {
 
     render(
       <Router location={history.location} navigator={history}>
-        <CardGeneric {...cardGenericProps} />
+        <CardCategory {...cardGenericProps} />
       </Router>
     );
 
