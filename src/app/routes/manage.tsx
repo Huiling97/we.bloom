@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../types/form.ts';
@@ -15,12 +16,14 @@ import { isProtectedCategory } from '../util/auth-helper.ts';
 import { ModalContext } from '../store/modal-context.tsx';
 import { ServicesContext } from '../store/services-context.tsx';
 import { DetailsContext } from '../store/details-context.tsx';
+import { AuthContext } from '../store/auth-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const Manage = () => {
   const formId = uuidv4();
+  const navigate = useNavigate();
 
   const {
     isLoading: isLoadingCategories,
@@ -39,6 +42,7 @@ const Manage = () => {
   } = useContext(ModalContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -107,8 +111,8 @@ const Manage = () => {
   };
 
   useEffect(() => {
-    if (services) {
-      servicesCtx.setServices(services);
+    if (!isAuthenticated) {
+      navigate('/login');
     }
   }, []);
 
