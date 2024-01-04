@@ -3,11 +3,11 @@ import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
-import { type CardCategoryProps } from '../../types/card/card-category';
+import { type CardCategoryProps } from '../../types/card/card-category.ts';
 import { type TabsSwitchProps } from '../../types/tabs.ts';
 import { displayCategories, displayServices } from './helpers.tsx';
-import { CategoriesContext } from '../../store/categories-context';
-import { ServicesContext } from '../../store/services-context';
+import { CategoriesContext } from '../../store/categories-context.tsx';
+import { ServicesContext } from '../../store/services-context.tsx';
 
 const TabSwitch = ({
   deleteCategory,

@@ -1,13 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../../types/form.ts';
-import { type CardCategoryObjectProps } from '../../types/card/card-category';
+import { type CardCategoryObjectProps } from '../../types/card/card-category.ts';
 import {
   type onDeleteCategoryHandlerProps,
   type onEditHandlerCategoeyProps,
   type onDeleteServiceHandlerProps,
   type onEditServiceHandlerProps,
 } from '../../types/tabs.ts';
-import CardService from '../card/card-services';
+import CardService from '../card/card-services/index.tsx';
 
 const serviceItem = (
   serviceData: CardServiceFormInputProps,

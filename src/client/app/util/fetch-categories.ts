@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { type CardCategoryObjectProps } from '../../app/types/card/card-category.ts';
+import { type CardCategoryObjectProps } from '../types/card/card-category.ts';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';

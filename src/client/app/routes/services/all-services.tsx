@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { isEmpty } from 'lodash';
-import { CategoriesContext } from '../../store/categories-context';
-import CardGrid from '../../components/card/card-grid';
-import fetchCategoriesData from '../../util/fetch-categories';
+import { CategoriesContext } from '../../store/categories-context.tsx';
+import CardGrid from '../../components/card/card-grid/index.tsx';
+import fetchCategoriesData from '../../util/fetch-categories.ts';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 
 const AllServices = () => {
