@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../store/auth-context';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000';
 
 const Login = () => {
   const navigate = useNavigate();
