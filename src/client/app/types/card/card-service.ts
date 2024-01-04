@@ -1,4 +1,4 @@
-import { type CardDetailsProps } from '../card/card-service-details.ts';
+import { type CardDetailsProps } from './card-service-details.ts';
 import { type CardServiceFormInputProps } from '../form.ts';
 
 export type CardServiceProps = {
