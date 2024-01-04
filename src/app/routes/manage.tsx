@@ -16,6 +16,7 @@ import { isProtectedCategory } from '../util/auth-helper.ts';
 import { ModalContext } from '../store/modal-context.tsx';
 import { ServicesContext } from '../store/services-context.tsx';
 import { DetailsContext } from '../store/details-context.tsx';
+import { AuthContext } from '../store/auth-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, set } from 'firebase/database';
 import { database } from '../../main.tsx';
@@ -41,8 +42,8 @@ const Manage = () => {
   } = useContext(ModalContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeForm, setActiveForm] = useState<string>('');
