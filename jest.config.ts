@@ -5,7 +5,7 @@ module.exports = {
   verbose: true,
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   moduleNameMapper: {
-    '\\.(css|scss)$': '<rootDir>/src/app/test/__mocks__/styleMock.js',
+    '\\.(css|scss)$': '<rootDir>/src/client/app/test/__mocks__/styleMock.js',
   },
   transform: {
     '^.+\\.tsx?$': [
