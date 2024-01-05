@@ -10,9 +10,11 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { ArrowBackOutline } from '@styled-icons/evaicons-outline';
 import { AuthContext } from '../store/auth-context';
-import { isValidPhone } from '../util/phone-helper';
+import { isPhoneValid } from '../util/phone-helper';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
-const BASE_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5000';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -74,10 +76,10 @@ const Login = () => {
     }
   };
 
-  const phoneChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setPhoneInput(e.target.value);
-    if (e.target.value.length !== 8) {
-      setCodeError('Phone number must be 8 digits long');
+  const phoneChangeHandler = (phone: string) => {
+    setPhoneInput(phone);
+    if (codeError && !isPhoneValid(phone)) {
+      setCodeError('Invalid phone number');
     } else {
       setCodeError('');
     }
@@ -89,8 +91,8 @@ const Login = () => {
 
   const onSubmitPhone = (e: FormEvent) => {
     e.preventDefault();
-    if (phoneInput.length !== 8 && !isValidPhone(phoneInput)) {
-      setCodeError('Phone number must be 8 digits long');
+    if (!isPhoneValid(phoneInput)) {
+      setCodeError('Invalid phone number');
     } else {
       setCodeError('');
       setHasPhone(true);
@@ -130,7 +132,7 @@ const Login = () => {
 
             <div className='form-title'>Confirm your phone number</div>
             <div className='form-subtitle'>
-              {`We just sent a code to +65 ${phoneInput}, enter it below`}
+              {`We just sent a code to ${phoneInput}, enter it below`}
             </div>
             <label htmlFor='code'>Code</label>
             <input
@@ -164,18 +166,12 @@ const Login = () => {
             <div className='form-subtitle'>
               Enter your phone number to receive a SMS verification code.
             </div>
-            <label htmlFor='phone'>Phone Number</label>
-            <input
-              type='tel'
-              id='phone'
-              name='phone'
-              required
-              pattern='[0-9]{8}'
-              minLength={8}
-              maxLength={8}
+            <div>Phone Number</div>
+            <PhoneInput
+              defaultCountry='sg'
               value={phoneInput}
-              onChange={phoneChangeHandler}
-              className={codeError ? 'error-input' : ''}
+              onChange={(phoneInput) => phoneChangeHandler(phoneInput)}
+              inputStyle={{ width: '100%' }}
             />
             {codeError && <div className='error-message'>{codeError}</div>}
             <Button type='submit'>Send code</Button>
