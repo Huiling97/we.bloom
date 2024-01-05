@@ -14,7 +14,7 @@ import { isPhoneValid } from '../util/phone-helper';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000';
 
 const Login = () => {
   const navigate = useNavigate();
