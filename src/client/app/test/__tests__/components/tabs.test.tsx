@@ -29,7 +29,7 @@ describe('displayCategories', () => {
   });
 
   it('should render component with uppercase title', () => {
-    const title = screen.getByText('MOCKCATEGORY1');
+    const title = screen.getByText('MOCK TITLE 1');
 
     expect(title).toBeInTheDocument();
   });
