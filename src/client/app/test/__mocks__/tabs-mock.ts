@@ -1,18 +1,18 @@
 import { type CardServiceFormInputProps } from '../../types/form.ts';
 import { cardDetailsArrayProps } from './card-mock.ts';
 
-export const categoryArrayProps = {
-  MockCategory1: {
+export const categoryArrayProps = [
+  {
     id: '123',
     name: 'Mock Title 1',
     image: 'mock-image-1',
   },
-  MockCategory2: {
+  {
     id: '456',
     name: 'Mock Title 2',
     image: 'mock-image-2',
   },
-};
+];
 
 export const serviceArrayProps: CardServiceFormInputProps[] = [
   {
