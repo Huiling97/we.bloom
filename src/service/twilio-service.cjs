@@ -10,7 +10,7 @@ const twilioRequestHandler = (app) => {
   app.get('/sendCode', (req, res) => {
     client.verify.v2
       .services(verifySid)
-      .verifications.create({ to: `+65${req.query.phone}`, channel: 'sms' })
+      .verifications.create({ to: `+${req.query.phone}`, channel: 'sms' })
       .then((verification) => {
         res.status(200).send({
           message: 'Verification sent',
@@ -24,7 +24,7 @@ const twilioRequestHandler = (app) => {
     client.verify.v2
       .services(verifySid)
       .verificationChecks.create({
-        to: `+65${req.query.phone}`,
+        to: `+${req.query.phone}`,
         code: `${req.query.code}`,
       })
       .then((verification_check) => {
