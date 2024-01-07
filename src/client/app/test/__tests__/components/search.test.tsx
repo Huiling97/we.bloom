@@ -8,11 +8,11 @@ describe('SearchBar', () => {
   it('should update search input value when typing', () => {
     const updatedInput = 'updated value';
 
-    const { getByPlaceholderText } = render(
+    const { getByRole } = render(
       <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
     );
 
-    const searchField = getByPlaceholderText('Start typing to search');
+    const searchField = getByRole('searchField');
     fireEvent.change(searchField, { target: { value: updatedInput } });
 
     expect(setSearchInput).toHaveBeenCalledWith(updatedInput);
@@ -22,11 +22,11 @@ describe('SearchBar', () => {
     const searchInput = 'test';
     const setSearchInput = jest.fn();
 
-    const { getByPlaceholderText } = render(
+    const { getByRole } = render(
       <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
     );
 
-    const searchField = getByPlaceholderText('Start typing to search');
+    const searchField = getByRole('searchField');
     fireEvent.blur(searchField);
 
     expect(setSearchInput).toHaveBeenCalledWith('');
