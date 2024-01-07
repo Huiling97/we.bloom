@@ -23,17 +23,23 @@ const TabSwitch = ({
   const [searchInput, setSearchInput] = useState('');
 
   const filterCategoryData = () => {
-    const filteredCategories = Object.values(categories).filter((category) =>
-      category.name.toLowerCase().includes(searchInput.toLocaleLowerCase())
-    );
-    return filteredCategories;
+    if (categories) {
+      const filteredCategories = Object.values(categories).filter((category) =>
+        category.name.toLowerCase().includes(searchInput.toLocaleLowerCase())
+      );
+      return filteredCategories;
+    }
+    return [];
   };
 
   const filterServiceData = (services: CardServiceFormInputProps[]) => {
-    const filteredServices = services.filter((service) =>
-      service.name.toLowerCase().includes(searchInput.toLowerCase())
-    );
-    return filteredServices;
+    if (services) {
+      const filteredServices = services.filter((service) =>
+        service.name.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      return filteredServices;
+    }
+    return [];
   };
 
   const tabOptions = () => {
