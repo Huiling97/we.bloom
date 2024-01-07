@@ -13,6 +13,7 @@ const SearchBar = ({ searchInput, setSearchInput }: SearchBarProps) => {
   return (
     <input
       type='search'
+      role='searchField'
       value={searchInput}
       placeholder='Start typing to search'
       className='search-input'
