@@ -1,3 +1,11 @@
+.tabs-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: #bdbdbd 1.5px solid;
+  padding-top: 20px;
+}
+
 .tab-grid-container {
   display: flex;
   flex-wrap: wrap;

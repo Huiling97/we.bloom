@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../../types/form.ts';
-import { type CardCategoryObjectProps } from '../../types/card/card-category.ts';
+import { type CardCategoryProps } from '../../types/card/card-category.ts';
 import {
   type onDeleteCategoryHandlerProps,
   type onEditHandlerCategoeyProps,
@@ -55,21 +55,24 @@ const displayServices = (
 };
 
 const displayCategories = (
-  data: CardCategoryObjectProps,
+  data: CardCategoryProps[],
   deleteCategory: onDeleteCategoryHandlerProps,
   editCategory: onEditHandlerCategoeyProps
 ) => {
   return (
     <div className='tab-grid-container'>
-      {Object.entries(data).map(([key, value]) => {
-        const { id, image } = value;
+      {data.map((category) => {
+        const { id, name, image } = category;
         return (
           <div key={id} role='listCategories' className='list-item-container'>
             <div className='item-image-container'>
-              <div className='item-title'>{key.toUpperCase()}</div>
+              <div className='item-title'>{name.toUpperCase()}</div>
               <img src={image} alt='category name' className='item-image' />
               <div className='buttons-container-fixed'>
-                <Button variant='secondary' onClick={() => editCategory(value)}>
+                <Button
+                  variant='secondary'
+                  onClick={() => editCategory(category)}
+                >
                   Edit
                 </Button>
                 <Button variant='danger' onClick={() => deleteCategory(id)}>
