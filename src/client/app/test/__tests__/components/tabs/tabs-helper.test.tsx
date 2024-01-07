@@ -2,11 +2,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   displayCategories,
   displayServices,
-} from '../../../components/tabs/helpers.tsx';
+} from '../../../../components/tabs/helpers.tsx';
 import {
   categoryArrayProps,
   serviceArrayProps,
-} from '../../__mocks__/tabs-mock.ts';
+} from '../../../__mocks__/tabs-mock.ts';
 
 describe('displayCategories', () => {
   const mockOnDeleteHandler = jest.fn();
