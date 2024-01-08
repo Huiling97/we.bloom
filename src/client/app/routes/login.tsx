@@ -6,8 +6,8 @@ import {
   useEffect,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 import { ArrowBackOutline } from '@styled-icons/evaicons-outline';
 import { AuthContext } from '../store/auth-context';
 import { isPhoneValid } from '../util/phone-helper';
@@ -89,6 +89,13 @@ const Login = () => {
     setCodeInput(e.target.value);
   };
 
+  const codeKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSubmitCode(e);
+    }
+  };
+
   const onSubmitPhone = (e: FormEvent) => {
     e.preventDefault();
     if (!isPhoneValid(phoneInput)) {
@@ -142,6 +149,7 @@ const Login = () => {
               required
               value={codeInput}
               onChange={codeChangeHandler}
+              onKeyDown={codeKeyDownHandler}
               className={codeError ? 'error-input' : ''}
             />
             {codeError && <div className='error-message'>{codeError}</div>}
