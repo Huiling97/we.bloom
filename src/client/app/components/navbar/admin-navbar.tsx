@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,13 +9,7 @@ import { PersonCircle } from '@styled-icons/bootstrap';
 import { isMobile } from '../../util/screen-size-helper';
 import { AuthContext } from '../../store/auth-context';
 
-export const TABS_LIST = {
-  home: '/',
-  services: '/services',
-  contact: '/contact',
-};
-
-const NavBar = () => {
+const AdminNavBar = () => {
   const [show, setShow] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -28,14 +22,14 @@ const NavBar = () => {
     <Navbar expand={expand} sticky='top'>
       <Container fluid>
         <Navbar.Brand>
-          <NavLink to='/' className='navbar-logo-container link-no-decoration'>
+          <a href='/' className='navbar-logo-container link-no-decoration'>
             <img
               src='/logo/flower-gold.svg'
               alt='Logo'
               className='navbar-logo'
             />
             <div className='logo-text'>we.bloom</div>
-          </NavLink>
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar-false-${expand}`}
@@ -52,23 +46,9 @@ const NavBar = () => {
           <Offcanvas.Body>
             <Nav className='justify-content-end flex-grow-1 pe-3'>
               <div className='navbar-container'>
-                {Object.entries(TABS_LIST).map(([key, value]) => {
-                  return (
-                    <div
-                      className='navbar-list-item '
-                      key={key}
-                      onClick={closeHandler}
-                      data-testid='navbar-tab-item'
-                    >
-                      <NavLink
-                        to={`${value}`}
-                        className='navbar-link link-no-decoration'
-                      >
-                        {key.toUpperCase()}
-                      </NavLink>
-                    </div>
-                  );
-                })}
+                <a href='/'>
+                  <Button>Return to home</Button>
+                </a>
                 {isAuthenticated && !isMobile() && (
                   <div className='navbar-list-item account-container account-avatar-icon-container'>
                     <PersonCircle size='24' />
@@ -80,10 +60,21 @@ const NavBar = () => {
               </div>
             </Nav>
           </Offcanvas.Body>
+          {isAuthenticated && isMobile() && (
+            <div className='account-container'>
+              <div className='account-avatar-icon-container'>
+                <PersonCircle size='24' />
+                <div>Admin</div>
+              </div>
+              <a href='/' className='link-no-decoration account-link'>
+                Logout
+              </a>
+            </div>
+          )}
         </Navbar.Offcanvas>
       </Container>
     </Navbar>
   );
 };
 
-export default NavBar;
+export default AdminNavBar;

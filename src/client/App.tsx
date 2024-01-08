@@ -8,6 +8,7 @@ import AllServices from './app/routes/services/all-services.tsx';
 import Service from './app/routes/services/service.tsx';
 import Error from './app/routes/error.tsx';
 import NavBar from './app/components/navbar/index.tsx';
+import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Manage from './app/routes/manage.tsx';
 import Login from './app/routes/login.tsx';
@@ -61,7 +62,7 @@ function App() {
       path: '/manage',
       element: (
         <>
-          <NavBar />
+          <AdminNavBar />
           <Manage />
         </>
       ),
