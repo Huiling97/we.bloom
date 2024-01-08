@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { PersonCircle } from '@styled-icons/bootstrap';
 import { isMobile } from '../../util/screen-size-helper';
+import { AuthContext } from '../../store/auth-context';
 
 export const TABS_LIST = {
   home: '/',
@@ -14,6 +17,7 @@ export const TABS_LIST = {
 
 const NavBar = () => {
   const [show, setShow] = useState(false);
+  const { isAuthenticated } = useContext(AuthContext);
 
   const closeHandler = () => setShow(false);
   const showHandler = () => setShow(true);
@@ -65,6 +69,14 @@ const NavBar = () => {
                     </div>
                   );
                 })}
+                {isAuthenticated && !isMobile() && (
+                  <div className='navbar-list-item account-container account-avatar-icon-container'>
+                    <PersonCircle size='24' />
+                    <NavDropdown title='Admin' id='navbarScrollingDropdown'>
+                      <NavDropdown.Item href='/'>Logout</NavDropdown.Item>
+                    </NavDropdown>
+                  </div>
+                )}
               </div>
             </Nav>
           </Offcanvas.Body>
