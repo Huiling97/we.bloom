@@ -44,13 +44,13 @@
 
   @include media('<=mobile') {
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
+    padding: 10px 0;
   }
 }
 
 .navbar-list-item {
   list-style-type: none;
-  display: inline-block;
   margin-left: 40px;
   color: $grey-color;
 }
@@ -61,4 +61,26 @@
 
 .navbar-link.active {
   color: $secondary-color;
+}
+
+.account-container {
+  color: $grey-color;
+
+  @include media('<=mobile') {
+    padding: 1rem;
+  }
+}
+
+.account-link {
+  color: $grey-color;
+}
+
+// react bootstrap nav bar dropdown
+.navbar-nav {
+  --bs-nav-link-padding-y: unset;
+}
+
+.dropdown-menu[data-bs-popper] {
+  right: 0;
+  left: unset;
 }

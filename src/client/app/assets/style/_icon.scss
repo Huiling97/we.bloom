@@ -16,3 +16,15 @@
 .back-button-icon {
   color: $grey-color;
 }
+
+.account-avatar-icon-container {
+  display: flex;
+  align-items: center;
+
+  @include media('<=mobile') {
+    gap: 5px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: $grey-color 1px solid;
+  }
+}
