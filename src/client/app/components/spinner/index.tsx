@@ -9,6 +9,7 @@ const LoadingSpinner = () => {
         size='sm'
         role='status'
         aria-hidden='true'
+        data-testid='loading-spinner'
       />
       Preparing the best experience for you...
     </div>
