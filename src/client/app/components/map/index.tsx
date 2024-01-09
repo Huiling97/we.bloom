@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+//Fix for "ReferenceError: TextDecoder is not defined" error
 import { TextEncoder, TextDecoder } from 'text-encoding';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
