@@ -6,6 +6,8 @@ jobs:
   run-jest-tests:
     name: Jest Tests
     runs-on: ubuntu-latest
+    env:
+      FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
 
     steps:
       - name: Checkout under $GITHUB_WORKSPACE
