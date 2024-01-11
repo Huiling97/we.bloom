@@ -20,4 +20,11 @@ const database = getDatabase(app);
 
 export { database };
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
+const rootElement = document.getElementById('root')!;
+const renderApp = () => {
+  ReactDOM.createRoot(rootElement).render(<App />);
+};
+
+if (rootElement) {
+  renderApp();
+}
