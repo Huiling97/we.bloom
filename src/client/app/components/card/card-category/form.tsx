@@ -59,16 +59,18 @@ const CardCategoryForm = ({ catgeoryData }: CardCategoryFormProps) => {
   };
 
   useEffect(() => {
+    const standardizedName = formData?.name.toLowerCase();
+
     const data = {
       id: formData.id,
-      name: formData.name,
+      name: standardizedName,
       image: formData.image,
       description: formData.description,
     };
 
     if (formData.name && formData.description && formData.image) {
-      categoriesCtx.addCategory({ [formData.name]: data });
-      set(ref(database, 'categories/' + formData.name), data);
+      categoriesCtx.addCategory({ [standardizedName]: data });
+      set(ref(database, 'categories/' + standardizedName), data);
       setShowModal(false);
       setIsFormCompleted(false);
     }

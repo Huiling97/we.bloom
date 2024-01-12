@@ -25,7 +25,7 @@ const TabSwitch = ({
   const filterCategoryData = () => {
     if (categories) {
       const filteredCategories = Object.values(categories).filter((category) =>
-        category.name.toLowerCase().includes(searchInput.toLocaleLowerCase())
+        category.name.toLowerCase().includes(searchInput.toLowerCase())
       );
       return filteredCategories;
     }
