@@ -9,7 +9,7 @@ export type ShowModalProps = {
   formId?: string;
   show: boolean;
   catgeoryData?: CardCategoryProps;
-  categories?: string[];
+  categoryTypes?: string[];
   service?: CardServiceFormInputProps;
 };
 
