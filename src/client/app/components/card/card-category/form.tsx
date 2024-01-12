@@ -19,6 +19,7 @@ const CardCategoryForm = ({ catgeoryData }: CardCategoryFormProps) => {
     name: isEditModal ? catgeoryData.name : '',
     image: '',
     description: isEditModal ? catgeoryData.description : '',
+    servicesCount: 0,
   };
 
   const [formData, setFormData] = useState(formInput);
@@ -66,6 +67,7 @@ const CardCategoryForm = ({ catgeoryData }: CardCategoryFormProps) => {
       name: standardizedName,
       image: formData.image,
       description: formData.description,
+      servicesCount: formData.servicesCount,
     };
 
     if (formData.name && formData.description && formData.image) {

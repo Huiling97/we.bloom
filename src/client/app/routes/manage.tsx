@@ -18,7 +18,7 @@ import { ServicesContext } from '../store/services-context.tsx';
 import { DetailsContext } from '../store/details-context.tsx';
 import { AuthContext } from '../store/auth-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
-import { ref, set } from 'firebase/database';
+import { ref, set, update } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const Manage = () => {
@@ -51,6 +51,7 @@ const Manage = () => {
     id: '',
     name: '',
     image: '',
+    servicesCount: 0,
   });
   const [serviceData, setServiceDate] = useState<CardServiceFormInputProps>({
     id: '',
@@ -97,7 +98,13 @@ const Manage = () => {
         const remainingServices = categoryServices.filter(
           (service: CardServiceFormInputProps) => service.id !== id
         );
+
+        const updateServicesCount = categories[categoryKey].servicesCount! - 1;
+
         set(ref(database, 'services/' + categoryKey), remainingServices);
+        update(ref(database, 'categories/' + categoryKey), {
+          servicesCount: updateServicesCount,
+        });
       }
     }
   };
@@ -170,7 +177,7 @@ const Manage = () => {
                 form={CardServiceForm}
                 formId={formId}
                 show={showModal}
-                categories={categoryType}
+                categoryTypes={categoryType}
                 service={serviceData as CardServiceFormInputProps}
               />
             )}

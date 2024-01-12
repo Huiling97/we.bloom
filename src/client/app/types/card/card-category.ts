@@ -3,6 +3,7 @@ export interface CardCategoryProps {
   name: string;
   image: string;
   description?: string;
+  servicesCount?: number;
 }
 
 export interface CardCategoryObjectProps {

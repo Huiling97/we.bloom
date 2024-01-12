@@ -1,10 +1,7 @@
 import { type ReactNode } from 'react';
 import { type CardServiceObjectProps } from '../../../types/card/card-service.ts';
 import { type CardServiceFormInputProps } from '../../../types/form.ts';
-import {
-  type CardCategoryProps,
-  type CardCategoryObjectProps,
-} from '../../../types/card/card-category.ts';
+import { type CardCategoryObjectProps } from '../../../types/card/card-category.ts';
 import CardCategory from '../card-category/index.tsx';
 import CardService from '../card-services/index.tsx';
 
@@ -37,15 +34,14 @@ const CardGrid = <T extends CardTypeProps>({
                 details={details}
               />
             );
+          } else {
+            const { id, image, servicesCount } = value;
+            if (servicesCount !== 0) {
+              return (
+                <CardCategory key={index} id={id} name={key} image={image} />
+              );
+            }
           }
-          return (
-            <CardCategory
-              key={index}
-              id={(value as CardCategoryProps).id}
-              name={key}
-              image={(value as CardCategoryProps).image}
-            />
-          );
         })}
       </div>
     </div>
