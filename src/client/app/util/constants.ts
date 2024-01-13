@@ -2,7 +2,7 @@ export const REVIEWS_LIST = [
   {
     title: 'My skin is finally able to breathe again',
     description:
-      'I have sensitive skin and the beautician Jean has been very detailed about my facial service, every session was very skilful and relaxing for me. Overall, I received professional services and would recommend Xiu House! ',
+      'I have sensitive skin and the beautician Jean has been very detailed about my facial service, every session was very skilful and relaxing for me. Overall, I received professional services and would recommend! ',
     user: 'April',
   },
   {
