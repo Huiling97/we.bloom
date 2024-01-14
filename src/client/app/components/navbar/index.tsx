@@ -13,6 +13,7 @@ export const TABS_LIST = {
   home: '/',
   services: '/services',
   contact: '/contact',
+  shop: '/shop',
 };
 
 const NavBar = () => {
