@@ -6,6 +6,9 @@ jobs:
   run-jest-tests:
     name: Jest Tests
     runs-on: ubuntu-latest
+    env:
+      VITE_DATABASE_URL: ${{ secrets.VITE_DATABASE_URL }}
+      VITE_PROJECT_ID: ${{ secrets.VITE_PROJECT_ID }}
 
     steps:
       - name: Checkout under $GITHUB_WORKSPACE
@@ -19,5 +22,8 @@ jobs:
       - name: Install all dependencies
         run: npm install
 
-      - name: Run Jest Tests
-        run: npm run test
+      - name: Run Jest Tests with Firebase config
+        run: |
+          export VITE_DATABASE_URL=$VITE_DATABASE_URL
+          export VITE_PROJECT_ID=$VITE_PROJECT_ID
+          npm run test

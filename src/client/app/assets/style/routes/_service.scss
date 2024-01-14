@@ -1,7 +1,9 @@
-@import 'src/client/app/assets/style/_color.scss';
-
 .content-container {
   margin: 0 140px;
+
+  @include media('<=mobile') {
+    margin: 0;
+  }
 }
 
 .back-button {
@@ -9,4 +11,8 @@
   align-items: center;
   color: $grey-color;
   margin-bottom: 10px;
+
+  @include media('<=mobile') {
+    margin-left: 20px;
+  }
 }
