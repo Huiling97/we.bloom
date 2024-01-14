@@ -9,12 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { ArrowBackOutline } from '@styled-icons/evaicons-outline';
+import isDevEnv from '../util/is-dev-env';
 import { AuthContext } from '../store/auth-context';
 import { isPhoneValid } from '../util/phone-helper';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-const BASE_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000';
+const BASE_URL = isDevEnv
+  ? 'http://localhost:5000'
+  : import.meta.env.VITE_BASE_API_URL;
 
 const Login = () => {
   const navigate = useNavigate();
