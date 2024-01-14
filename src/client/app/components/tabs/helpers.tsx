@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../../types/form.ts';
 import { type CardCategoryProps } from '../../types/card/card-category.ts';
@@ -36,6 +37,15 @@ const displayServices = (
   deleteService: onDeleteServiceHandlerProps,
   editService: onEditServiceHandlerProps
 ) => {
+  if (isEmpty(services)) {
+    return (
+      <div className='list-item-empty'>
+        There are no services associated with this category yet.
+        <br />
+        Add some services now!
+      </div>
+    );
+  }
   return (
     <div className='tab-grid-container'>
       {services &&

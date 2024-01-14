@@ -23,7 +23,7 @@ export const formModalProps: ShowModalProps = {
   form: MockFormComponent,
   show: false,
   catgeoryData: cardGenericProps,
-  categories: [],
+  categoryTypes: [],
   service: cardDetailedProps,
 };
 
