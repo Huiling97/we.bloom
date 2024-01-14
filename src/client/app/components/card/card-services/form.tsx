@@ -16,14 +16,15 @@ import Form from 'react-bootstrap/Form';
 import ServiceDetailsForm from './details/form.tsx';
 import { displayCategoryOptions } from './helpers.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
+import { CategoriesContext } from '../../../store/categories-context.tsx';
 import { ServicesContext } from '../../../store/services-context.tsx';
 import { DetailsContext } from '../../../store/details-context.tsx';
-import { ref, set } from 'firebase/database';
+import { ref, set, update } from 'firebase/database';
 import { database } from '../../../../main.tsx';
 
 const CardServiceForm = ({
   formId,
-  categories,
+  categoryTypes,
   service,
 }: CardServiceFormProps) => {
   const {
@@ -33,6 +34,7 @@ const CardServiceForm = ({
     isFormCompleted,
     setIsFormCompleted,
   } = useContext(ModalContext);
+  const { categories } = useContext(CategoriesContext);
   const { services, setServices, updateService } = useContext(ServicesContext);
   const { details, setDetails, addDetails, deleteDetails } =
     useContext(DetailsContext);
@@ -232,7 +234,14 @@ const CardServiceForm = ({
         } else {
           updatedData = [data];
         }
+
+        const updateServicesCount =
+          categories[dropdownOption].servicesCount! + 1;
+
         set(ref(database, 'services/' + dropdownOption), updatedData);
+        update(ref(database, 'categories/' + dropdownOption), {
+          servicesCount: updateServicesCount,
+        });
         closeModal();
       }
     }
@@ -252,7 +261,7 @@ const CardServiceForm = ({
             <option value='' disabled={true}>
               Open this select menu
             </option>
-            {displayCategoryOptions(categories)}
+            {displayCategoryOptions(categoryTypes)}
           </Form.Select>
           <Form.Control.Feedback type='invalid'>
             Please select a category

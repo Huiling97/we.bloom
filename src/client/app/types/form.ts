@@ -4,7 +4,7 @@ import { type CardDetailsProps } from './card/card-service-details.ts';
 
 export type FormComponentProps = {
   formId: string;
-  categories: string[];
+  categoryTypes: string[];
   service: CardServiceFormInputProps;
   catgeoryData: CardCategoryProps;
 };
@@ -15,7 +15,7 @@ export type CardCategoryFormProps = {
 
 export type CardServiceFormProps = {
   formId: string;
-  categories: string[];
+  categoryTypes: string[];
   service: CardServiceFormInputProps;
 };
 
