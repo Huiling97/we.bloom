@@ -12,8 +12,8 @@ import { AuthContext } from '../../store/auth-context';
 export const TABS_LIST = {
   home: '/',
   services: '/services',
-  contact: '/contact',
   shop: '/shop',
+  contact: '/contact',
 };
 
 const NavBar = () => {
