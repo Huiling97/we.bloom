@@ -12,7 +12,6 @@ import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Manage from './app/routes/manage.tsx';
 import Login from './app/routes/login.tsx';
-import Shop from './app/routes/shop.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -71,15 +70,6 @@ function App() {
     {
       path: '/login',
       element: <Login />,
-    },
-    {
-      path: '/shop',
-      element: (
-        <>
-          <NavBar />
-          <Shop />
-        </>
-      ),
     },
   ]);
 
