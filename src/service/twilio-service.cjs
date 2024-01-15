@@ -1,3 +1,6 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+
 const accountSid = process.env.VITE_TWILIO_ACCOUNT_SID;
 const authToken = process.env.VITE_TWILIO_AUTH_TOKEN;
 const verifySid = process.env.VITE_TWILIO_VERIFY_SID;

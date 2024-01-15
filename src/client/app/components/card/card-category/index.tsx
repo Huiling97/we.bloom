@@ -8,7 +8,7 @@ const CardCategory = ({ name, image }: CardCategoryProps): ReactNode => {
       <Link to={`/services/${name}`}>
         <div className='card-image-overlay'></div>
         <img src={image} alt='category image' className='card-image' />
-        <div className='card-category-title'>{name.toUpperCase()}</div>
+        <div className='card-title'>{name.toUpperCase()}</div>
       </Link>
     </div>
   );

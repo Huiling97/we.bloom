@@ -12,7 +12,6 @@ import { AuthContext } from '../../store/auth-context';
 export const TABS_LIST = {
   home: '/',
   services: '/services',
-  shop: '/shop',
   contact: '/contact',
 };
 
