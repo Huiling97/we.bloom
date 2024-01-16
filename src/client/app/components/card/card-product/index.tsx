@@ -18,7 +18,7 @@ const CardProduct = () => {
   }, []);
 
   return (
-    <Row xs={1} md={4} className='g-4 m-2'>
+    <Row xs={1} md={4} className='card-product-container'>
       {allProducts.map((product) => {
         return (
           <Col key={product.id}>
