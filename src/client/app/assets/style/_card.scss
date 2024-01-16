@@ -34,7 +34,7 @@
   height: 200px;
 }
 
-.card-title {
+.card-category-title {
   font-family: 'Source Sans 3';
   font-size: 40px;
   font-weight: 500;
@@ -164,4 +164,9 @@
 .slick-prev:before {
   content: '<';
   color: $grey-medium-dark-color;
+}
+
+// product card
+.card-product-container {
+  margin: 0.5rem;
 }
