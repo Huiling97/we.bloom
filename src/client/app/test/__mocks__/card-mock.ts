@@ -39,3 +39,16 @@ export const cardDetailedProps: CardServiceFormInputProps = {
   description: 'Mock description',
   details: cardDetailsArrayProps,
 };
+
+export const cardProductMock = [
+  {
+    id: 1,
+    name: 'Radiant Glow Serum',
+    brand: 'Luminous Beauty',
+  },
+  {
+    id: 2,
+    name: 'Silk Elixir Moisturizer',
+    brand: 'Ethereal Elegance',
+  },
+];
