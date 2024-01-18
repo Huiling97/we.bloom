@@ -1,4 +1,4 @@
-export type CardProductProps = {
+export type ProductProps = {
   id: number;
   brand: string;
   category: string;
@@ -10,4 +10,8 @@ export type CardProductProps = {
   details: string;
   usage: string;
   ingredients: string;
+};
+
+export type CardProductProps = {
+  products: ProductProps[];
 };

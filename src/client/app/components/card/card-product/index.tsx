@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { fetchProducts } from './helpers';
-import { CardProductProps } from '../../../types/card/card-product';
+import {
+  type ProductProps,
+  type CardProductProps,
+} from '../../../types/card/card-product';
 
-const CardProduct = () => {
-  const [allProducts, setAllProducts] = useState<CardProductProps[]>([]);
-
-  useEffect(() => {
-    const getAllProducts = async () => {
-      const data = await fetchProducts();
-      setAllProducts(data);
-    };
-
-    getAllProducts();
-  }, []);
-
+const CardProduct = ({ products }: CardProductProps) => {
   return (
     <Row xs={1} md={4} className='card-product-container'>
-      {allProducts.map((product) => {
+      {products.map((product: ProductProps) => {
         return (
           <Col key={product.id}>
             <Card>

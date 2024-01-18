@@ -4,6 +4,7 @@ import { ModalContextProvider } from './modal-context';
 import { CategoriesContextProvider } from './categories-context';
 import { DetailsContextProvider } from './details-context';
 import { ServicesContextProvider } from './services-context';
+import { ProductsContextProvider } from './products-context';
 
 const AllProviders: React.FC<AllProvidersProps> = ({ children }) => {
   return (
@@ -11,7 +12,9 @@ const AllProviders: React.FC<AllProvidersProps> = ({ children }) => {
       <ModalContextProvider>
         <CategoriesContextProvider>
           <ServicesContextProvider>
-            <DetailsContextProvider>{children}</DetailsContextProvider>
+            <DetailsContextProvider>
+              <ProductsContextProvider>{children}</ProductsContextProvider>
+            </DetailsContextProvider>
           </ServicesContextProvider>
         </CategoriesContextProvider>
       </ModalContextProvider>

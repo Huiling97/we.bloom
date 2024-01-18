@@ -10,7 +10,9 @@ let container: HTMLElement;
 
 describe('CardProduct', () => {
   beforeEach(() => {
-    const { container: renderedContainer } = render(<CardProduct />);
+    const { container: renderedContainer } = render(
+      <CardProduct products={cardProductMock} />
+    );
 
     container = renderedContainer;
   });
