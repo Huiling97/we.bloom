@@ -1,6 +1,6 @@
 import { createContext, useReducer, type ReactNode } from 'react';
-import { type CardServiceObjectProps } from '../types/card/card-service.ts';
-import { type CardServiceFormInputProps } from '../types/form.ts';
+import { type CardServiceObjectProps } from '../types/components/card/card-service.ts';
+import { type CardServiceFormInputProps } from '../types/components/form.ts';
 import {
   ServicesContextProps,
   ServiceActionProps,

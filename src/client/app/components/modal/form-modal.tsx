@@ -1,7 +1,7 @@
 import { useContext, type FunctionComponent } from 'react';
-import { type CardServiceFormInputProps } from '../../types/form.ts';
-import { type CardCategoryProps } from '../../types/card/card-category.ts';
-import { type ShowModalProps } from '../../types/modal.ts';
+import { type CardServiceFormInputProps } from '../../types/components/form.ts';
+import { type CardCategoryProps } from '../../types/components/card/card-category.ts';
+import { type ShowModalProps } from '../../types/components/modal.ts';
 import Modal from 'react-bootstrap/Modal';
 import { ModalContext } from '../../store/modal-context.tsx';
 import { DetailsContext } from '../../store/details-context.tsx';

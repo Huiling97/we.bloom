@@ -3,7 +3,7 @@ import {
   type DetailsContextProps,
   type DetailsActionProps,
 } from '../types/context/details.ts';
-import { type CardDetailsProps } from '../types/card/card-service-details.ts';
+import { type CardDetailsProps } from '../types/components/card/card-service-details.ts';
 
 const DetailsContext = createContext<DetailsContextProps>({
   details: [],

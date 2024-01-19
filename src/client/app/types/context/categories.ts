@@ -1,7 +1,7 @@
 import {
   type CardCategoryProps,
   CardCategoryObjectProps,
-} from '../card/card-category.ts';
+} from '../components/card/card-category.ts';
 
 enum CategoryActionType {
   SET = 'SET',

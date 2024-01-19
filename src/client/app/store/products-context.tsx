@@ -3,7 +3,7 @@ import {
   type ProductsContextProps,
   type ProductsActionProps,
 } from '../types/context/products';
-import { type ProductProps } from '../types/card/card-product';
+import { type ProductProps } from '../types/components/card/card-product';
 
 const ProductsContext = createContext<ProductsContextProps>({
   products: [],

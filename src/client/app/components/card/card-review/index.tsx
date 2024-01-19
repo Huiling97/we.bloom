@@ -3,7 +3,7 @@ import { type ReactNode } from 'react';
 import {
   type CardReviewProps,
   type CardReviewsListProps,
-} from '../../../types/card/card-review.ts';
+} from '../../../types/components/card/card-review.ts';
 import { isMobile } from '../../../util/screen-size-helper.ts';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';

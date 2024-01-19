@@ -1,6 +1,6 @@
 import { useState, useContext, type FormEvent, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { type CardCategoryFormProps } from '../../../types/form.ts';
+import { type CardCategoryFormProps } from '../../../types/components/form.ts';
 import { ModalContext } from '../../../store/modal-context.tsx';
 import { CategoriesContext } from '../../../store/categories-context.tsx';
 import Button from 'react-bootstrap/Button';

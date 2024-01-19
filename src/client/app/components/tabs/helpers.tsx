@@ -1,13 +1,13 @@
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
-import { type CardServiceFormInputProps } from '../../types/form.ts';
-import { type CardCategoryProps } from '../../types/card/card-category.ts';
+import { type CardServiceFormInputProps } from '../../types/components/form.ts';
+import { type CardCategoryProps } from '../../types/components/card/card-category.ts';
 import {
   type onDeleteCategoryHandlerProps,
   type onEditHandlerCategoeyProps,
   type onDeleteServiceHandlerProps,
   type onEditServiceHandlerProps,
-} from '../../types/tabs.ts';
+} from '../../types/components/tabs.ts';
 import CardService from '../card/card-services/index.tsx';
 
 const serviceItem = (

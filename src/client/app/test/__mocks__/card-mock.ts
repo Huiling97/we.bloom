@@ -1,6 +1,6 @@
-import { type CardDetailsProps } from '../../types/card/card-service-details.ts';
-import { type CardServiceFormInputProps } from '../../types/form.ts';
-import { type CardCategoryProps } from '../../types/card/card-category.ts';
+import { type CardDetailsProps } from '../../types/components/card/card-service-details.ts';
+import { type CardServiceFormInputProps } from '../../types/components/form.ts';
+import { type CardCategoryProps } from '../../types/components/card/card-category.ts';
 
 export const cardGenericProps: CardCategoryProps = {
   id: '123',

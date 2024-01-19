@@ -1,4 +1,4 @@
-import { type BannerProps } from '../../types/banner.ts';
+import { type BannerProps } from '../../types/components/banner.ts';
 
 const Banner = ({ image, title, description }: BannerProps) => {
   return (

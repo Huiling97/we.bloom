@@ -1,4 +1,4 @@
-import { type CardServiceFormInputProps } from '../../types/form.ts';
+import { type CardServiceFormInputProps } from '../../types/components/form.ts';
 import { cardDetailsArrayProps } from './card-mock.ts';
 
 export const categoryArrayProps = [

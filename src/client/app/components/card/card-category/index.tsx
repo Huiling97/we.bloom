@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { type ReactNode } from 'react';
-import { type CardCategoryProps } from '../../../types/card/card-category';
+import { type CardCategoryProps } from '../../../types/components/card/card-category';
 
 const CardCategory = ({ name, image }: CardCategoryProps): ReactNode => {
   return (
