@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-const DisplayServices = () => {
+const DisplayOutlet = () => {
   return <Outlet />;
 };
 
-export default DisplayServices;
+export default DisplayOutlet;
