@@ -3,16 +3,17 @@ import AllProviders from './app/store/index.tsx';
 
 import Home from './app/routes/home.tsx';
 import Contact from './app/routes/contact.tsx';
-import DisplayServices from './app/routes/services/index.tsx';
+import DisplayOutlet from './app/routes/outlet.tsx';
 import AllServices from './app/routes/services/all-services.tsx';
 import Service from './app/routes/services/service.tsx';
 import Error from './app/routes/error.tsx';
 import NavBar from './app/components/navbar/index.tsx';
 import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
-import Manage from './app/routes/manage.tsx';
+import ManageCategories from './app/routes/manage/manage-categories.tsx';
 import Login from './app/routes/login.tsx';
 import Shop from './app/routes/shop.tsx';
+import ManageActions from './app/routes/manage/index.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -32,7 +33,7 @@ function App() {
       element: (
         <>
           <NavBar />
-          <DisplayServices />
+          <DisplayOutlet />
           <Footer />
         </>
       ),
@@ -73,9 +74,20 @@ function App() {
       element: (
         <>
           <AdminNavBar />
-          <Manage />
+          <DisplayOutlet />
         </>
       ),
+      errorElement: <Error />,
+      children: [
+        {
+          path: '',
+          element: <ManageActions />,
+        },
+        {
+          path: 'categories-and-services',
+          element: <ManageCategories />,
+        },
+      ],
     },
     {
       path: '/login',
