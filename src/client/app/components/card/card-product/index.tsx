@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import {
   type ProductProps,
   type CardProductProps,
-} from '../../../types/card/card-product';
+} from '../../../types/components/card/card-product';
 
 const CardProduct = ({ products }: CardProductProps) => {
   return (

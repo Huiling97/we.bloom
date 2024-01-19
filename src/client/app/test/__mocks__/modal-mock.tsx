@@ -1,6 +1,9 @@
 import { useContext, type FunctionComponent } from 'react';
-import { type ShowModalProps, type DeleteModalProps } from '../../types/modal';
-import { type FormComponentProps } from '../../types/form';
+import {
+  type ShowModalProps,
+  type DeleteModalProps,
+} from '../../types/components/modal';
+import { type FormComponentProps } from '../../types/components/form';
 import { cardGenericProps, cardDetailedProps } from './card-mock';
 import { ModalContext } from '../../store/modal-context';
 

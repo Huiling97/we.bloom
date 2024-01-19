@@ -2,7 +2,7 @@ import { createContext, useReducer, type ReactNode } from 'react';
 import {
   type CardCategoryProps,
   type CardCategoryObjectProps,
-} from '../types/card/card-category.ts';
+} from '../types/components/card/card-category.ts';
 
 import {
   type CategoriesContextProps,

@@ -1,5 +1,5 @@
 import { type ChangeEvent } from 'react';
-import { type SearchBarProps } from '../../types/search';
+import { type SearchBarProps } from '../../types/components/search';
 
 const SearchBar = ({ searchInput, setSearchInput }: SearchBarProps) => {
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

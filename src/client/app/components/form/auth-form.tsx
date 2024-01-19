@@ -1,6 +1,6 @@
 import { useState, useContext, type FormEvent, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { type AuthFormProps } from '../../types/form.ts';
+import { type AuthFormProps } from '../../types/components/form.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { CategoriesContext } from '../../store/categories-context.tsx';

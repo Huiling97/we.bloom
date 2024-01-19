@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { TabsTopProps } from '../../../types/tabs';
+import { TabsTopProps } from '../../../types/components/tabs';
 import CardProduct from '../../card/card-product';
 
 const TabsTop = ({ categories, products }: TabsTopProps) => {

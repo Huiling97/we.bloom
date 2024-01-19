@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { type AlertDismissibleProps } from '../../types/alert';
+import { type AlertDismissibleProps } from '../../types/components/alert';
 import Alert from 'react-bootstrap/Alert';
 
 function AlertDismissible({ text, showAlert }: AlertDismissibleProps) {

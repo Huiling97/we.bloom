@@ -1,4 +1,4 @@
-import { type CardDetailsProps } from '../../../../types/card/card-service-details';
+import { type CardDetailsProps } from '../../../../types/components/card/card-service-details';
 
 const CardDetails = (details: CardDetailsProps) => {
   const { duration, price } = details;

@@ -5,8 +5,8 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { type ServiceDetailsFormProps } from '../../../../types/form.ts';
-import { type CardDetailsProps } from '../../../../types/card/card-service-details.ts';
+import { type ServiceDetailsFormProps } from '../../../../types/components/form.ts';
+import { type CardDetailsProps } from '../../../../types/components/card/card-service-details.ts';
 import { ModalContext } from '../../../../store/modal-context.tsx';
 import { DetailsContext } from '../../../../store/details-context.tsx';
 import Form from 'react-bootstrap/Form';

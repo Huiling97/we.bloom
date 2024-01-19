@@ -6,11 +6,11 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { type CardDetailsProps } from '../../../types/card/card-service-details.ts';
+import { type CardDetailsProps } from '../../../types/components/card/card-service-details.ts';
 import {
   type CardServiceFormProps,
   type CardServiceFormInputProps,
-} from '../../../types/form.ts';
+} from '../../../types/components/form.ts';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ServiceDetailsForm from './details/form.tsx';

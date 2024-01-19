@@ -1,4 +1,4 @@
-import { ProductProps } from '../card/card-product';
+import { ProductProps } from '../components/card/card-product';
 
 enum ProductsActionType {
   SET = 'SET',

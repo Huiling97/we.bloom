@@ -1,5 +1,5 @@
-import { type CardServiceObjectProps } from '../card/card-service.ts';
-import { type CardServiceFormInputProps } from '../form.ts';
+import { type CardServiceObjectProps } from '../components/card/card-service.ts';
+import { type CardServiceFormInputProps } from '../components/form.ts';
 
 enum ServiceActionType {
   SET = 'SET',

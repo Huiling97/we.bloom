@@ -1,4 +1,4 @@
-import { type CardDetailsProps } from '../card/card-service-details.ts';
+import { type CardDetailsProps } from '../components/card/card-service-details.ts';
 
 enum DetailsActionType {
   SET = 'SET',

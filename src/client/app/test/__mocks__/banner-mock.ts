@@ -1,4 +1,4 @@
-import { type BannerProps } from '../../types/banner.ts';
+import { type BannerProps } from '../../types/components/banner.ts';
 
 export const bannerProps: BannerProps = {
   image: 'mock-image',

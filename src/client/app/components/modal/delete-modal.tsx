@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { type DeleteModalProps } from '../../types/modal.ts';
+import { type DeleteModalProps } from '../../types/components/modal.ts';
 import { CategoriesContext } from '../../store/categories-context.tsx';
 import { getCategoryById } from '../../util/category-helper.ts';
 import { ref, set } from 'firebase/database';
