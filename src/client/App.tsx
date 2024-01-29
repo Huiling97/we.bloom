@@ -13,7 +13,7 @@ import Footer from './app/components/footer/index.tsx';
 import ManageCategories from './app/routes/manage/manage-categories.tsx';
 import Login from './app/routes/login.tsx';
 import Shop from './app/routes/shop.tsx';
-import ManageActions from './app/routes/manage/index.tsx';
+import ManageActions from './app/routes/manage/manage-actions.tsx';
 
 function App() {
   const router = createBrowserRouter([
