@@ -10,10 +10,11 @@ import Error from './app/routes/error.tsx';
 import NavBar from './app/components/navbar/index.tsx';
 import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
-import ManageCategories from './app/routes/manage/manage-categories.tsx';
 import Login from './app/routes/login.tsx';
 import Shop from './app/routes/shop.tsx';
 import ManageActions from './app/routes/manage/manage-actions.tsx';
+import ManageCategories from './app/routes/manage/manage-categories.tsx';
+import ManageProducts from './app/routes/manage/manage-products.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -55,6 +56,7 @@ function App() {
         <>
           <NavBar />
           <Shop />
+          <Footer />
         </>
       ),
     },
@@ -86,6 +88,10 @@ function App() {
         {
           path: 'categories-and-services',
           element: <ManageCategories />,
+        },
+        {
+          path: 'products',
+          element: <ManageProducts />,
         },
       ],
     },
