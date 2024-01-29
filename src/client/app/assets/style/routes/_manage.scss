@@ -1,3 +1,37 @@
+.manage-actions-container {
+  display: flex;
+  position: relative;
+}
+
+.actions-title {
+  text-align: center;
+  margin: 20px 0;
+  color: $grey-dark-color;
+}
+
+.action-link {
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-image {
+  width: 60%;
+  height: auto;
+  border: 1px solid $grey-color;
+  border-radius: 5px;
+  opacity: 60%;
+}
+
+.action-name {
+  position: absolute;
+  z-index: 1;
+  font-size: 24px;
+  color: $grey-dark-color;
+}
+
 .manage-page-container {
   margin: 0 5px;
   display: flex;

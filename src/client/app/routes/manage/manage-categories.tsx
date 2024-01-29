@@ -1,29 +1,26 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
-import { type CardServiceFormInputProps } from '../types/components/form.ts';
-import { type CardCategoryProps } from '../types/components/card/card-category.ts';
-import DeleteModal from '../components/modal/delete-modal.tsx';
-import ShowModal from '../components/modal/form-modal.tsx';
-import CardCategoryForm from '../components/card/card-category/form.tsx';
-import CardServiceForm from '../components/card/card-services/form.tsx';
-import TabSwitch from '../components/tabs/index.tsx';
-import AuthForm from '../components/form/auth-form.tsx';
-import fetchCategoriesData from '../util/fetch-categories.ts';
-import fetchServicesData from '../util/fetch-services.ts';
-import { isProtectedCategory } from '../util/auth-helper.ts';
-import { ModalContext } from '../store/modal-context.tsx';
-import { ServicesContext } from '../store/services-context.tsx';
-import { DetailsContext } from '../store/details-context.tsx';
-import { AuthContext } from '../store/auth-context.tsx';
+import { type CardServiceFormInputProps } from '../../types/components/form.ts';
+import { type CardCategoryProps } from '../../types/components/card/card-category.ts';
+import DeleteModal from '../../components/modal/delete-modal.tsx';
+import ShowModal from '../../components/modal/form-modal.tsx';
+import CardCategoryForm from '../../components/card/card-category/form.tsx';
+import CardServiceForm from '../../components/card/card-services/form.tsx';
+import TabSwitch from '../../components/tabs/index.tsx';
+import AuthForm from '../../components/form/auth-form.tsx';
+import fetchCategoriesData from '../../util/fetch-categories.ts';
+import fetchServicesData from '../../util/fetch-services.ts';
+import { isProtectedCategory } from '../../util/auth-helper.ts';
+import { ModalContext } from '../../store/modal-context.tsx';
+import { ServicesContext } from '../../store/services-context.tsx';
+import { DetailsContext } from '../../store/details-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, set, update } from 'firebase/database';
-import { database } from '../../main.tsx';
+import { database } from '../../../main.tsx';
 
 const Manage = () => {
   const formId = uuidv4();
-  const navigate = useNavigate();
 
   const {
     isLoading: isLoadingCategories,
@@ -42,7 +39,6 @@ const Manage = () => {
   } = useContext(ModalContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
-  const { isAuthenticated } = useContext(AuthContext);
 
   const [deleteCategoryId, setDeleteCategoryId] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -116,12 +112,6 @@ const Manage = () => {
     setServiceDate(data);
     setDetails(data.details);
   };
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, []);
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Manage from '../../../../routes/manage';
+import Manage from '../../../../../routes/manage/manage-categories';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Manage', () => {
