@@ -15,7 +15,6 @@ export type CardCategoryFormProps = {
 
 export type CardServiceFormProps = {
   formId: string;
-  categoryTypes: string[];
   service: CardServiceFormInputProps;
 };
 
