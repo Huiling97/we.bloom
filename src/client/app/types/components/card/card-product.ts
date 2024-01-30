@@ -4,8 +4,6 @@ export type ProductProps = {
   category: string;
   name: string;
   size: string;
-  rating: number;
-  reviews_count: number;
   price: number;
   details: string;
   usage: string;
