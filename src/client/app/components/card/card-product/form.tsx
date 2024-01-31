@@ -123,9 +123,9 @@ const CardProductForm = () => {
       />
 
       <Row className='mb-3'>
-        <InputGroup as={Col}>
+        <Form.Group as={Col}>
           <Form.Label>Price</Form.Label>
-          <div className='add-on-container'>
+          <InputGroup className='mb-3'>
             <InputGroup.Text className='border-radius-right-none'>
               $
             </InputGroup.Text>
@@ -137,14 +137,14 @@ const CardProductForm = () => {
               onChange={onChangeHandler}
               className='border-radius-left-none'
             />
-          </div>
-          <Form.Control.Feedback type='invalid'>
-            Please provide a price
-          </Form.Control.Feedback>
-        </InputGroup>
-        <InputGroup as={Col}>
+            <Form.Control.Feedback type='invalid'>
+              Please provide a price
+            </Form.Control.Feedback>
+          </InputGroup>
+        </Form.Group>
+        <Form.Group as={Col}>
           <Form.Label>Size</Form.Label>
-          <div className='add-on-container'>
+          <InputGroup className='mb-3'>
             <Form.Control
               type='number'
               name='size'
@@ -155,9 +155,10 @@ const CardProductForm = () => {
             <InputGroup.Text className='border-radius-left-none'>
               ml
             </InputGroup.Text>
-          </div>
-        </InputGroup>
+          </InputGroup>
+        </Form.Group>
       </Row>
+
       <Form.Group className='mb-3' controlId='details'>
         <Form.Label>Details</Form.Label>
         <Form.Control
@@ -168,6 +169,7 @@ const CardProductForm = () => {
           onChange={onChangeHandler}
         />
       </Form.Group>
+
       <Form.Group className='mb-3' controlId='how_to_use'>
         <Form.Label>How to use</Form.Label>
         <Form.Control
@@ -178,6 +180,7 @@ const CardProductForm = () => {
           onChange={onChangeHandler}
         />
       </Form.Group>
+
       <Form.Group className='mb-3' controlId='ingredients'>
         <Form.Label>Ingredients</Form.Label>
         <Form.Control
@@ -188,6 +191,7 @@ const CardProductForm = () => {
           onChange={onChangeHandler}
         />
       </Form.Group>
+
       <Button variant='secondary' onClick={closeModalHandler}>
         Close
       </Button>
