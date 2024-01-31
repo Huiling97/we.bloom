@@ -6,8 +6,6 @@ import CardProductForm from '../card/card-product/form';
 const ProductModal = () => {
   const { showModal, setShowModal } = useContext(ModalContext);
 
-  console.log('showModal in product modal', showModal);
-
   const closeModalHandler = () => {
     setShowModal(false);
   };
