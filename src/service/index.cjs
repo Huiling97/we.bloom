@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 const { twilioRequestHandler } = require('./twilio-service.cjs');
-const { productsRequestHandler } = require('./products-service.cjs');
+const { productsRequestHandler } = require('./products-service/index.cjs');
 
 const allowlist = ['http://localhost:8080', 'https://we-bloom.onrender.com'];
 const corsOptionsDelegate = function (req, callback) {
@@ -20,6 +20,7 @@ const corsOptionsDelegate = function (req, callback) {
 };
 
 app.use(cors(corsOptionsDelegate));
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.status(200).send({
@@ -29,6 +30,11 @@ app.get('/', (req, res) => {
 
 twilioRequestHandler(app);
 productsRequestHandler(app);
+
+app.use((err, req, res) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke');
+});
 
 app.listen(5000, () => {
   console.log('Server is running on port 5000');

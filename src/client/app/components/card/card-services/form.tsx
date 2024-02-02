@@ -14,7 +14,7 @@ import {
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ServiceDetailsForm from './details/form.tsx';
-import { displayCategoryOptions } from './helpers.tsx';
+import Dropdown from '../../dropdown/index.tsx';
 import { ModalContext } from '../../../store/modal-context.tsx';
 import { CategoriesContext } from '../../../store/categories-context.tsx';
 import { ServicesContext } from '../../../store/services-context.tsx';
@@ -22,11 +22,7 @@ import { DetailsContext } from '../../../store/details-context.tsx';
 import { ref, set, update } from 'firebase/database';
 import { database } from '../../../../main.tsx';
 
-const CardServiceForm = ({
-  formId,
-  categoryTypes,
-  service,
-}: CardServiceFormProps) => {
+const CardServiceForm = ({ formId, service }: CardServiceFormProps) => {
   const {
     setShowModal,
     isEditModal,
@@ -65,11 +61,6 @@ const CardServiceForm = ({
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
   const [isEditingCompleted, setIsEditingCompleted] = useState(false);
   const [enableAddDetailsBtn, setEnableAddDetailsBtn] = useState(false);
-
-  const onDropdownChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    setDropdownOption(e.target.value);
-    setIsDropdownInvalid(false);
-  };
 
   const onTextChangeHandler = (e: FormEvent) => {
     const { name, value } = e.target as HTMLInputElement;
@@ -250,23 +241,13 @@ const CardServiceForm = ({
   return (
     <Form noValidate validated={validated} onSubmit={submitFormHandler}>
       <div className='form-container'>
-        <Form.Group controlId='category'>
-          <Form.Label>Select a category:</Form.Label>
-          <Form.Select
-            onChange={onDropdownChangeHandler}
-            value={isEditModal ? service.category : dropdownOption}
-            isInvalid={isDropdownInvalid}
-            disabled={isEditModal}
-          >
-            <option value='' disabled={true}>
-              Open this select menu
-            </option>
-            {displayCategoryOptions(categoryTypes)}
-          </Form.Select>
-          <Form.Control.Feedback type='invalid'>
-            Please select a category
-          </Form.Control.Feedback>
-        </Form.Group>
+        <Dropdown
+          dropdownOption={dropdownOption}
+          setDropdownOption={setDropdownOption}
+          isDropdownInvalid={isDropdownInvalid}
+          setIsDropdownInvalid={setIsDropdownInvalid}
+          selectedCategory={service.category}
+        />
         <Form.Group controlId='name'>
           <Form.Label>Name</Form.Label>
           <Form.Control

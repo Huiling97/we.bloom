@@ -25,7 +25,7 @@ const Manage = () => {
   const {
     isLoading: isLoadingCategories,
     categories,
-    categoryType,
+    categoryTypes,
   } = fetchCategoriesData();
   const { isLoading: isLoadingServices, services } = fetchServicesData('');
 
@@ -167,7 +167,7 @@ const Manage = () => {
                 form={CardServiceForm}
                 formId={formId}
                 show={showModal}
-                categoryTypes={categoryType}
+                categoryTypes={categoryTypes}
                 service={serviceData as CardServiceFormInputProps}
               />
             )}

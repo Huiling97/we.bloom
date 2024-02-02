@@ -25,6 +25,7 @@ describe('Shop', () => {
             <ProductsContext.Provider
               value={{
                 products: cardProductMock,
+                addProducts: jest.fn(),
                 setProducts: jest.fn(),
               }}
             >
@@ -53,6 +54,7 @@ describe('Shop', () => {
             <ProductsContext.Provider
               value={{
                 products: [],
+                addProducts: jest.fn(),
                 setProducts: jest.fn(),
               }}
             >
@@ -81,6 +83,7 @@ describe('Shop', () => {
             <ProductsContext.Provider
               value={{
                 products: [],
+                addProducts: jest.fn(),
                 setProducts: jest.fn(),
               }}
             >
@@ -111,6 +114,7 @@ describe('Shop', () => {
             <ProductsContext.Provider
               value={{
                 products: cardProductMock,
+                addProducts: jest.fn(),
                 setProducts: jest.fn(),
               }}
             >

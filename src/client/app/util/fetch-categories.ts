@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { type CardCategoryObjectProps } from '../types/components/card/card-category.ts';
 import { CategoriesContext } from '../store/categories-context.tsx';
+import { CategoryTypesContext } from '../store/category-types-context.tsx';
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 
 const fetchCategoriesData = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryType, setCategoryType] = useState<string[]>([]);
+  const { categoryTypes, setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const fetchCategoriesData = () => {
           const data = snapshot.val() as CardCategoryObjectProps;
           if (data) {
             const updatedTypes = Object.keys(data);
-            setCategoryType(updatedTypes);
+            setCategoryTypes(updatedTypes);
             setCategories(data);
           }
         } else {
@@ -32,7 +33,7 @@ const fetchCategoriesData = () => {
     }
   }, []);
 
-  return { isLoading, categories, categoryType };
+  return { isLoading, categories, categoryTypes };
 };
 
 export default fetchCategoriesData;
