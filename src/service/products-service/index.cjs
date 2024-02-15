@@ -1,4 +1,4 @@
-const { getProducts, addProduct } = require('./database.cjs');
+const { getProducts, addProduct, deleteProduct } = require('./database.cjs');
 
 const productsRequestHandler = (app) => {
   app.get('/api/v1/products/all', async (req, res) => {
@@ -29,6 +29,13 @@ const productsRequestHandler = (app) => {
       ingredients
     );
     res.status(201).send(addedProduct);
+  });
+
+  app.delete('/api/v1/products/all/:id', async (req, res) => {
+    const productId = req.params.id;
+
+    await deleteProduct(productId);
+    res.status(200).json('Product has been deleted successfully');
   });
 };
 

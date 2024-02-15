@@ -8,32 +8,64 @@ import { cardProductMock } from '../../../../__mocks__/card-mock';
 
 jest.mock('../../../../../components/card/card-product/helpers');
 
+const renderEmptyContext = () => {
+  return render(
+    <MemoryRouter>
+      <CategoriesContext.Provider
+        value={{
+          categories: {},
+          setCategories: jest.fn(),
+          addCategory: jest.fn(),
+          updateCategory: jest.fn(),
+          deleteCategory: jest.fn(),
+        }}
+      >
+        <ProductsContext.Provider
+          value={{
+            products: [],
+            setProducts: jest.fn(),
+            addProducts: jest.fn(),
+            deleteProduct: jest.fn(),
+          }}
+        >
+          <ManageProducts />
+        </ProductsContext.Provider>
+      </CategoriesContext.Provider>
+    </MemoryRouter>
+  );
+};
+
+const renderMockedContext = () => {
+  return render(
+    <MemoryRouter>
+      <CategoriesContext.Provider
+        value={{
+          categories: categoriesMock,
+          setCategories: jest.fn(),
+          addCategory: jest.fn(),
+          updateCategory: jest.fn(),
+          deleteCategory: jest.fn(),
+        }}
+      >
+        <ProductsContext.Provider
+          value={{
+            products: cardProductMock,
+            setProducts: jest.fn(),
+            addProducts: jest.fn(),
+            deleteProduct: jest.fn(),
+          }}
+        >
+          <ManageProducts />
+        </ProductsContext.Provider>
+      </CategoriesContext.Provider>
+    </MemoryRouter>
+  );
+};
+
 describe('ManageProducts', () => {
   describe('while feteching data', () => {
-    beforeEach(() => {
-      render(
-        <MemoryRouter>
-          <CategoriesContext.Provider
-            value={{
-              categories: {},
-              setCategories: jest.fn(),
-              addCategory: jest.fn(),
-              updateCategory: jest.fn(),
-              deleteCategory: jest.fn(),
-            }}
-          >
-            <ProductsContext.Provider
-              value={{
-                products: [],
-                addProducts: jest.fn(),
-                setProducts: jest.fn(),
-              }}
-            >
-              <ManageProducts />
-            </ProductsContext.Provider>
-          </CategoriesContext.Provider>
-        </MemoryRouter>
-      );
+    beforeAll(() => {
+      renderEmptyContext();
     });
 
     it('should display loading spinner', () => {
@@ -53,29 +85,7 @@ describe('ManageProducts', () => {
 
   describe('displays content when data is fetched', () => {
     beforeEach(() => {
-      render(
-        <MemoryRouter>
-          <CategoriesContext.Provider
-            value={{
-              categories: categoriesMock,
-              setCategories: jest.fn(),
-              addCategory: jest.fn(),
-              updateCategory: jest.fn(),
-              deleteCategory: jest.fn(),
-            }}
-          >
-            <ProductsContext.Provider
-              value={{
-                products: cardProductMock,
-                addProducts: jest.fn(),
-                setProducts: jest.fn(),
-              }}
-            >
-              <ManageProducts />
-            </ProductsContext.Provider>
-          </CategoriesContext.Provider>
-        </MemoryRouter>
-      );
+      renderMockedContext();
     });
 
     it('should not display loading spinner', () => {

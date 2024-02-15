@@ -25,11 +25,12 @@ describe('Shop', () => {
             <ProductsContext.Provider
               value={{
                 products: cardProductMock,
-                addProducts: jest.fn(),
                 setProducts: jest.fn(),
+                addProducts: jest.fn(),
+                deleteProduct: jest.fn(),
               }}
             >
-              <Shop />
+              <Shop areActionsEnabled={false} />
             </ProductsContext.Provider>
           </CategoriesContext.Provider>
         </MemoryRouter>
@@ -56,9 +57,10 @@ describe('Shop', () => {
                 products: [],
                 addProducts: jest.fn(),
                 setProducts: jest.fn(),
+                deleteProduct: jest.fn(),
               }}
             >
-              <Shop />
+              <Shop areActionsEnabled={false} />
             </ProductsContext.Provider>
           </CategoriesContext.Provider>
         </MemoryRouter>
@@ -85,9 +87,10 @@ describe('Shop', () => {
                 products: [],
                 addProducts: jest.fn(),
                 setProducts: jest.fn(),
+                deleteProduct: jest.fn(),
               }}
             >
-              <Shop />
+              <Shop areActionsEnabled={false} />
             </ProductsContext.Provider>
           </CategoriesContext.Provider>
         </MemoryRouter>
@@ -114,11 +117,12 @@ describe('Shop', () => {
             <ProductsContext.Provider
               value={{
                 products: cardProductMock,
-                addProducts: jest.fn(),
                 setProducts: jest.fn(),
+                addProducts: jest.fn(),
+                deleteProduct: jest.fn(),
               }}
             >
-              <Shop />
+              <Shop areActionsEnabled={false} />
             </ProductsContext.Provider>
           </CategoriesContext.Provider>
         </MemoryRouter>
