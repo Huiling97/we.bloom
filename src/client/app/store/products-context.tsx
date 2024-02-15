@@ -9,6 +9,7 @@ const ProductsContext = createContext<ProductsContextProps>({
   products: [],
   setProducts: () => {},
   addProducts: () => {},
+  deleteProduct: () => {},
 });
 
 const productsReducer = (
@@ -20,6 +21,8 @@ const productsReducer = (
       return action.payload as ProductProps[];
     case 'ADD':
       return [...state, action.payload] as ProductProps[];
+    case 'DELETE':
+      return state.filter((product) => product.id !== action.payload);
     default:
       return state;
   }
@@ -36,10 +39,15 @@ const ProductsContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'ADD', payload: productData });
   };
 
+  const deleteProduct = (id: number) => {
+    dispatch({ type: 'DELETE', payload: id });
+  };
+
   const value = {
     products: productsState,
     setProducts: setProducts,
     addProducts: addProducts,
+    deleteProduct: deleteProduct,
   };
 
   return (
