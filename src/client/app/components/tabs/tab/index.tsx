@@ -4,7 +4,11 @@ import Tabs from 'react-bootstrap/Tabs';
 import { TabsTopProps } from '../../../types/components/tabs';
 import CardProduct from '../../card/card-product';
 
-const TabsTop = ({ categories, products }: TabsTopProps) => {
+const TabsTop = ({
+  categories,
+  products,
+  areActionsEnabled,
+}: TabsTopProps & { areActionsEnabled: boolean }) => {
   const [key, setKey] = useState('all');
 
   const displayCategoryContent = () =>
@@ -14,12 +18,11 @@ const TabsTop = ({ categories, products }: TabsTopProps) => {
     categories &&
     Object.keys(categories).map((type) => {
       return (
-        <Tab
-          key={`${type}`}
-          eventKey={`${type}`}
-          title={`${type.toUpperCase()}`}
-        >
-          <CardProduct products={displayCategoryContent()} />
+        <Tab key={type} eventKey={type} title={type.toUpperCase()}>
+          <CardProduct
+            products={displayCategoryContent()}
+            areActionsEnabled={areActionsEnabled}
+          />
         </Tab>
       );
     });
@@ -27,7 +30,10 @@ const TabsTop = ({ categories, products }: TabsTopProps) => {
   return (
     <Tabs activeKey={key} onSelect={(k) => setKey(k!)} className='mb-3'>
       <Tab eventKey='all' title='All'>
-        <CardProduct products={products} />
+        <CardProduct
+          products={products}
+          areActionsEnabled={areActionsEnabled}
+        />
       </Tab>
       {displayCategory()}
     </Tabs>

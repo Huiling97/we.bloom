@@ -29,7 +29,7 @@ const ManageProducts = () => {
           <ProductModal />
         </div>
       )}
-      <Shop />
+      <Shop areActionsEnabled={true} />
     </div>
   );
 };

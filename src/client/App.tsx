@@ -55,7 +55,7 @@ function App() {
       element: (
         <>
           <NavBar />
-          <Shop />
+          <Shop areActionsEnabled={false} />
           <Footer />
         </>
       ),
