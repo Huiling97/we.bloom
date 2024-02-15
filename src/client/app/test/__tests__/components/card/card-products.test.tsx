@@ -11,7 +11,7 @@ let container: HTMLElement;
 describe('CardProduct', () => {
   beforeEach(() => {
     const { container: renderedContainer } = render(
-      <CardProduct products={cardProductMock} />
+      <CardProduct products={cardProductMock} areActionsEnabled={false} />
     );
 
     container = renderedContainer;
@@ -40,6 +40,28 @@ describe('CardProduct', () => {
       expect(title).toHaveLength(2);
       expect(screen.getByText(cardProductMock[0].name)).toBeInTheDocument();
       expect(screen.getByText(cardProductMock[1].name)).toBeInTheDocument();
+    });
+  });
+
+  describe('are actions enabled for card', () => {
+    it('should render Card component without actions enabled given areActionsEnabled is false', () => {
+      render(
+        <CardProduct products={cardProductMock} areActionsEnabled={false} />
+      );
+
+      const deleteBtn = screen.queryAllByRole('button', { name: /Delete/i });
+
+      expect(deleteBtn).toHaveLength(0);
+    });
+
+    it('should render Card component with actions enabled given areActionsEnabled is true', () => {
+      render(
+        <CardProduct products={cardProductMock} areActionsEnabled={true} />
+      );
+
+      const deleteBtn = screen.getAllByRole('button', { name: /Delete/i });
+
+      expect(deleteBtn).toHaveLength(2);
     });
   });
 });
