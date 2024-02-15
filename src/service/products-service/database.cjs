@@ -55,4 +55,12 @@ const addProduct = async (
   return getProduct(id);
 };
 
-module.exports = { getProducts, addProduct };
+const deleteProduct = async (productId) => {
+  const q = `DELETE FROM products WHERE id = ?`;
+
+  await db.query(q, [productId]);
+  const [rows] = await db.query(q, [productId]);
+  return getProducts();
+};
+
+module.exports = { getProducts, addProduct, deleteProduct };
