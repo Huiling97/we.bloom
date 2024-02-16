@@ -1,9 +1,25 @@
-const { getProducts, addProduct, deleteProduct } = require('./database.cjs');
+const {
+  getProducts,
+  getProduct,
+  addProduct,
+  deleteProduct,
+} = require('./database.cjs');
 
 const productsRequestHandler = (app) => {
   app.get('/api/v1/products/all', async (req, res) => {
     const products = await getProducts();
     res.status(200).send(products);
+  });
+
+  app.get('/api/v1/products/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const selectedProduct = await getProduct(id);
+    if (selectedProduct) {
+      res.status(200).send(selectedProduct);
+    } else {
+      res.status(404).send({ error: 'Product not found' });
+    }
   });
 
   app.post('/api/v1/products/all', async (req, res) => {
