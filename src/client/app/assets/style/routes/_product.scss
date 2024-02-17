@@ -1,14 +1,30 @@
+.product-content-container {
+  margin: 10px 50px;
+}
+
 .product-container-main {
   display: flex;
+  margin: 20px 0;
+  height: 400px;
 }
 
 .product-details-container {
-  flex-direction: column;
+  padding: 0 50px;
+  flex-grow: 2;
 
-  .product-title {
+  .product-name {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: $font-bold-600;
   }
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: $brown-light-color;
+  border-radius: 5px;
 }
 
 .font-bold {
@@ -16,5 +32,6 @@
 }
 
 .product-image {
-  width: 30%;
+  width: 80%;
+  padding: 0 20px;
 }

@@ -105,6 +105,10 @@ function App() {
       path: '/login',
       element: <Login />,
     },
+    {
+      path: '/error',
+      element: <Error />,
+    },
   ]);
 
   return (
