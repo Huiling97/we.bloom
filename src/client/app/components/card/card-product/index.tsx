@@ -35,7 +35,10 @@ const CardProduct = ({
         return (
           <Col key={productId}>
             <Card>
-              <Link to={`/shop/${productId}`}>
+              <Link
+                to={`/shop/${productId}`}
+                className='link-no-decoration link-grey'
+              >
                 <Card.Img variant='top' src='image4.jpg' />
                 <Card.Body>
                   <Card.Title>{product.name}</Card.Title>
