@@ -14,11 +14,15 @@ const productsRequestHandler = (app) => {
   app.get('/api/v1/products/:id', async (req, res) => {
     const { id } = req.params;
 
+    if (isNaN(id)) {
+      return res.status(400).send({ error: `Invalid product id: ${id}` });
+    }
+
     const selectedProduct = await getProduct(id);
     if (selectedProduct) {
       res.status(200).send(selectedProduct);
     } else {
-      res.status(404).send({ error: 'Product not found' });
+      res.status(404).send({ error: `Product ${id} not found` });
     }
   });
 
