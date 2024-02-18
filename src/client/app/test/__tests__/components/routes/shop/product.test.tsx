@@ -7,7 +7,7 @@ import Error from '../../../../../routes/error';
 import { ProductsContext } from '../../../../../store/products-context';
 import { mockProductsContextValue } from '../../../../__mocks__/store/products-context-mock';
 
-const renderContent = () => {
+const renderContentWithValidId = () => {
   return render(
     <MemoryRouter initialEntries={['/shop/1']}>
       <ProductsContext.Provider value={mockProductsContextValue}>
@@ -24,7 +24,7 @@ describe('Product', () => {
   describe('given valid id', () => {
     describe('should render product details', () => {
       beforeEach(() => {
-        renderContent();
+        renderContentWithValidId();
       });
 
       it('should render product image', async () => {
@@ -69,7 +69,7 @@ describe('Product', () => {
     });
 
     it('should render back to shop button with correct link', () => {
-      renderContent();
+      renderContentWithValidId();
 
       const backBtn = screen.getByRole('link', {
         name: /Back to all products/i,
