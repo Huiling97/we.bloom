@@ -86,7 +86,7 @@ describe('Product', () => {
   });
 
   describe('given invalid id', () => {
-    it('should redirect to error page given invalid id', () => {
+    it('should redirect to error page', () => {
       const history = createMemoryHistory();
       history.push('/shop/invalidId');
 
