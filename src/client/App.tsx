@@ -12,6 +12,7 @@ import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Login from './app/routes/login.tsx';
 import Shop from './app/routes/shop.tsx';
+import Product from './app/routes/shop/product.tsx';
 import ManageActions from './app/routes/manage/manage-actions.tsx';
 import ManageCategories from './app/routes/manage/manage-categories.tsx';
 import ManageProducts from './app/routes/manage/manage-products.tsx';
@@ -55,10 +56,15 @@ function App() {
       element: (
         <>
           <NavBar />
-          <Shop areActionsEnabled={false} />
+          <DisplayOutlet />
           <Footer />
         </>
       ),
+      errorElement: <Error />,
+      children: [
+        { path: '', element: <Shop areActionsEnabled={false} /> },
+        { path: ':id', element: <Product /> },
+      ],
     },
     {
       path: '/contact',
@@ -98,6 +104,10 @@ function App() {
     {
       path: '/login',
       element: <Login />,
+    },
+    {
+      path: '/error',
+      element: <Error />,
     },
   ]);
 

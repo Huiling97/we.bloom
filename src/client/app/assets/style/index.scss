@@ -1,8 +1,8 @@
 @import 'src/client/app/assets/style/_color.scss';
+@import 'src/client/app/assets/style/_fonts.scss';
 @import 'src/client/app/assets/style/_media-query.scss';
 
 @import 'button';
-@import 'fonts';
 @import 'icon';
 
 @import 'banner';
@@ -26,6 +26,7 @@
 @import 'routes/login';
 @import 'routes/manage';
 @import 'routes/service';
+@import 'routes/product';
 
 :root {
   font-family: 'Source Sans 3';
@@ -52,4 +53,8 @@
 
 .link-no-decoration {
   text-decoration: none;
+}
+
+.link-grey {
+  color: $grey-dark-color;
 }

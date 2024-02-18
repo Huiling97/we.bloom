@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -34,19 +35,24 @@ const CardProduct = ({
         return (
           <Col key={productId}>
             <Card>
-              <Card.Img variant='top' src='image4.jpg' />
-              <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>{product.brand}</Card.Text>
-                {areActionsEnabled && (
-                  <Button
-                    variant='danger'
-                    onClick={() => onDeleteHandler(productId)}
-                  >
-                    Delete
-                  </Button>
-                )}
-              </Card.Body>
+              <Link
+                to={`/shop/${productId}`}
+                className='link-no-decoration link-grey'
+              >
+                <Card.Img variant='top' src='image4.jpg' />
+                <Card.Body>
+                  <Card.Title>{product.name}</Card.Title>
+                  <Card.Text>{product.brand}</Card.Text>
+                  {areActionsEnabled && (
+                    <Button
+                      variant='danger'
+                      onClick={() => onDeleteHandler(productId)}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </Card.Body>
+              </Link>
             </Card>
           </Col>
         );

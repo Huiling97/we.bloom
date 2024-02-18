@@ -24,8 +24,12 @@ const getProducts = async () => {
 const getProduct = async (id) => {
   const q = 'SELECT * FROM products WHERE id = ?';
 
-  const [rows] = await db.query(q, [id]);
-  return rows[0];
+  try {
+    const [rows] = await db.query(q, [id]);
+    return rows[0];
+  } catch (e) {
+    console.error('Error retrieving product from database', e);
+  }
 };
 
 const addProduct = async (
@@ -63,4 +67,4 @@ const deleteProduct = async (productId) => {
   return getProducts();
 };
 
-module.exports = { getProducts, addProduct, deleteProduct };
+module.exports = { getProducts, getProduct, addProduct, deleteProduct };
