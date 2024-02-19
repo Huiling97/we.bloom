@@ -9,23 +9,29 @@ import Dropdown from '../../dropdown';
 import { ModalContext } from '../../../store/modal-context';
 import { ProductsContext } from '../../../store/products-context';
 import URLConstants from '../../../util/constants/url-constants';
+import { ProductProps } from '../../../types/components/card/card-product';
 
 const CardProductForm = () => {
   const { setShowModal, isEditModal, isFormCompleted, setIsFormCompleted } =
     useContext(ModalContext);
-  const { addProducts } = useContext(ProductsContext);
+  const { selectedProduct, addProducts, setProducts } =
+    useContext(ProductsContext);
 
   const [dropdownOption, setDropdownOption] = useState<string>('');
 
+  const { id, name, brand, price, size, details, usage, ingredients } =
+    selectedProduct as ProductProps;
+
   const formInput = {
-    name: '',
-    brand: '',
+    id: id,
+    name: name || '',
+    brand: brand || '',
     category: isEditModal ? dropdownOption : '',
-    price: '',
-    size: '',
-    details: '',
-    how_to_use: '',
-    ingredients: '',
+    price: price || '',
+    size: size || '',
+    details: details || '',
+    usage: usage || '',
+    ingredients: ingredients || '',
   };
 
   const [formData, setFormData] = useState(formInput);
@@ -64,26 +70,39 @@ const CardProductForm = () => {
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const addProduct = async () => {
       if (isFormCompleted) {
         try {
           const data = { ...formData, category: dropdownOption };
 
-          const response = await axios.post(
-            `${URLConstants.PRODUCTS_PATH}/all`,
-            data
-          );
+          if (isEditModal) {
+            console.log('data', data);
+            const response = await axios.put(
+              `${URLConstants.PRODUCTS_PATH}/all`,
+              data
+            );
 
-          addProducts(response.data);
+            setProducts(response.data);
+          } else {
+            const response = await axios.post(
+              `${URLConstants.PRODUCTS_PATH}/all`,
+              data
+            );
+            addProducts(response.data);
+          }
         } catch (e) {
           console.log(e);
-          throw new Error('Error adding new product');
+          if (isEditModal) {
+            throw new Error('Error updating product');
+          } else {
+            throw new Error('Error adding new product');
+          }
         }
         setShowModal(false);
         setIsFormCompleted(false);
       }
     };
-    fetchProducts();
+    addProduct();
   }, [isFormCompleted]);
 
   return (
@@ -146,7 +165,7 @@ const CardProductForm = () => {
           <Form.Label>Size</Form.Label>
           <InputGroup className='mb-3'>
             <Form.Control
-              type='number'
+              type='text'
               name='size'
               value={formData.size}
               onChange={onChangeHandler}
@@ -170,13 +189,13 @@ const CardProductForm = () => {
         />
       </Form.Group>
 
-      <Form.Group className='mb-3' controlId='how_to_use'>
+      <Form.Group className='mb-3' controlId='usage'>
         <Form.Label>How to use</Form.Label>
         <Form.Control
           as='textarea'
-          name='how_to_use'
+          name='usage'
           rows={2}
-          value={formData.how_to_use}
+          value={formData.usage}
           onChange={onChangeHandler}
         />
       </Form.Group>
@@ -196,7 +215,7 @@ const CardProductForm = () => {
         Close
       </Button>
       <Button variant='primary' type='submit'>
-        Add
+        {isEditModal ? 'Edit' : 'Add'}
       </Button>
     </Form>
   );
