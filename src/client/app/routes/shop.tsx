@@ -7,7 +7,7 @@ import { fetchProducts } from '../components/card/card-product/helpers';
 import TabsTop from '../components/tabs/tab';
 import LoadingSpinner from '../components/spinner';
 
-const Shop = ({ areActionsEnabled }: { areActionsEnabled: boolean }) => {
+const Shop = () => {
   const { categories } = useContext(CategoriesContext);
   const { products } = useContext(ProductsContext);
 
@@ -24,11 +24,7 @@ const Shop = ({ areActionsEnabled }: { areActionsEnabled: boolean }) => {
       {isEmpty(products) || isEmpty(categories) ? (
         <LoadingSpinner />
       ) : (
-        <TabsTop
-          products={products}
-          categories={categories}
-          areActionsEnabled={areActionsEnabled}
-        />
+        <TabsTop products={products} categories={categories} />
       )}
     </div>
   );

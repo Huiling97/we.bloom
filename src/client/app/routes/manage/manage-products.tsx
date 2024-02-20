@@ -10,13 +10,14 @@ import ProductModal from '../../components/modal/product-modal';
 const ManageProducts = () => {
   const { setIsEditModal, setShowModal } = useContext(ModalContext);
   const { categories } = useContext(CategoriesContext);
-  const { products } = useContext(ProductsContext);
+  const { products, setSelectedProduct } = useContext(ProductsContext);
 
   const showLoadingOnly = isEmpty(categories) || isEmpty(products);
 
   const addProductHandler = () => {
     setShowModal(true);
     setIsEditModal(false);
+    setSelectedProduct({});
   };
 
   return (
@@ -29,7 +30,7 @@ const ManageProducts = () => {
           <ProductModal />
         </div>
       )}
-      <Shop areActionsEnabled={true} />
+      <Shop />
     </div>
   );
 };
