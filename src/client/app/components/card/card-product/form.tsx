@@ -17,16 +17,23 @@ const CardProductForm = () => {
   const { selectedProduct, addProducts, setProducts } =
     useContext(ProductsContext);
 
-  const [dropdownOption, setDropdownOption] = useState<string>('');
-
-  const { id, name, brand, price, size, details, usage, ingredients } =
-    selectedProduct as ProductProps;
+  const {
+    id,
+    name,
+    brand,
+    category,
+    price,
+    size,
+    details,
+    usage,
+    ingredients,
+  } = selectedProduct as ProductProps;
 
   const formInput = {
     id: id,
     name: name || '',
     brand: brand || '',
-    category: isEditModal ? dropdownOption : '',
+    category: category || '',
     price: price || '',
     size: size || '',
     details: details || '',
@@ -36,6 +43,7 @@ const CardProductForm = () => {
 
   const [formData, setFormData] = useState(formInput);
   const [validated, setValidated] = useState(false);
+  const [dropdownOption, setDropdownOption] = useState<string>('');
   const [isDropdownInvalid, setIsDropdownInvalid] = useState(false);
 
   const onChangeHandler = (e: FormEvent) => {
@@ -73,17 +81,15 @@ const CardProductForm = () => {
     const addProduct = async () => {
       if (isFormCompleted) {
         try {
-          const data = { ...formData, category: dropdownOption };
-
           if (isEditModal) {
-            console.log('data', data);
+            const data = { ...formData };
             const response = await axios.put(
               `${URLConstants.PRODUCTS_PATH}/all`,
               data
             );
-
             setProducts(response.data);
           } else {
+            const data = { ...formData, category: dropdownOption };
             const response = await axios.post(
               `${URLConstants.PRODUCTS_PATH}/all`,
               data
@@ -139,6 +145,7 @@ const CardProductForm = () => {
         setDropdownOption={setDropdownOption}
         isDropdownInvalid={isDropdownInvalid}
         setIsDropdownInvalid={setIsDropdownInvalid}
+        selectedCategory={category}
       />
 
       <Row className='mb-3'>
@@ -211,12 +218,14 @@ const CardProductForm = () => {
         />
       </Form.Group>
 
-      <Button variant='secondary' onClick={closeModalHandler}>
-        Close
-      </Button>
-      <Button variant='primary' type='submit'>
-        {isEditModal ? 'Edit' : 'Add'}
-      </Button>
+      <div className='buttons-container'>
+        <Button variant='secondary' onClick={closeModalHandler}>
+          Close
+        </Button>
+        <Button variant='primary' type='submit'>
+          {isEditModal ? 'Update' : 'Add'}
+        </Button>
+      </div>
     </Form>
   );
 };
