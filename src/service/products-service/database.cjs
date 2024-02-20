@@ -42,7 +42,7 @@ const addProduct = async (
   usage,
   ingredients
 ) => {
-  const q = `INSERT INTO products (brand, category, name, price, size, details, usage, ingredients) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  const q = `INSERT INTO products (brand, category, name, price, size, details, \`usage\`, ingredients) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   const values = [
     brand,
     category,
