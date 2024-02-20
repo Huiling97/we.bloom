@@ -12,7 +12,7 @@ export interface ProductsContextProps {
   products: ProductProps[];
   setProducts: (productsData: ProductProps[]) => void;
   selectedProduct: ProductProps | {};
-  setSelectedProduct: Dispatch<SetStateAction<ProductProps>>;
+  setSelectedProduct: Dispatch<SetStateAction<ProductProps | {}>>;
   addProducts: (productData: ProductProps) => void;
   updateProduct: (productData: ProductProps) => void;
   deleteProduct: (id: number) => void;
