@@ -41,14 +41,8 @@ function App() {
       ),
       errorElement: <Error />,
       children: [
-        {
-          path: '',
-          element: <AllServices />,
-        },
-        {
-          path: ':id',
-          element: <Service />,
-        },
+        { path: '', element: <AllServices /> },
+        { path: ':id', element: <Service /> },
       ],
     },
     {
@@ -62,8 +56,8 @@ function App() {
       ),
       errorElement: <Error />,
       children: [
-        { path: '', element: <Shop areActionsEnabled={false} /> },
-        { path: ':id', element: <Product /> },
+        { path: '', element: <Shop /> },
+        { path: ':id', element: <Product areActionsEnabled={false} /> },
       ],
     },
     {
@@ -87,17 +81,15 @@ function App() {
       ),
       errorElement: <Error />,
       children: [
-        {
-          path: '',
-          element: <ManageActions />,
-        },
-        {
-          path: 'categories-and-services',
-          element: <ManageCategories />,
-        },
+        { path: '', element: <ManageActions /> },
+        { path: 'categories-and-services', element: <ManageCategories /> },
         {
           path: 'products',
-          element: <ManageProducts />,
+          element: <DisplayOutlet />,
+          children: [
+            { path: '', element: <ManageProducts /> },
+            { path: ':id', element: <Product areActionsEnabled={true} /> },
+          ],
         },
       ],
     },
