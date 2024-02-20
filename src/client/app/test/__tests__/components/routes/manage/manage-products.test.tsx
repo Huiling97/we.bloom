@@ -3,8 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import ManageProducts from '../../../../../routes/manage/manage-products';
 import { CategoriesContext } from '../../../../../store/categories-context';
 import { ProductsContext } from '../../../../../store/products-context';
-import { categoriesMock } from '../../../../__mocks__/category-mock';
-import { cardProductMock } from '../../../../__mocks__/card-mock';
+import { mockCategoriesContextValue } from '../../../../__mocks__/store/categories-context-mock';
+import { mockProductsContextValue } from '../../../../__mocks__/store/products-context-mock';
 
 jest.mock('../../../../../components/card/card-product/helpers');
 
@@ -12,21 +12,10 @@ const renderEmptyContext = () => {
   return render(
     <MemoryRouter>
       <CategoriesContext.Provider
-        value={{
-          categories: {},
-          setCategories: jest.fn(),
-          addCategory: jest.fn(),
-          updateCategory: jest.fn(),
-          deleteCategory: jest.fn(),
-        }}
+        value={{ ...mockCategoriesContextValue, categories: {} }}
       >
         <ProductsContext.Provider
-          value={{
-            products: [],
-            setProducts: jest.fn(),
-            addProducts: jest.fn(),
-            deleteProduct: jest.fn(),
-          }}
+          value={{ ...mockProductsContextValue, products: [] }}
         >
           <ManageProducts />
         </ProductsContext.Provider>
@@ -38,23 +27,8 @@ const renderEmptyContext = () => {
 const renderMockedContext = () => {
   return render(
     <MemoryRouter>
-      <CategoriesContext.Provider
-        value={{
-          categories: categoriesMock,
-          setCategories: jest.fn(),
-          addCategory: jest.fn(),
-          updateCategory: jest.fn(),
-          deleteCategory: jest.fn(),
-        }}
-      >
-        <ProductsContext.Provider
-          value={{
-            products: cardProductMock,
-            setProducts: jest.fn(),
-            addProducts: jest.fn(),
-            deleteProduct: jest.fn(),
-          }}
-        >
+      <CategoriesContext.Provider value={mockCategoriesContextValue}>
+        <ProductsContext.Provider value={mockProductsContextValue}>
           <ManageProducts />
         </ProductsContext.Provider>
       </CategoriesContext.Provider>

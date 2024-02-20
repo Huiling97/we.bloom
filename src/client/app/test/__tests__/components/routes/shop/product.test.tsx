@@ -12,8 +12,27 @@ const renderContentWithValidId = () => {
     <MemoryRouter initialEntries={['/shop/1']}>
       <ProductsContext.Provider value={mockProductsContextValue}>
         <Routes>
-          <Route path='/shop' element={<Shop areActionsEnabled={false} />} />
-          <Route path='/shop/:id' element={<Product />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route
+            path='/shop/:id'
+            element={<Product areActionsEnabled={false} />}
+          />
+        </Routes>
+      </ProductsContext.Provider>
+    </MemoryRouter>
+  );
+};
+
+const renderContentWithActionsEnabled = () => {
+  return render(
+    <MemoryRouter initialEntries={['/shop/1']}>
+      <ProductsContext.Provider value={mockProductsContextValue}>
+        <Routes>
+          <Route path='/shop' element={<Shop />} />
+          <Route
+            path='/shop/:id'
+            element={<Product areActionsEnabled={true} />}
+          />
         </Routes>
       </ProductsContext.Provider>
     </MemoryRouter>
@@ -68,6 +87,24 @@ describe('Product', () => {
       });
     });
 
+    describe('are actions enabled', () => {
+      it('should render page without actions enabled given areActionsEnabled is false', () => {
+        renderContentWithValidId();
+
+        const deleteBtn = screen.queryByRole('button', { name: /Delete/i });
+
+        expect(deleteBtn).not.toBeInTheDocument();
+      });
+
+      it('should render page with actions enabled given areActionsEnabled is true', () => {
+        renderContentWithActionsEnabled();
+
+        const deleteBtn = screen.getByRole('button', { name: /Delete/i });
+
+        expect(deleteBtn).toBeInTheDocument();
+      });
+    });
+
     it('should render back to shop button with correct link', () => {
       renderContentWithValidId();
 
@@ -94,7 +131,10 @@ describe('Product', () => {
         <Router location={history.location} navigator={history}>
           <ProductsContext.Provider value={mockProductsContextValue}>
             <Routes>
-              <Route path='/shop/:id' element={<Product />} />
+              <Route
+                path='/shop/:id'
+                element={<Product areActionsEnabled={false} />}
+              />
               <Route path='/error' element={<Error />} />
             </Routes>
           </ProductsContext.Provider>

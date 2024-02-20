@@ -13,7 +13,7 @@ let container: HTMLElement;
 const renderContentWithActionsNotEnabled = () => {
   const { container: renderedContainer } = render(
     <MemoryRouter>
-      <CardProduct products={cardProductMock} areActionsEnabled={false} />
+      <CardProduct products={cardProductMock} />
     </MemoryRouter>
   );
 
@@ -59,7 +59,7 @@ describe('CardProduct', () => {
 
     render(
       <Router location={history.location} navigator={history}>
-        <CardProduct products={cardProductMock} areActionsEnabled={false} />
+        <CardProduct products={cardProductMock} />
       </Router>
     );
 
@@ -83,27 +83,5 @@ describe('CardProduct', () => {
         unstable_viewTransition: undefined,
       }
     );
-  });
-
-  describe('are actions enabled for card', () => {
-    it('should render Card component without actions enabled given areActionsEnabled is false', () => {
-      renderContentWithActionsNotEnabled();
-
-      const deleteBtn = screen.queryAllByRole('button', { name: /Delete/i });
-
-      expect(deleteBtn).toHaveLength(0);
-    });
-
-    it('should render Card component with actions enabled given areActionsEnabled is true', () => {
-      render(
-        <MemoryRouter>
-          <CardProduct products={cardProductMock} areActionsEnabled={true} />
-        </MemoryRouter>
-      );
-
-      const deleteBtn = screen.getAllByRole('button', { name: /Delete/i });
-
-      expect(deleteBtn).toHaveLength(2);
-    });
   });
 });
