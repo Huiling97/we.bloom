@@ -2,30 +2,58 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { isEmpty } from 'lodash';
+import Button from 'react-bootstrap/Button';
 import { ChevronBack } from 'styled-icons/ionicons-solid';
 import URLConstants from '../../util/constants/url-constants';
+import { ModalContext } from '../../store/modal-context';
 import { ProductsContext } from '../../store/products-context';
 import { ProductProps } from '../../types/components/card/card-product';
+import { isManageStorePage } from '../../util/path-helper';
+import ProductModal from '../../components/modal/product-modal';
 
-const Product = () => {
+const Product = ({ areActionsEnabled }: { areActionsEnabled: boolean }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { products } = useContext(ProductsContext);
-  const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(
+  const { setShowModal, isEditModal, setIsEditModal } =
+    useContext(ModalContext);
+  const { products, setSelectedProduct, deleteProduct } =
+    useContext(ProductsContext);
+  const [productDetails, setProductDetails] = useState<ProductProps | null>(
     null
   );
+
+  const productId = parseInt(id!);
+
+  const redirectionUrl = () =>
+    isManageStorePage() ? '/manage/products' : '/shop';
+
+  const onEditHandler = (product: ProductProps) => {
+    setShowModal(true);
+    setIsEditModal(true);
+    setSelectedProduct(product);
+  };
+
+  const onDeleteHandler = async (productId: number) => {
+    try {
+      await axios.delete(`${URLConstants.PRODUCTS_PATH}/${productId}`);
+      deleteProduct(productId);
+      navigate('/manage/products');
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     if (id) {
       if (!isEmpty(products)) {
         const foundProduct = products.find((product) =>
-          id ? product.id === parseInt(id) : null
+          id ? product.id === productId : null
         );
 
         if (!foundProduct) {
           navigate('/error');
         } else {
-          setSelectedProduct(foundProduct);
+          setProductDetails(foundProduct);
         }
       } else {
         const fetchSelectedProduct = async () => {
@@ -33,7 +61,7 @@ const Product = () => {
             const response = await axios.get(
               `${URLConstants.PRODUCTS_PATH}/${id}`
             );
-            setSelectedProduct(response.data);
+            setProductDetails(response.data);
           } catch (e) {
             console.error('Error fetching product', e);
             navigate('/error');
@@ -46,12 +74,28 @@ const Product = () => {
   }, [products, id]);
 
   return (
-    <div className='product-content-container'>
-      <Link to={'/shop'} className='back-button link-no-decoration'>
-        <ChevronBack size='28' className='back-button-icon' />
-        <div>Back to all products</div>
-      </Link>
-      <div className='product-container-main'>
+    <div className='product-container'>
+      <div className='product-actions-container'>
+        {isEditModal && <ProductModal />}
+        <Link to={redirectionUrl()} className='back-button link-no-decoration'>
+          <ChevronBack size='28' className='back-button-icon' />
+          <div>Back to all products</div>
+        </Link>
+        {areActionsEnabled && (
+          <div className='buttons-container'>
+            <Button
+              variant='secondary'
+              onClick={() => onEditHandler(productDetails!)}
+            >
+              Edit
+            </Button>
+            <Button variant='danger' onClick={() => onDeleteHandler(productId)}>
+              Delete
+            </Button>
+          </div>
+        )}
+      </div>
+      <div className='product-content-container'>
         <div className='image-container'>
           <img
             src='/image4.jpg'
@@ -60,11 +104,11 @@ const Product = () => {
           />
         </div>
         <div className='product-details-container'>
-          <div className='font-bold'>{selectedProduct?.brand}</div>
-          <div className='product-name'>{selectedProduct?.name}</div>
-          <div>${selectedProduct?.price}</div>
+          <div className='font-bold'>{productDetails?.brand}</div>
+          <div className='product-name'>{productDetails?.name}</div>
+          <div>${productDetails?.price}</div>
           <div className='font-bold'>Description</div>
-          <div>{selectedProduct?.details}</div>
+          <div>{productDetails?.details}</div>
         </div>
       </div>
     </div>

@@ -1,8 +1,13 @@
-.product-content-container {
+.product-container {
   margin: 10px 50px;
 }
 
-.product-container-main {
+.product-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-content-container {
   display: flex;
   margin: 20px 0;
   height: 400px;
@@ -11,6 +16,7 @@
 .product-details-container {
   padding: 0 50px;
   flex-grow: 2;
+  min-width: 430px;
 
   .product-name {
     font-size: 18px;

@@ -39,10 +39,10 @@ const addProduct = async (
   price,
   size,
   details,
-  how_to_use,
+  usage,
   ingredients
 ) => {
-  const q = `INSERT INTO products (brand, category, name, price, size, details, how_to_use, ingredients) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  const q = `INSERT INTO products (brand, category, name, price, size, details, \`usage\`, ingredients) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   const values = [
     brand,
     category,
@@ -50,13 +50,45 @@ const addProduct = async (
     price,
     size,
     details,
-    how_to_use,
+    usage,
     ingredients,
   ];
 
   const [result] = await db.query(q, values);
   const id = result.insertId;
   return getProduct(id);
+};
+
+const editProduct = async (
+  brand,
+  category,
+  name,
+  price,
+  size,
+  details,
+  usage,
+  ingredients,
+  productId
+) => {
+  const q =
+    'UPDATE products SET brand = ?, category = ?, name = ?, price = ?, size = ?, details = ?, `usage` = ?, ingredients = ? WHERE id = ?';
+  const values = [
+    brand,
+    category,
+    name,
+    price,
+    size,
+    details,
+    usage,
+    ingredients,
+  ];
+
+  try {
+    const [rows] = await db.query(q, [...values, productId]);
+    return await getProducts();
+  } catch (e) {
+    console.error('Error updating product in database', e);
+  }
 };
 
 const deleteProduct = async (productId) => {
@@ -67,4 +99,10 @@ const deleteProduct = async (productId) => {
   return getProducts();
 };
 
-module.exports = { getProducts, getProduct, addProduct, deleteProduct };
+module.exports = {
+  getProducts,
+  getProduct,
+  addProduct,
+  editProduct,
+  deleteProduct,
+};

@@ -3,98 +3,62 @@ import { MemoryRouter } from 'react-router-dom';
 import Shop from '../../../../routes/shop';
 import { CategoriesContext } from '../../../../store/categories-context';
 import { ProductsContext } from '../../../../store/products-context';
-import { cardProductMock } from '../../../__mocks__/card-mock';
-import { categoriesMock } from '../../../__mocks__/category-mock';
+import { mockCategoriesContextValue } from '../../../__mocks__/store/categories-context-mock';
+import { mockProductsContextValue } from '../../../__mocks__/store/products-context-mock';
+import { renderContextProps } from '../../../__mocks__/store/context-mock';
 
 jest.mock('../../../../components/card/card-product/helpers');
+
+const renderContext = (props: renderContextProps) => {
+  const { categoriesContextValue, productsContextValue } = props;
+
+  return render(
+    <MemoryRouter>
+      <CategoriesContext.Provider value={categoriesContextValue}>
+        <ProductsContext.Provider value={productsContextValue}>
+          <Shop />
+        </ProductsContext.Provider>
+      </CategoriesContext.Provider>
+    </MemoryRouter>
+  );
+};
 
 describe('Shop', () => {
   describe('displays loading spinner while feteching data', () => {
     it('when categories data is being fetched while products data has been fetched', () => {
-      render(
-        <MemoryRouter>
-          <CategoriesContext.Provider
-            value={{
-              categories: {},
-              setCategories: jest.fn(),
-              addCategory: jest.fn(),
-              updateCategory: jest.fn(),
-              deleteCategory: jest.fn(),
-            }}
-          >
-            <ProductsContext.Provider
-              value={{
-                products: cardProductMock,
-                setProducts: jest.fn(),
-                addProducts: jest.fn(),
-                deleteProduct: jest.fn(),
-              }}
-            >
-              <Shop areActionsEnabled={false} />
-            </ProductsContext.Provider>
-          </CategoriesContext.Provider>
-        </MemoryRouter>
-      );
+      renderContext({
+        categoriesContextValue: {
+          ...mockCategoriesContextValue,
+          categories: {},
+        },
+        productsContextValue: mockProductsContextValue,
+      });
+
       const loadingSpinner = screen.getByTestId('loading-spinner');
 
       expect(loadingSpinner).toBeInTheDocument();
     });
 
     it('when products data is being fetched while categories data has been fetched', () => {
-      render(
-        <MemoryRouter>
-          <CategoriesContext.Provider
-            value={{
-              categories: categoriesMock,
-              setCategories: jest.fn(),
-              addCategory: jest.fn(),
-              updateCategory: jest.fn(),
-              deleteCategory: jest.fn(),
-            }}
-          >
-            <ProductsContext.Provider
-              value={{
-                products: [],
-                addProducts: jest.fn(),
-                setProducts: jest.fn(),
-                deleteProduct: jest.fn(),
-              }}
-            >
-              <Shop areActionsEnabled={false} />
-            </ProductsContext.Provider>
-          </CategoriesContext.Provider>
-        </MemoryRouter>
-      );
+      renderContext({
+        categoriesContextValue: mockCategoriesContextValue,
+        productsContextValue: { ...mockProductsContextValue, products: [] },
+      });
+
       const loadingSpinner = screen.getByTestId('loading-spinner');
 
       expect(loadingSpinner).toBeInTheDocument();
     });
 
     it('when both categories data and products data is being fetched', () => {
-      render(
-        <MemoryRouter>
-          <CategoriesContext.Provider
-            value={{
-              categories: {},
-              setCategories: jest.fn(),
-              addCategory: jest.fn(),
-              updateCategory: jest.fn(),
-              deleteCategory: jest.fn(),
-            }}
-          >
-            <ProductsContext.Provider
-              value={{
-                products: [],
-                addProducts: jest.fn(),
-                setProducts: jest.fn(),
-                deleteProduct: jest.fn(),
-              }}
-            >
-              <Shop areActionsEnabled={false} />
-            </ProductsContext.Provider>
-          </CategoriesContext.Provider>
-        </MemoryRouter>
-      );
+      renderContext({
+        categoriesContextValue: {
+          ...mockCategoriesContextValue,
+          categories: {},
+        },
+        productsContextValue: { ...mockProductsContextValue, products: [] },
+      });
+
       const loadingSpinner = screen.getByTestId('loading-spinner');
 
       expect(loadingSpinner).toBeInTheDocument();
@@ -103,30 +67,10 @@ describe('Shop', () => {
 
   describe('displays content when data is fetched', () => {
     beforeEach(() => {
-      render(
-        <MemoryRouter>
-          <CategoriesContext.Provider
-            value={{
-              categories: categoriesMock,
-              setCategories: jest.fn(),
-              addCategory: jest.fn(),
-              updateCategory: jest.fn(),
-              deleteCategory: jest.fn(),
-            }}
-          >
-            <ProductsContext.Provider
-              value={{
-                products: cardProductMock,
-                setProducts: jest.fn(),
-                addProducts: jest.fn(),
-                deleteProduct: jest.fn(),
-              }}
-            >
-              <Shop areActionsEnabled={false} />
-            </ProductsContext.Provider>
-          </CategoriesContext.Provider>
-        </MemoryRouter>
-      );
+      renderContext({
+        categoriesContextValue: mockCategoriesContextValue,
+        productsContextValue: mockProductsContextValue,
+      });
     });
 
     it('should not display loading spinner', () => {

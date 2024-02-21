@@ -4,7 +4,7 @@ import { ModalContext } from '../../store/modal-context';
 import CardProductForm from '../card/card-product/form';
 
 const ProductModal = () => {
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { showModal, setShowModal, isEditModal } = useContext(ModalContext);
 
   const closeModalHandler = () => {
     setShowModal(false);
@@ -18,7 +18,9 @@ const ProductModal = () => {
         contentClassName='modal-content-container'
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add new product</Modal.Title>
+          <Modal.Title>
+            {isEditModal ? 'Edit product' : 'Add new product'}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CardProductForm />

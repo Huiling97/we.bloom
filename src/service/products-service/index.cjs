@@ -2,16 +2,19 @@ const {
   getProducts,
   getProduct,
   addProduct,
+  editProduct,
   deleteProduct,
 } = require('./database.cjs');
 
+const API_PATH = '/api/v1/products';
+
 const productsRequestHandler = (app) => {
-  app.get('/api/v1/products/all', async (req, res) => {
+  app.get(`${API_PATH}/all`, async (req, res) => {
     const products = await getProducts();
     res.status(200).send(products);
   });
 
-  app.get('/api/v1/products/:id', async (req, res) => {
+  app.get(`${API_PATH}/:id`, async (req, res) => {
     const { id } = req.params;
 
     if (isNaN(id)) {
@@ -26,17 +29,9 @@ const productsRequestHandler = (app) => {
     }
   });
 
-  app.post('/api/v1/products/all', async (req, res) => {
-    const {
-      brand,
-      category,
-      name,
-      price,
-      size,
-      details,
-      how_to_use,
-      ingredients,
-    } = req.body;
+  app.post(`${API_PATH}/all`, async (req, res) => {
+    const { brand, category, name, price, size, details, usage, ingredients } =
+      req.body;
 
     const addedProduct = await addProduct(
       brand,
@@ -45,13 +40,40 @@ const productsRequestHandler = (app) => {
       price,
       size,
       details,
-      how_to_use,
+      usage,
       ingredients
     );
     res.status(201).send(addedProduct);
   });
 
-  app.delete('/api/v1/products/all/:id', async (req, res) => {
+  app.put(`${API_PATH}/all`, async (req, res) => {
+    const {
+      brand,
+      category,
+      name,
+      price,
+      size,
+      details,
+      usage,
+      ingredients,
+      id,
+    } = req.body;
+
+    const updatedProductList = await editProduct(
+      brand,
+      category,
+      name,
+      price,
+      size,
+      details,
+      usage,
+      ingredients,
+      id
+    );
+    res.status(200).json(updatedProductList);
+  });
+
+  app.delete(`${API_PATH}/:id`, async (req, res) => {
     const productId = req.params.id;
 
     await deleteProduct(productId);
