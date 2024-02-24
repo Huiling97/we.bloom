@@ -6,6 +6,7 @@ import { CategoriesContext } from '../../store/categories-context';
 import { ProductsContext } from '../../store/products-context';
 import Shop from '../shop';
 import ProductModal from '../../components/modal/product-modal';
+import { BackLink } from '../../components/link';
 
 const ManageProducts = () => {
   const { setIsEditModal, setShowModal } = useContext(ModalContext);
@@ -22,6 +23,7 @@ const ManageProducts = () => {
 
   return (
     <div className='manage-page-container'>
+      <BackLink link='/manage' content='Back' />
       {!showLoadingOnly && (
         <div className='buttons-container left'>
           <Button variant='primary' onClick={addProductHandler}>
