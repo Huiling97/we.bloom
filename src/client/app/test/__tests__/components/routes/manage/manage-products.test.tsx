@@ -62,6 +62,12 @@ describe('ManageProducts', () => {
       renderMockedContext();
     });
 
+    it('should display the back link', () => {
+      const backLink = screen.getByRole('link', { name: /Back/i });
+
+      expect(backLink).toBeInTheDocument();
+    });
+
     it('should not display loading spinner', () => {
       const loadingSpinner = screen.queryByTestId('loading-spinner');
 
