@@ -9,6 +9,7 @@ import CardCategoryForm from '../../components/card/card-category/form.tsx';
 import CardServiceForm from '../../components/card/card-services/form.tsx';
 import TabSwitch from '../../components/tabs/index.tsx';
 import AuthForm from '../../components/form/auth-form.tsx';
+import { BackLink } from '../../components/link';
 import fetchCategoriesData from '../../util/fetch-categories.ts';
 import fetchServicesData from '../../util/fetch-services.ts';
 import { isProtectedCategory } from '../../util/auth-helper.ts';
@@ -115,6 +116,7 @@ const Manage = () => {
 
   return (
     <div>
+      <BackLink link='/manage' content='Back' />
       {isLoadingCategories || isLoadingServices ? (
         <div>loading</div>
       ) : (

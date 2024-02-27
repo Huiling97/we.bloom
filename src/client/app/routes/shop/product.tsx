@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
-import { ChevronBack } from 'styled-icons/ionicons-solid';
 import URLConstants from '../../util/constants/url-constants';
 import { ModalContext } from '../../store/modal-context';
 import { ProductsContext } from '../../store/products-context';
 import { ProductProps } from '../../types/components/card/card-product';
 import { isManageStorePage } from '../../util/path-helper';
 import ProductModal from '../../components/modal/product-modal';
+import { BackLink } from '../../components/link';
 
 const Product = ({ areActionsEnabled }: { areActionsEnabled: boolean }) => {
   const { id } = useParams();
@@ -77,10 +77,7 @@ const Product = ({ areActionsEnabled }: { areActionsEnabled: boolean }) => {
     <div className='product-container'>
       <div className='product-actions-container'>
         {isEditModal && <ProductModal />}
-        <Link to={redirectionUrl()} className='back-button link-no-decoration'>
-          <ChevronBack size='28' className='back-button-icon' />
-          <div>Back to all products</div>
-        </Link>
+        <BackLink link={redirectionUrl()} content='Back to all products' />
         {areActionsEnabled && (
           <div className='buttons-container'>
             <Button
