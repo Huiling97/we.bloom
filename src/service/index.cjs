@@ -7,6 +7,7 @@ const app = express();
 
 const { twilioRequestHandler } = require('./twilio-service.cjs');
 const { productsRequestHandler } = require('./products-service/index.cjs');
+const { cartsProductsRequestHandler } = require('./carts-service/index.cjs');
 
 const allowlist = ['http://localhost:8080', 'https://we-bloom.onrender.com'];
 const corsOptionsDelegate = function (req, callback) {
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 
 twilioRequestHandler(app);
 productsRequestHandler(app);
+cartsProductsRequestHandler(app);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
