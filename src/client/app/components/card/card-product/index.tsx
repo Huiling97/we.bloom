@@ -24,13 +24,16 @@ const CardProduct = ({ products }: CardProductProps) => {
     const cartProductQuantity = getCartProductQuantity(cartItems, productId);
     if (cartProductQuantity) {
       return (
-        <>
-          <Button>+</Button>
-          <Button>-</Button>
-        </>
+        <div className='card-cart-product-actions'>
+          <div>{cartProductQuantity}</div>
+          <div className='cart-product-buttons'>
+            <Button>+</Button>
+            <Button>-</Button>
+          </div>
+        </div>
       );
     }
-    return <Button>Add to cart</Button>;
+    return <Button variant='success'>Add to cart</Button>;
   };
 
   return (
