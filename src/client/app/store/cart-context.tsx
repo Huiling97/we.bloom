@@ -26,7 +26,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [cartItemsState, dispatch] = useReducer(cartReducer, []);
 
   const setCartItems = (items: CartItemsProps[]) => {
-    dispatch({ type: 'GET', payload: items });
+    dispatch({ type: 'SET', payload: items });
   };
 
   const value = {
