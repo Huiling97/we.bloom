@@ -1,19 +1,39 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Button } from 'react-bootstrap';
+import { isEmpty } from 'lodash';
 import {
   type ProductProps,
   type CardProductProps,
 } from '../../../types/components/card/card-product';
 import { CartContext } from '../../../store/cart-context';
 import { isManageStorePage } from '../../../util/path-helper';
+import { getFromStorage } from '../../../util/storage-helper';
+import { fetchCartsProducts } from '../../../util/fetch-carts-products';
 import { getCartProductQuantity } from './helpers';
 
 const CardProduct = ({ products }: CardProductProps) => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useContext(CartContext);
+
+  const fetchData = async () => {
+    const cartProducts = await fetchCartsProducts();
+    setCartItems(cartProducts);
+    return cartProducts;
+  };
+
+  useEffect(() => {
+    if (isEmpty(cartItems)) {
+      const storageData = getFromStorage('cartItems');
+      if (storageData) {
+        setCartItems(storageData);
+      } else {
+        fetchData();
+      }
+    }
+  }, []);
 
   const redirectionUrl = (productId: number) =>
     isManageStorePage()
