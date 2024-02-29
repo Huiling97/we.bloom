@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { setupAxiosMock } from '../../../../util/axiosMockUtils';
+import URLConstants from '../../../../../util/constants/url-constants';
 import Shop from '../../../../../routes/shop';
 import Product from '../../../../../routes/shop/product';
 import Error from '../../../../../routes/error';
@@ -40,6 +42,10 @@ const renderContentWithActionsEnabled = () => {
 };
 
 describe('Product', () => {
+  beforeAll(() => {
+    setupAxiosMock(`${URLConstants.CART_PRODUCTS_PATH}/all`, []);
+  });
+
   describe('given valid id', () => {
     describe('should render product details', () => {
       beforeEach(() => {

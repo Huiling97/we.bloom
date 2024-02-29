@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { setupAxiosMock } from '../../../util/axiosMockUtils';
+import URLConstants from '../../../../util/constants/url-constants';
 import Shop from '../../../../routes/shop';
 import { CategoriesContext } from '../../../../store/categories-context';
 import { ProductsContext } from '../../../../store/products-context';
@@ -24,6 +26,10 @@ const renderContext = (props: renderContextProps) => {
 };
 
 describe('Shop', () => {
+  beforeAll(() => {
+    setupAxiosMock(`${URLConstants.CART_PRODUCTS_PATH}/all`, []);
+  });
+
   describe('displays loading spinner while feteching data', () => {
     it('when categories data is being fetched while products data has been fetched', () => {
       renderContext({

@@ -1,11 +1,15 @@
 import { Router, MemoryRouter } from 'react-router-dom';
 import { screen, render, waitFor, fireEvent } from '@testing-library/react';
-import CardProduct from '../../../../components/card/card-product';
-import { cardProductMock } from '../../../__mocks__/card-mock';
 import { createMemoryHistory } from 'history';
+import { setupAxiosMock } from '../../../../util/axiosMockUtils';
+import URLConstants from '../../../../../util/constants/url-constants';
+import CardProduct from '../../../../../components/card/card-product';
+import { getCartProductQuantity } from '../../../../../components/card/card-product/helpers';
+import { cardProductMock } from '../../../../__mocks__/card-mock';
 
-jest.mock('../../../../components/card/card-product/helpers', () => ({
+jest.mock('../../../../../components/card/card-product/helpers', () => ({
   fetchProducts: jest.fn(() => Promise.resolve(cardProductMock)),
+  getCartProductQuantity: jest.fn(),
 }));
 
 let container: HTMLElement;
@@ -21,6 +25,10 @@ const renderContentWithActionsNotEnabled = () => {
 };
 
 describe('CardProduct', () => {
+  beforeAll(() => {
+    setupAxiosMock(`${URLConstants.CART_PRODUCTS_PATH}/all`, []);
+  });
+
   it('should render component with the correct number of Card component', async () => {
     renderContentWithActionsNotEnabled();
 
@@ -83,5 +91,27 @@ describe('CardProduct', () => {
         unstable_viewTransition: undefined,
       }
     );
+  });
+
+  describe('should render Card component with approriate cart actions', () => {
+    it('should render `Add to cart` button given product is not in cart', () => {
+      (getCartProductQuantity as jest.Mock).mockReturnValueOnce(0);
+      renderContentWithActionsNotEnabled();
+
+      const cartBtn = screen.getAllByRole('button', { name: /Add to cart/i });
+
+      expect(cartBtn).toHaveLength(2);
+    });
+
+    it('should render increment and decrement buttons given product is in cart', () => {
+      (getCartProductQuantity as jest.Mock).mockReturnValueOnce(1);
+      renderContentWithActionsNotEnabled();
+
+      const incrementBtn = screen.getByRole('button', { name: '+' });
+      const decrementBtn = screen.getByRole('button', { name: '-' });
+
+      expect(incrementBtn).toBeInTheDocument();
+      expect(decrementBtn).toBeInTheDocument();
+    });
   });
 });
