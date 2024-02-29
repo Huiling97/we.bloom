@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { setupAxiosMock } from '../../../util/axiosMockUtils.ts';
+import URLConstants from '../../../../util/constants/url-constants.ts';
 import Home from '../../../../routes/home.tsx';
 import { CategoriesContext } from '../../../../store/categories-context.tsx';
 import { mockCategoriesContextValue } from '../../../__mocks__/store/categories-context-mock.ts';
@@ -9,14 +9,10 @@ import { mockCartContextValue } from '../../../__mocks__/store/cart-context-mock
 import { CartContext } from '../../../../store/cart-context.tsx';
 
 let container: HTMLElement;
-const mock = new MockAdapter(axios);
 
 describe('Home', () => {
   beforeAll(() => {
-    // Mock the Axios request for the test
-    mock
-      .onGet('http://localhost:5000/api/v1/carts-products/all')
-      .reply(200, []);
+    setupAxiosMock(`${URLConstants.CART_PRODUCTS_PATH}/all`, []);
   });
 
   it('displays loading spinner while fetching categories data', () => {

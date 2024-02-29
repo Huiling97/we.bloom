@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { setupAxiosMock } from '../../../../util/axiosMockUtils';
+import URLConstants from '../../../../../util/constants/url-constants';
 import ManageProducts from '../../../../../routes/manage/manage-products';
 import { CategoriesContext } from '../../../../../store/categories-context';
 import { ProductsContext } from '../../../../../store/products-context';
@@ -37,6 +39,10 @@ const renderMockedContext = () => {
 };
 
 describe('ManageProducts', () => {
+  beforeAll(() => {
+    setupAxiosMock(`${URLConstants.CART_PRODUCTS_PATH}/all`, []);
+  });
+
   describe('while feteching data', () => {
     beforeAll(() => {
       renderEmptyContext();

@@ -1,6 +1,8 @@
 import { Router, MemoryRouter } from 'react-router-dom';
 import { screen, render, waitFor, fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import { setupAxiosMock } from '../../../../util/axiosMockUtils';
+import URLConstants from '../../../../../util/constants/url-constants';
 import CardProduct from '../../../../../components/card/card-product';
 import { getCartProductQuantity } from '../../../../../components/card/card-product/helpers';
 import { cardProductMock } from '../../../../__mocks__/card-mock';
@@ -23,6 +25,10 @@ const renderContentWithActionsNotEnabled = () => {
 };
 
 describe('CardProduct', () => {
+  beforeAll(() => {
+    setupAxiosMock(`${URLConstants.CART_PRODUCTS_PATH}/all`, []);
+  });
+
   it('should render component with the correct number of Card component', async () => {
     renderContentWithActionsNotEnabled();
 
