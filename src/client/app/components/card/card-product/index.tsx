@@ -52,7 +52,7 @@ const CardProduct = ({ products }: CardProductProps) => {
                 <Card.Body>
                   <Card.Title>{product.name}</Card.Title>
                   <Card.Text>{product.brand}</Card.Text>
-                  <Card.Text>{cartActions(productId)}</Card.Text>
+                  <>{cartActions(productId)}</>
                 </Card.Body>
               </Link>
             </Card>
