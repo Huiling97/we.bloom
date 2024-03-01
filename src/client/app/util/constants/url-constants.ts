@@ -1,3 +1,5 @@
+import isDevEnv from '../is-dev-env';
+
 interface URLConstantsProps {
   BASE: string;
   PRODUCTS_PATH: string;
@@ -6,8 +8,9 @@ interface URLConstantsProps {
 
 const URLConstants = <URLConstantsProps>{};
 
-URLConstants.BASE =
-  import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000';
+URLConstants.BASE = isDevEnv
+  ? 'http://localhost:5000'
+  : import.meta.env.VITE_BASE_API_URL;
 URLConstants.PRODUCTS_PATH = `${URLConstants.BASE}/api/v1/products`;
 URLConstants.CART_PRODUCTS_PATH = `${URLConstants.BASE}/api/v1/carts-products`;
 
