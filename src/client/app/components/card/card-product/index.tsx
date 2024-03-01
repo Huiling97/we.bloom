@@ -10,11 +10,11 @@ import {
   type CardProductProps,
 } from '../../../types/components/card/card-product';
 import { CartContext } from '../../../store/cart-context';
+import { updateCartItems, deleteCartItem } from '../../../service/cartService';
 import { isManageStorePage } from '../../../util/path-helper';
 import { getFromStorage } from '../../../util/storage-helper';
 import { fetchCartsProducts } from '../../../util/fetch-carts-products';
 import { getCartProductQuantity } from './helpers';
-import { updateCartItems, deleteCartItem } from '../../../service/cartService';
 
 const CardProduct = ({ products }: CardProductProps) => {
   const { cartItems, setCartItems, incrementCartItem, decrementCartItem } =
