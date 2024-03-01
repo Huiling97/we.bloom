@@ -14,7 +14,7 @@ import { isManageStorePage } from '../../../util/path-helper';
 import { getFromStorage } from '../../../util/storage-helper';
 import { fetchCartsProducts } from '../../../util/fetch-carts-products';
 import { getCartProductQuantity } from './helpers';
-import { updateCartItems } from '../../../service/cartService';
+import { updateCartItems, deleteCartItem } from '../../../service/cartService';
 
 const CardProduct = ({ products }: CardProductProps) => {
   const { cartItems, setCartItems, incrementCartItem, decrementCartItem } =
@@ -37,7 +37,7 @@ const CardProduct = ({ products }: CardProductProps) => {
     return storageData;
   };
 
-  const addItemHandlder = async (
+  const addItemHandlder = (
     productId: number,
     cartProductQuantity: number,
     price: number
@@ -60,13 +60,21 @@ const CardProduct = ({ products }: CardProductProps) => {
     price: number
   ) => {
     const updatedQuantity = cartProductQuantity - 1;
-    await updateCartItems(
-      productId,
-      cartProductQuantity,
-      updatedQuantity,
-      price
-    );
-    decrementCartItem(productId);
+
+    if (updatedQuantity) {
+      debounce(async () => {
+        await updateCartItems(
+          productId,
+          cartProductQuantity,
+          updatedQuantity,
+          price
+        );
+      }, 1000)();
+      decrementCartItem(productId);
+    } else {
+      await deleteCartItem(productId);
+      decrementCartItem(productId);
+    }
   };
 
   useEffect(() => {

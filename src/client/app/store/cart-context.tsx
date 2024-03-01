@@ -12,6 +12,7 @@ const CartContext = createContext<CartContextProps>({
   setCartItems: () => {},
   incrementCartItem: () => {},
   decrementCartItem: () => {},
+  deleteCartItem: () => {},
 });
 
 const cartReducer = (state: CartItemsProps[], action: CartActionProps) => {
@@ -44,6 +45,8 @@ const cartReducer = (state: CartItemsProps[], action: CartActionProps) => {
           { cart_id: 1, product_id: productId, quantity: 1, total_price: 9.59 },
         ];
       }
+    case 'DELETE':
+      return state.filter((item) => item.product_id !== action.payload);
     default:
       return state;
   }
@@ -64,11 +67,16 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'DECREMENT', payload: id });
   };
 
+  const deleteCartItem = (id: number) => {
+    dispatch({ type: 'DELETE', payload: id });
+  };
+
   const value = {
     cartItems: cartItemsState,
     setCartItems,
     incrementCartItem,
     decrementCartItem,
+    deleteCartItem,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

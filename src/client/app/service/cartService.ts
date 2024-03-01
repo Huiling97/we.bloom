@@ -12,7 +12,7 @@ const updateItems = async (
     updatedQuantity,
     updatedTotalPrice,
   });
-  if (response.data) saveToStorage('cartItems', response.data);
+  if (response.data) saveToStorage('cartItems', response.data.updatedCart);
 };
 
 const addItem = async (productId: number, price: number) => {
@@ -20,7 +20,7 @@ const addItem = async (productId: number, price: number) => {
     productId,
     price,
   });
-  if (response.data) saveToStorage('cartItems', response.data);
+  if (response.data) saveToStorage('cartItems', response.data.updatedCart);
   return response.data;
 };
 
@@ -42,4 +42,15 @@ const updateCartItems = async (
   }
 };
 
-export { updateCartItems };
+const deleteCartItem = async (productId: number) => {
+  try {
+    const response = await axios.delete(
+      `${URLConstants.CART_PRODUCTS_PATH}/${productId}`
+    );
+    if (response.data) saveToStorage('cartItems', response.data.updatedCart);
+  } catch (e) {
+    console.error('Error deleting cart item', e);
+  }
+};
+
+export { updateCartItems, deleteCartItem };
