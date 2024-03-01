@@ -3,8 +3,12 @@ const { db } = require('../databse.cjs');
 const getCartProducts = async () => {
   const q = `SELECT * FROM carts_products`;
 
-  const [rows] = await db.query(q);
-  return rows;
+  try {
+    const [rows] = await db.query(q);
+    return rows;
+  } catch (e) {
+    console.error('Error fetching cart items', e);
+  }
 };
 
 const addCartProduct = async (productId, price) => {
@@ -30,4 +34,20 @@ const updateCartProducts = async (productId, quantity, totalPrice) => {
   }
 };
 
-module.exports = { getCartProducts, addCartProduct, updateCartProducts };
+const deleteCartProduct = async (productId) => {
+  const q = `DELETE FROM carts_products WHERE product_id = ?`;
+
+  try {
+    await db.query(q, [productId]);
+    return await getCartProducts();
+  } catch (e) {
+    console.error(`Error deleting product ${productId} from cart`, e);
+  }
+};
+
+module.exports = {
+  getCartProducts,
+  addCartProduct,
+  updateCartProducts,
+  deleteCartProduct,
+};
