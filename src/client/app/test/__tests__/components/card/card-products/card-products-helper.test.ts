@@ -1,5 +1,14 @@
 import { cartItemsMock } from '../../../../__mocks__/cart-mock';
-import { getCartProductQuantity } from '../../../../../components/card/card-product/helpers';
+import {
+  getCartItemByProductId,
+  getCartProductQuantity,
+} from '../../../../../components/card/card-product/helpers';
+
+describe('getSelectedCartItem', () => {
+  it('should return the cart item by product id', () => {
+    expect(getCartItemByProductId(cartItemsMock, 1)).toBe(cartItemsMock[0]);
+  });
+});
 
 describe('getCartProductQuantity', () => {
   it('should return the quantity of product given product exists in the cart', () => {

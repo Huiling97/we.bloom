@@ -5,5 +5,4 @@ export const mockCartContextValue = {
   setCartItems: jest.fn(),
   incrementCartItem: jest.fn(),
   decrementCartItem: jest.fn(),
-  deleteCartItem: jest.fn(),
 };
