@@ -2,7 +2,6 @@ import {
   getCartItemByProductId,
   getCartProductQuantity,
   getCartTotalPrice,
-  getCartTotalQuantity,
   getProductByProductId,
 } from '../../../../../components/card/card-product/helpers';
 import { cartItemsMock } from '../../../../__mocks__/cart-mock';
@@ -28,12 +27,6 @@ describe('getCartProductQuantity', () => {
 describe('getCartTotalPrice', () => {
   it('should return the sum of the total price of all items in the cart', () => {
     expect(getCartTotalPrice(cartItemsMock)).toBeCloseTo(21.99, 2);
-  });
-});
-
-describe('getCartTotalQuantity', () => {
-  it('should return the sum of the total quantity of all items in the cart', () => {
-    expect(getCartTotalQuantity(cartItemsMock)).toEqual(3);
   });
 });
 

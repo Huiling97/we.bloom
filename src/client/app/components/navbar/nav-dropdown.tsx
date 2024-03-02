@@ -3,17 +3,14 @@ import { Badge, Button, Nav, NavDropdown } from 'react-bootstrap';
 import { Cart } from '@styled-icons/bootstrap';
 import { CartContext } from '../../store/cart-context';
 import { ProductsContext } from '../../store/products-context';
-import {
-  getCartTotalQuantity,
-  getProductByProductId,
-} from '../card/card-product/helpers';
+import { getProductByProductId } from '../card/card-product/helpers';
 import { type ProductProps } from '../../types/components/card/card-product';
 
 const NavBarDropdown = () => {
   const { cartItems } = useContext(CartContext);
   const { products } = useContext(ProductsContext);
 
-  const totalItemsCount = getCartTotalQuantity(cartItems);
+  const totalItemsCount = cartItems.length;
   const getFirst5Items = cartItems.slice(0, 5);
 
   const displayCartItems = () => {
