@@ -10,7 +10,11 @@ import {
   type CardProductProps,
 } from '../../../types/components/card/card-product';
 import { CartContext } from '../../../store/cart-context';
-import { updateCartItems, deleteCartItem } from '../../../service/cartService';
+import {
+  updateCartItems,
+  addCartItem,
+  deleteCartItem,
+} from '../../../service/cartService';
 import { isManageStorePage } from '../../../util/path-helper';
 import { getFromStorage } from '../../../util/storage-helper';
 import { fetchCartsProducts } from '../../../util/fetch-carts-products';
@@ -37,20 +41,20 @@ const CardProduct = ({ products }: CardProductProps) => {
     return storageData;
   };
 
-  const addItemHandlder = (
+  const addItemHandlder = async (
     productId: number,
     cartProductQuantity: number,
     price: number
   ) => {
     const updatedQuantity = cartProductQuantity + 1;
-    debounce(async () => {
-      await updateCartItems(
-        productId,
-        cartProductQuantity,
-        updatedQuantity,
-        price
-      );
-    }, 1000)();
+
+    if (cartProductQuantity) {
+      debounce(async () => {
+        await updateCartItems(productId, updatedQuantity, price);
+      }, 1000)();
+    } else {
+      await addCartItem(productId, price);
+    }
     incrementCartItem(productId, price);
   };
 
@@ -63,18 +67,12 @@ const CardProduct = ({ products }: CardProductProps) => {
 
     if (updatedQuantity) {
       debounce(async () => {
-        await updateCartItems(
-          productId,
-          cartProductQuantity,
-          updatedQuantity,
-          price
-        );
+        await updateCartItems(productId, updatedQuantity, price);
       }, 1000)();
-      decrementCartItem(productId);
     } else {
       await deleteCartItem(productId);
-      decrementCartItem(productId);
     }
+    decrementCartItem(productId, price);
   };
 
   useEffect(() => {

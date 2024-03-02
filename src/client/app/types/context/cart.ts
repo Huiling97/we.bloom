@@ -9,23 +9,21 @@ enum CartActionType {
   SET = 'SET',
   INCREMENT = 'INCREMENT',
   DECREMENT = 'DECREMENT',
-  DELETE = 'DELETE',
 }
 
 export interface CartContextProps {
   cartItems: CartItemsProps[];
   setCartItems: (items: CartItemsProps[]) => void;
   incrementCartItem: (id: number, price: number) => void;
-  decrementCartItem: (id: number) => void;
-  deleteCartItem: (id: number) => void;
+  decrementCartItem: (id: number, price: number) => void;
 }
 
 export interface CartActionProps {
   type: CartActionType | string;
-  payload: CartItemsProps[] | number | CartIncrementPayload;
+  payload: CartItemsProps[] | number | CartUpdatePayload;
 }
 
-export interface CartIncrementPayload {
+export interface CartUpdatePayload {
   id: number;
   price: number;
 }

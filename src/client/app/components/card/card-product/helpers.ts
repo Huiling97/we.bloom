@@ -19,15 +19,17 @@ const fetchProducts = async () => {
   }
 };
 
-const getSelectedCartItem = (cartItems: CartItemsProps[], productId: number) =>
-  cartItems.find((item) => item.product_id === productId);
+const getCartItemByProductId = (
+  cartItems: CartItemsProps[],
+  productId: number
+) => cartItems.find((item) => item.product_id === productId);
 
 const getCartProductQuantity = (
   cartItems: CartItemsProps[],
   productId: number
 ) => {
-  const selectedCartItem = getSelectedCartItem(cartItems, productId);
+  const selectedCartItem = getCartItemByProductId(cartItems, productId);
   return selectedCartItem ? selectedCartItem.quantity : 0;
 };
 
-export { fetchProducts, getSelectedCartItem, getCartProductQuantity };
+export { fetchProducts, getCartItemByProductId, getCartProductQuantity };

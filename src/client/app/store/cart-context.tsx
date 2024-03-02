@@ -3,50 +3,67 @@ import {
   type CartItemsProps,
   type CartContextProps,
   type CartActionProps,
-  type CartIncrementPayload,
+  type CartUpdatePayload,
 } from '../types/context/cart';
-import { getSelectedCartItem } from '../components/card/card-product/helpers';
+import { getCartItemByProductId } from '../components/card/card-product/helpers';
 
 const CartContext = createContext<CartContextProps>({
   cartItems: [],
   setCartItems: () => {},
   incrementCartItem: () => {},
   decrementCartItem: () => {},
-  deleteCartItem: () => {},
 });
 
-const cartReducer = (state: CartItemsProps[], action: CartActionProps) => {
+const cartReducer = (
+  state: CartItemsProps[],
+  action: CartActionProps
+): CartItemsProps[] => {
   switch (action.type) {
     case 'SET':
       return action.payload as CartItemsProps[];
-    case 'INCREMENT':
-      const { id, price } = action.payload as CartIncrementPayload;
-      const itemToIncrement = getSelectedCartItem(state, id);
+    case 'INCREMENT': {
+      const { id, price } = action.payload as CartUpdatePayload;
+      const itemToIncrement = getCartItemByProductId(state, id);
 
       if (itemToIncrement) {
-        itemToIncrement.quantity++;
-        return [...state, itemToIncrement];
+        return state.map((item) => {
+          if (item.product_id === id) {
+            return {
+              ...item,
+              quantity: item.quantity + 1,
+              total_price: (item.quantity + 1) * price,
+            };
+          } else {
+            return item;
+          }
+        });
       } else {
         return [
           ...state,
           { cart_id: 1, product_id: id, quantity: 1, total_price: price },
         ];
       }
-    case 'DECREMENT':
-      const productId = action.payload as number;
-      const itemToDecrement = getSelectedCartItem(state, productId);
+    }
+    case 'DECREMENT': {
+      const { id, price } = action.payload as CartUpdatePayload;
+      const itemToDecrement = getCartItemByProductId(state, id);
 
-      if (itemToDecrement) {
-        itemToDecrement.quantity--;
-        return [...state, itemToDecrement];
+      if (itemToDecrement && itemToDecrement?.quantity > 1) {
+        return state.map((item) => {
+          if (item.product_id === id) {
+            return {
+              ...item,
+              quantity: item.quantity - 1,
+              total_price: (item.quantity - 1) * price,
+            };
+          } else {
+            return item;
+          }
+        });
       } else {
-        return [
-          ...state,
-          { cart_id: 1, product_id: productId, quantity: 1, total_price: 9.59 },
-        ];
+        return state.filter((item) => item.product_id !== id);
       }
-    case 'DELETE':
-      return state.filter((item) => item.product_id !== action.payload);
+    }
     default:
       return state;
   }
@@ -63,12 +80,8 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'INCREMENT', payload: { id, price } });
   };
 
-  const decrementCartItem = (id: number) => {
-    dispatch({ type: 'DECREMENT', payload: id });
-  };
-
-  const deleteCartItem = (id: number) => {
-    dispatch({ type: 'DELETE', payload: id });
+  const decrementCartItem = (id: number, price: number) => {
+    dispatch({ type: 'DECREMENT', payload: { id, price } });
   };
 
   const value = {
@@ -76,7 +89,6 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     setCartItems,
     incrementCartItem,
     decrementCartItem,
-    deleteCartItem,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
