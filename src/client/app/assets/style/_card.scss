@@ -169,9 +169,16 @@
 .card-cart-product-actions {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.cart-product-buttons {
+.cart-product-description {
+  padding-left: 20px;
+}
+
+.cart-product-button-container {
   display: flex;
+  align-self: flex-end;
   gap: 10px;
+  margin: 10px;
 }

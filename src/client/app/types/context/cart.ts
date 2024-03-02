@@ -7,14 +7,23 @@ export type CartItemsProps = {
 
 enum CartActionType {
   SET = 'SET',
+  INCREMENT = 'INCREMENT',
+  DECREMENT = 'DECREMENT',
 }
 
 export interface CartContextProps {
   cartItems: CartItemsProps[];
   setCartItems: (items: CartItemsProps[]) => void;
+  incrementCartItem: (id: number, price: number) => void;
+  decrementCartItem: (id: number, price: number) => void;
 }
 
 export interface CartActionProps {
   type: CartActionType | string;
-  payload: CartItemsProps[];
+  payload: CartItemsProps[] | number | CartUpdatePayload;
+}
+
+export interface CartUpdatePayload {
+  id: number;
+  price: number;
 }
