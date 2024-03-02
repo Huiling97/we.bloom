@@ -1,8 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { Whatsapp } from '@styled-icons/boxicons-logos';
 import { CategoriesContext } from '../store/categories-context.tsx';
-import { CartContext } from '../store/cart-context.tsx';
 import LoadingSpinner from '../components/spinner/index.tsx';
 import CarouselBanner from '../components/carousel/index.tsx';
 import CardGrid from '../components/card/card-grid/index.tsx';
