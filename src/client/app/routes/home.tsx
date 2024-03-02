@@ -9,27 +9,15 @@ import CardGrid from '../components/card/card-grid/index.tsx';
 import CardReview from '../components/card/card-review/index.tsx';
 import Separator from '../components/separator/index.tsx';
 import fetchCategoriesData from '../util/fetch-categories.ts';
-import { fetchCartsProducts } from '../util/fetch-carts-products.ts';
 import { isMobile } from '../util/screen-size-helper.ts';
 import { REVIEWS_LIST } from '../util/constants.ts';
 
 const Home = () => {
   const { categories } = useContext(CategoriesContext);
-  const { setCartItems } = useContext(CartContext);
-
-  const fetchData = async () => {
-    const cartProducts = await fetchCartsProducts();
-    setCartItems(cartProducts);
-    return cartProducts;
-  };
 
   if (isEmpty(categories)) {
     fetchCategoriesData();
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div>
