@@ -1,17 +1,19 @@
 import { useContext } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Button } from 'react-bootstrap';
+import { Badge, Button, Nav, NavDropdown } from 'react-bootstrap';
 import { Cart } from '@styled-icons/bootstrap';
 import { CartContext } from '../../store/cart-context';
 import { ProductsContext } from '../../store/products-context';
-import { getProductByProductId } from '../card/card-product/helpers';
+import {
+  getCartTotalQuantity,
+  getProductByProductId,
+} from '../card/card-product/helpers';
 import { type ProductProps } from '../../types/components/card/card-product';
 
 const NavBarDropdown = () => {
   const { cartItems } = useContext(CartContext);
   const { products } = useContext(ProductsContext);
 
+  const totalItemsCount = getCartTotalQuantity(cartItems);
   const getFirst5Items = cartItems.slice(0, 5);
 
   const displayCartItems = () => {
@@ -34,7 +36,7 @@ const NavBarDropdown = () => {
   };
 
   const getRemainingItemsCount = () => {
-    const remainingItemsCount = cartItems.length - 5;
+    const remainingItemsCount = totalItemsCount - 5;
 
     if (remainingItemsCount > 0) {
       return (
@@ -46,12 +48,18 @@ const NavBarDropdown = () => {
     }
   };
 
+  const displayCartIcon = () => {
+    return (
+      <>
+        <Cart size='24' className='icon-grey' />
+        <Badge bg='secondary'>{totalItemsCount}</Badge>
+      </>
+    );
+  };
+
   return (
     <Nav>
-      <NavDropdown
-        title={<Cart size='24' className='icon-grey' />}
-        id='nav-dropdown'
-      >
+      <NavDropdown title={displayCartIcon()} id='nav-dropdown'>
         {displayCartItems()}
         <NavDropdown.Divider />
         <div className='cart-summary-container'>

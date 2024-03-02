@@ -1,17 +1,12 @@
 import {
   getCartItemByProductId,
   getCartProductQuantity,
-  getProductByProductId,
   getCartTotalPrice,
+  getCartTotalQuantity,
+  getProductByProductId,
 } from '../../../../../components/card/card-product/helpers';
 import { cartItemsMock } from '../../../../__mocks__/cart-mock';
 import { productsMock } from '../../../../__mocks__/product-mock';
-
-describe('getProductByProductId', () => {
-  it('should return the product by product id', () => {
-    expect(getProductByProductId(productsMock, 1)).toBe(productsMock[0]);
-  });
-});
 
 describe('getCartItemByProductId', () => {
   it('should return the cart item by product id', () => {
@@ -33,5 +28,17 @@ describe('getCartProductQuantity', () => {
 describe('getCartTotalPrice', () => {
   it('should return the sum of the total price of all items in the cart', () => {
     expect(getCartTotalPrice(cartItemsMock)).toBeCloseTo(21.99, 2);
+  });
+});
+
+describe('getCartTotalQuantity', () => {
+  it('should return the sum of the total quantity of all items in the cart', () => {
+    expect(getCartTotalQuantity(cartItemsMock)).toEqual(3);
+  });
+});
+
+describe('getProductByProductId', () => {
+  it('should return the product by product id', () => {
+    expect(getProductByProductId(productsMock, 1)).toBe(productsMock[0]);
   });
 });

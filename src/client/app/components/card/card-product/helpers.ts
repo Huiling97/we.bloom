@@ -36,6 +36,9 @@ const getCartProductQuantity = (
 const getCartTotalPrice = (cartItems: CartItemsProps[]) =>
   cartItems.reduce((acc, currItem) => acc + currItem.total_price, 0);
 
+const getCartTotalQuantity = (cartItems: CartItemsProps[]) =>
+  cartItems.reduce((acc, currItem) => acc + currItem.quantity, 0);
+
 const getProductByProductId = (
   productList: ProductProps[],
   product_id: number
@@ -46,5 +49,6 @@ export {
   getCartItemByProductId,
   getCartProductQuantity,
   getCartTotalPrice,
+  getCartTotalQuantity,
   getProductByProductId,
 };
