@@ -37,10 +37,20 @@
   background-color: $white-color;
 
   @include media('>mobile') {
-    justify-content: flex-end;
     padding: 15px 15px 0 0;
     margin-bottom: 5px;
+    justify-content: space-between;
   }
+
+  @include media('<=mobile') {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+  }
+}
+
+.navbar-actions {
+  display: flex;
 
   @include media('<=mobile') {
     flex-direction: column;
@@ -83,4 +93,16 @@
 .dropdown-menu[data-bs-popper] {
   right: 0;
   left: unset;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cart-item-list-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.cart-summary-container {
+  display: flex;
+  gap: 30px;
 }

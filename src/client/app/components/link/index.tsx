@@ -5,7 +5,7 @@ import { type BackLinkProps } from '../../types/components/link';
 const BackLink = ({ link, content }: BackLinkProps) => {
   return (
     <Link to={link} className='back-button link-no-decoration'>
-      <ChevronBack size='28' className='back-button-icon' />
+      <ChevronBack size='28' className='icon-grey' />
       <div>{content}</div>
     </Link>
   );

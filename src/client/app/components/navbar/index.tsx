@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { PersonCircle } from '@styled-icons/bootstrap';
+import NavBarDropdown from './nav-dropdown';
 import { isMobile } from '../../util/screen-size-helper';
 import { AuthContext } from '../../store/auth-context';
 
@@ -53,23 +54,26 @@ const NavBar = () => {
           <Offcanvas.Body>
             <Nav className='justify-content-end flex-grow-1 pe-3'>
               <div className='navbar-container'>
-                {Object.entries(TABS_LIST).map(([key, value]) => {
-                  return (
-                    <div
-                      className='navbar-list-item '
-                      key={key}
-                      onClick={closeHandler}
-                      data-testid='navbar-tab-item'
-                    >
-                      <NavLink
-                        to={`${value}`}
-                        className='navbar-link link-no-decoration'
+                <div className='navbar-actions'>
+                  {Object.entries(TABS_LIST).map(([key, value]) => {
+                    return (
+                      <div
+                        className='navbar-list-item '
+                        key={key}
+                        onClick={closeHandler}
+                        data-testid='navbar-tab-item'
                       >
-                        {key.toUpperCase()}
-                      </NavLink>
-                    </div>
-                  );
-                })}
+                        <NavLink
+                          to={`${value}`}
+                          className='navbar-link link-no-decoration'
+                        >
+                          {key.toUpperCase()}
+                        </NavLink>
+                      </div>
+                    );
+                  })}
+                </div>
+                {!isAuthenticated && !isMobile() && <NavBarDropdown />}
                 {isAuthenticated && !isMobile() && (
                   <div className='navbar-list-item account-container account-avatar-icon-container'>
                     <PersonCircle size='24' />

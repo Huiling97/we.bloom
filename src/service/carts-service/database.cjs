@@ -5,7 +5,12 @@ const getCartProducts = async () => {
 
   try {
     const [rows] = await db.query(q);
-    return rows;
+    const cartProducts = rows.map((item) => ({
+      ...item,
+      total_price: parseFloat(item.total_price),
+    }));
+
+    return cartProducts;
   } catch (e) {
     console.error('Error fetching cart items', e);
   }
