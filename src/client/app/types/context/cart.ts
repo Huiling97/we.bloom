@@ -1,9 +1,10 @@
+import { ProductProps } from '../components/card/card-product';
+
 export type CartItemsProps = {
-  cart_id: number;
-  product_id: number;
+  id: number;
   quantity: number;
   total_price: number;
-};
+} & ProductProps;
 
 enum CartActionType {
   SET = 'SET',
@@ -14,16 +15,11 @@ enum CartActionType {
 export interface CartContextProps {
   cartItems: CartItemsProps[];
   setCartItems: (items: CartItemsProps[]) => void;
-  incrementCartItem: (id: number, price: number) => void;
-  decrementCartItem: (id: number, price: number) => void;
+  incrementCartItem: (items: CartItemsProps) => void;
+  decrementCartItem: (items: CartItemsProps) => void;
 }
 
 export interface CartActionProps {
   type: CartActionType | string;
-  payload: CartItemsProps[] | number | CartUpdatePayload;
-}
-
-export interface CartUpdatePayload {
-  id: number;
-  price: number;
+  payload: CartItemsProps[] | CartItemsProps | number;
 }

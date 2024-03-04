@@ -9,6 +9,7 @@ import {
   type ProductProps,
   type CardProductProps,
 } from '../../../types/components/card/card-product';
+import { type CartItemsProps } from '../../../types/context/cart';
 import { CartContext } from '../../../store/cart-context';
 import {
   updateCartItems,
@@ -18,7 +19,6 @@ import {
 import { isManageStorePage } from '../../../util/path-helper';
 import { getFromStorage } from '../../../util/storage-helper';
 import { fetchCartsProducts } from '../../../util/fetch-carts-products';
-import { getCartProductQuantity } from './helpers';
 
 const CardProduct = ({ products }: CardProductProps) => {
   const { cartItems, setCartItems, incrementCartItem, decrementCartItem } =
@@ -41,38 +41,32 @@ const CardProduct = ({ products }: CardProductProps) => {
     return storageData;
   };
 
-  const addItemHandlder = async (
-    productId: number,
-    cartProductQuantity: number,
-    price: number
-  ) => {
-    const updatedQuantity = cartProductQuantity + 1;
+  const addItemHandler = async (item: CartItemsProps) => {
+    const { id, quantity, price } = item;
+    const updatedQuantity = quantity + 1;
 
-    if (cartProductQuantity) {
+    if (quantity) {
       debounce(async () => {
-        await updateCartItems(productId, updatedQuantity, price);
+        await updateCartItems(id, updatedQuantity, price);
       }, 1000)();
     } else {
-      await addCartItem(productId, price);
+      await addCartItem(id, price);
     }
-    incrementCartItem(productId, price);
+    incrementCartItem(item);
   };
 
-  const removeItemHandlder = async (
-    productId: number,
-    cartProductQuantity: number,
-    price: number
-  ) => {
-    const updatedQuantity = cartProductQuantity - 1;
+  const removeItemHandler = async (item: CartItemsProps) => {
+    const { id, quantity, price } = item;
+    const updatedQuantity = quantity - 1;
 
     if (updatedQuantity) {
       debounce(async () => {
-        await updateCartItems(productId, updatedQuantity, price);
+        await updateCartItems(id, updatedQuantity, price);
       }, 1000)();
     } else {
-      await deleteCartItem(productId);
+      await deleteCartItem(id);
     }
-    decrementCartItem(productId, price);
+    decrementCartItem(item);
   };
 
   useEffect(() => {
@@ -85,46 +79,46 @@ const CardProduct = ({ products }: CardProductProps) => {
     initCartItems();
   }, []);
 
-  const cartActions = (productId: number, price: number) => {
-    const cartProductQuantity = getCartProductQuantity(cartItems, productId);
-    if (cartProductQuantity) {
-      return (
-        <div className='card-cart-product-actions'>
-          <div className='cart-product-description'>{cartProductQuantity}</div>
-          <div className='cart-product-button-container'>
-            <Button
-              onClick={() =>
-                addItemHandlder(productId, cartProductQuantity, price)
-              }
-            >
-              +
-            </Button>
-            <Button
-              onClick={() =>
-                removeItemHandlder(productId, cartProductQuantity, price)
-              }
-            >
-              -
-            </Button>
+  const cartActions = (product: ProductProps) => {
+    const cartProduct = cartItems.find((item) => item.id === product.id);
+
+    if (cartProduct) {
+      const { quantity } = cartProduct;
+
+      if (quantity) {
+        return (
+          <div className='card-cart-product-actions'>
+            <div className='cart-product-description'>{quantity}</div>
+            <div className='cart-product-button-container'>
+              <Button onClick={() => addItemHandler(cartProduct)}>+</Button>
+              <Button onClick={() => removeItemHandler(cartProduct)}>-</Button>
+            </div>
           </div>
-        </div>
+        );
+      }
+    } else {
+      const addedProduct = {
+        ...product,
+        quantity: 0,
+        total_price: product.price,
+      };
+
+      return (
+        <Button
+          variant='success'
+          className='cart-product-button-container'
+          onClick={() => addItemHandler(addedProduct)}
+        >
+          Add to cart
+        </Button>
       );
     }
-    return (
-      <Button
-        variant='success'
-        className='cart-product-button-container'
-        onClick={() => addItemHandlder(productId, cartProductQuantity, price)}
-      >
-        Add to cart
-      </Button>
-    );
   };
 
   return (
     <Row xs={1} md={4} className='card-product-container'>
       {products.map((product: ProductProps) => {
-        const { id, price } = product;
+        const { id } = product;
 
         return (
           <Col key={id}>
@@ -139,7 +133,7 @@ const CardProduct = ({ products }: CardProductProps) => {
                   <Card.Text>{product.brand}</Card.Text>
                 </Card.Body>
               </Link>
-              <>{cartActions(id, price)}</>
+              <>{cartActions(product)}</>
             </Card>
           </Col>
         );

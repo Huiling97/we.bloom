@@ -3,9 +3,7 @@ import {
   type CartItemsProps,
   type CartContextProps,
   type CartActionProps,
-  type CartUpdatePayload,
 } from '../types/context/cart';
-import { getCartItemByProductId } from '../components/card/card-product/helpers';
 
 const CartContext = createContext<CartContextProps>({
   cartItems: [],
@@ -22,12 +20,11 @@ const cartReducer = (
     case 'SET':
       return action.payload as CartItemsProps[];
     case 'INCREMENT': {
-      const { id, price } = action.payload as CartUpdatePayload;
-      const itemToIncrement = getCartItemByProductId(state, id);
+      const { id, price, quantity } = action.payload as CartItemsProps;
 
-      if (itemToIncrement) {
+      if (quantity) {
         return state.map((item) => {
-          if (item.product_id === id) {
+          if (item.id === id) {
             return {
               ...item,
               quantity: item.quantity + 1,
@@ -40,17 +37,16 @@ const cartReducer = (
       } else {
         return [
           ...state,
-          { cart_id: 1, product_id: id, quantity: 1, total_price: price },
+          { ...(action.payload as CartItemsProps), quantity: 1 },
         ];
       }
     }
     case 'DECREMENT': {
-      const { id, price } = action.payload as CartUpdatePayload;
-      const itemToDecrement = getCartItemByProductId(state, id);
+      const { id, price, quantity } = action.payload as CartItemsProps;
 
-      if (itemToDecrement && itemToDecrement?.quantity > 1) {
+      if (quantity && quantity > 1) {
         return state.map((item) => {
-          if (item.product_id === id) {
+          if (item.id === id) {
             return {
               ...item,
               quantity: item.quantity - 1,
@@ -61,7 +57,7 @@ const cartReducer = (
           }
         });
       } else {
-        return state.filter((item) => item.product_id !== id);
+        return state.filter((item) => item.id !== id);
       }
     }
     default:
@@ -76,12 +72,12 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: 'SET', payload: items });
   };
 
-  const incrementCartItem = (id: number, price: number) => {
-    dispatch({ type: 'INCREMENT', payload: { id, price } });
+  const incrementCartItem = (item: CartItemsProps) => {
+    dispatch({ type: 'INCREMENT', payload: item });
   };
 
-  const decrementCartItem = (id: number, price: number) => {
-    dispatch({ type: 'DECREMENT', payload: { id, price } });
+  const decrementCartItem = (item: CartItemsProps) => {
+    dispatch({ type: 'DECREMENT', payload: item });
   };
 
   const value = {

@@ -20,31 +20,16 @@ const fetchProducts = async () => {
   }
 };
 
-const getCartItemByProductId = (
-  cartItems: CartItemsProps[],
-  productId: number
-) => cartItems.find((item) => item.product_id === productId);
-
-const getCartProductQuantity = (
-  cartItems: CartItemsProps[],
-  productId: number
+const getCartProducts = (
+  cartList: CartItemsProps[],
+  productList: ProductProps[]
 ) => {
-  const selectedCartItem = getCartItemByProductId(cartItems, productId);
-  return selectedCartItem ? selectedCartItem.quantity : 0;
+  return cartList.map((item) =>
+    productList.find((product) => product.id === item.id)
+  );
 };
 
 const getCartTotalPrice = (cartItems: CartItemsProps[]) =>
   cartItems.reduce((acc, currItem) => acc + currItem.total_price, 0);
 
-const getProductByProductId = (
-  productList: ProductProps[],
-  product_id: number
-) => productList.find((product) => product.id === product_id);
-
-export {
-  fetchProducts,
-  getCartItemByProductId,
-  getCartProductQuantity,
-  getCartTotalPrice,
-  getProductByProductId,
-};
+export { fetchProducts, getCartTotalPrice, getCartProducts };
