@@ -12,6 +12,7 @@ import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Login from './app/routes/login.tsx';
 import Shop from './app/routes/shop.tsx';
+import Cart from './app/routes/cart.tsx';
 import Product from './app/routes/shop/product.tsx';
 import ManageActions from './app/routes/manage/manage-actions.tsx';
 import ManageCategories from './app/routes/manage/manage-categories.tsx';
@@ -59,6 +60,10 @@ function App() {
         { path: '', element: <Shop /> },
         { path: ':id', element: <Product areActionsEnabled={false} /> },
       ],
+    },
+    {
+      path: '/cart',
+      element: <Cart />,
     },
     {
       path: '/contact',
