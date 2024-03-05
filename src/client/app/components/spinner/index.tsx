@@ -2,7 +2,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 const LoadingSpinner = () => {
   return (
-    <div className='spinner-container'>
+    <div className='content-centered'>
       <Spinner
         as='span'
         animation='grow'
