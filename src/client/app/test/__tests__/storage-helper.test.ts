@@ -1,13 +1,13 @@
 import { getFromStorage, saveToStorage } from '../../util/storage-helper';
+import { cartItemsMock } from '../__mocks__/cart-mock';
 
 describe('saveToStorage', () => {
   it('should save data to local storage', () => {
     const key = 'testKey';
-    const data = [{ id: 1, value: 'test value' }];
 
-    saveToStorage(key, data);
+    saveToStorage(key, cartItemsMock);
 
-    expect(localStorage.getItem(key)).toEqual(JSON.stringify(data));
+    expect(localStorage.getItem(key)).toEqual(JSON.stringify(cartItemsMock));
   });
 });
 
@@ -18,13 +18,12 @@ describe('getFromStorage', () => {
 
   it('should return data from local storage for an existing key', () => {
     const key = 'existingKey';
-    const data = [{ id: 1, value: 'test value' }];
 
-    localStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem(key, JSON.stringify(cartItemsMock));
 
     const result = getFromStorage(key);
 
-    expect(result).toEqual(data);
+    expect(result).toEqual(cartItemsMock);
   });
 
   it('should return null for a non-existing key', () => {

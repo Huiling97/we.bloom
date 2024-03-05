@@ -2,8 +2,12 @@ import '@testing-library/jest-dom';
 
 //Fix for "ReferenceError: TextDecoder is not defined" error
 import { TextEncoder, TextDecoder } from 'util';
-(global as any).TextEncoder = TextEncoder;
-(global as any).TextDecoder = TextDecoder;
+interface CustomGlobal {
+  TextEncoder: typeof TextEncoder;
+  TextDecoder: typeof TextDecoder;
+}
+(global as CustomGlobal).TextEncoder = TextEncoder;
+(global as CustomGlobal).TextDecoder = TextDecoder;
 
 //Fix for "matchMedia not present, legacy browsers require a polyfill jest" error
 window.matchMedia =
