@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react';
 import { type AllProvidersProps } from '../types/context';
 import { AuthContextProvider } from './auth-context';
 import { ModalContextProvider } from './modal-context';
@@ -8,7 +9,11 @@ import { ServicesContextProvider } from './services-context';
 import { ProductsContextProvider } from './products-context';
 import { CartContextProvider } from './cart-context';
 
-const AllProviders: React.FC<AllProvidersProps> = ({ children }) => {
+const AllProviders: React.FC<AllProvidersProps> = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   return (
     <AuthContextProvider>
       <ModalContextProvider>
