@@ -4,12 +4,12 @@ import { createMemoryHistory } from 'history';
 import { setupAxiosMock } from '../../../../util/axiosMockUtils';
 import URLConstants from '../../../../../util/constants/url-constants';
 import CardProduct from '../../../../../components/card/card-product';
-import { getCartProductQuantity } from '../../../../../components/card/card-product/helpers';
 import { cardProductMock } from '../../../../__mocks__/card-mock';
+import { CartContext } from '../../../../../store/cart-context';
+import { mockCartContextValue } from '../../../../__mocks__/store/cart-context-mock';
 
 jest.mock('../../../../../components/card/card-product/helpers', () => ({
   fetchProducts: jest.fn(() => Promise.resolve(cardProductMock)),
-  getCartProductQuantity: jest.fn(),
 }));
 
 let container: HTMLElement;
@@ -17,7 +17,9 @@ let container: HTMLElement;
 const renderContentWithActionsNotEnabled = () => {
   const { container: renderedContainer } = render(
     <MemoryRouter>
-      <CardProduct products={cardProductMock} />
+      <CartContext.Provider value={mockCartContextValue}>
+        <CardProduct products={cardProductMock} />
+      </CartContext.Provider>
     </MemoryRouter>
   );
 
@@ -95,23 +97,21 @@ describe('CardProduct', () => {
 
   describe('should render Card component with approriate cart actions', () => {
     it('should render `Add to cart` button given product is not in cart', () => {
-      (getCartProductQuantity as jest.Mock).mockReturnValueOnce(0);
       renderContentWithActionsNotEnabled();
 
       const cartBtn = screen.getAllByRole('button', { name: /Add to cart/i });
 
-      expect(cartBtn).toHaveLength(2);
+      expect(cartBtn).toHaveLength(1);
     });
 
     it('should render increment and decrement buttons given product is in cart', () => {
-      (getCartProductQuantity as jest.Mock).mockReturnValueOnce(1);
       renderContentWithActionsNotEnabled();
 
-      const incrementBtn = screen.getByRole('button', { name: '+' });
-      const decrementBtn = screen.getByRole('button', { name: '-' });
+      const incrementBtn = screen.getAllByRole('button', { name: '+' });
+      const decrementBtn = screen.getAllByRole('button', { name: '-' });
 
-      expect(incrementBtn).toBeInTheDocument();
-      expect(decrementBtn).toBeInTheDocument();
+      expect(incrementBtn).toHaveLength(1);
+      expect(decrementBtn).toHaveLength(1);
     });
   });
 });

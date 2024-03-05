@@ -1,24 +1,20 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Badge, Button, Nav, NavDropdown } from 'react-bootstrap';
 import { Cart } from '@styled-icons/bootstrap';
 import { CartContext } from '../../store/cart-context';
-import { ProductsContext } from '../../store/products-context';
-import { getProductByProductId } from '../card/card-product/helpers';
-import { type ProductProps } from '../../types/components/card/card-product';
+import { type CartItemsProps } from '../../types/context/cart';
 
 const NavBarDropdown = () => {
+  const navigate = useNavigate();
   const { cartItems } = useContext(CartContext);
-  const { products } = useContext(ProductsContext);
 
   const totalItemsCount = cartItems.length;
   const getFirst5Items = cartItems.slice(0, 5);
 
   const displayCartItems = () => {
     return getFirst5Items.map((item) => {
-      const { product_id } = item;
-      const cartProduct = getProductByProductId(products, product_id);
-
-      const { id, brand, name, price } = cartProduct as ProductProps;
+      const { id, brand, name, price } = item as CartItemsProps;
 
       return (
         <NavDropdown.Item eventKey={id} key={id}>
@@ -54,6 +50,10 @@ const NavBarDropdown = () => {
     );
   };
 
+  const viewCartHandler = () => {
+    navigate('/cart');
+  };
+
   return (
     <Nav>
       <NavDropdown title={displayCartIcon()} id='nav-dropdown'>
@@ -62,7 +62,7 @@ const NavBarDropdown = () => {
         <div className='cart-summary-container'>
           {getRemainingItemsCount()}
           <NavDropdown.Item eventKey='viewCart'>
-            <Button>View my cart</Button>
+            <Button onClick={viewCartHandler}>View my cart</Button>
           </NavDropdown.Item>
         </div>
       </NavDropdown>

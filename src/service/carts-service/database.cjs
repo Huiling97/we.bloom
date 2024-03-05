@@ -1,18 +1,16 @@
 const { db } = require('../databse.cjs');
 
 const getCartProducts = async () => {
-  const q = `SELECT * FROM carts_products`;
+  const q = `SELECT cp.quantity, cp.total_price, p.* 
+              FROM carts_products cp
+              JOIN products p ON cp.product_id = p.id
+              WHERE cp.cart_id = 1`;
 
   try {
     const [rows] = await db.query(q);
-    const cartProducts = rows.map((item) => ({
-      ...item,
-      total_price: parseFloat(item.total_price),
-    }));
-
-    return cartProducts;
+    return rows;
   } catch (e) {
-    console.error('Error fetching cart items', e);
+    console.error('Error fetching cart products', e);
   }
 };
 
