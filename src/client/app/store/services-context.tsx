@@ -16,14 +16,17 @@ const ServicesContext = createContext<ServicesContextProps>({
   deleteService: () => {},
 });
 
-const servicesReducer = (state: {}, action: ServiceActionProps) => {
+const servicesReducer = (
+  state: CardServiceObjectProps,
+  action: ServiceActionProps
+): CardServiceObjectProps => {
   switch (action.type) {
     case 'SET':
-      return { ...action.payload };
+      return { ...action.payload } as CardServiceObjectProps;
     case 'ADD':
-      return { ...action.payload, ...state };
-    case 'UPDATE':
-      let { serviceData, updatedServiceData } =
+      return { ...action.payload, ...state } as CardServiceObjectProps;
+    case 'UPDATE': {
+      const { serviceData, updatedServiceData } =
         action.payload as ServiceUpdatePayload;
       const serviceList = (state as CardServiceObjectProps)[
         serviceData.category
@@ -42,7 +45,8 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
         };
         return result;
       }
-    case 'DELETE':
+    }
+    case 'DELETE': {
       const { categoryKey, id } = action.payload as ServiceDeletePayload;
       const categoryServices = (state as CardServiceObjectProps)[categoryKey];
       if (categoryServices) {
@@ -55,6 +59,7 @@ const servicesReducer = (state: {}, action: ServiceActionProps) => {
         };
       }
       return state;
+    }
     default:
       return state;
   }
