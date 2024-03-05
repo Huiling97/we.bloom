@@ -102,6 +102,7 @@ const CardServiceForm = ({ formId, service }: CardServiceFormProps) => {
     setAdditionalDetailsForm([
       ...additionalDetailsForm,
       <ServiceDetailsForm
+        key={formInput.id}
         id={formInput.id}
         index={formIndex}
         data={defaultDetails}
@@ -168,6 +169,7 @@ const CardServiceForm = ({ formId, service }: CardServiceFormProps) => {
     if (details.length === 0) {
       formsToAdd = [
         <ServiceDetailsForm
+          key={formInput.id}
           id={formInput.id}
           index={0}
           onDetailsChange={onDetailsChangeHandler}
@@ -178,6 +180,7 @@ const CardServiceForm = ({ formId, service }: CardServiceFormProps) => {
       formsToAdd = details.map((detailData) => {
         return (
           <ServiceDetailsForm
+            key={formInput.id}
             id={formInput.id}
             index={detailData.index}
             data={detailData}
