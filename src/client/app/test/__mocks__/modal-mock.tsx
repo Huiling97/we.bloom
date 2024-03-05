@@ -7,7 +7,7 @@ import { type FormComponentProps } from '../../types/components/form';
 import { cardGenericProps, cardDetailedProps } from './card-mock';
 import { ModalContext } from '../../store/modal-context';
 
-const MockFormComponent: FunctionComponent<FormComponentProps> = ({}) => {
+const MockFormComponent: FunctionComponent<FormComponentProps> = () => {
   const { isEditModal } = useContext(ModalContext);
 
   return (
