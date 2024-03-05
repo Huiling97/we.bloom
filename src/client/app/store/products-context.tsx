@@ -24,7 +24,7 @@ const productsReducer = (
       return action.payload as ProductProps[];
     case 'ADD':
       return [...state, action.payload] as ProductProps[];
-    case 'UPDATE':
+    case 'UPDATE': {
       const productData = action.payload as ProductProps;
       const productIndex = state.findIndex(
         (product) => (product.id = productData.id)
@@ -34,6 +34,7 @@ const productsReducer = (
         state[productIndex] = productData;
       }
       return state;
+    }
     case 'DELETE':
       return state.filter((product) => product.id !== action.payload);
     default:

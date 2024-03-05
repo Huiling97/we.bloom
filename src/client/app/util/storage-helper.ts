@@ -1,4 +1,6 @@
-const saveToStorage = (key: string, data: any) => {
+import { type CartItemsProps } from '../types/context/cart';
+
+const saveToStorage = (key: string, data: CartItemsProps[]) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
 

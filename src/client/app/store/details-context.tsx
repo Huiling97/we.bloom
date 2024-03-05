@@ -19,7 +19,7 @@ const detailsReducer = (
   switch (action.type) {
     case 'SET':
       return action.payload as CardDetailsProps[];
-    case 'ADD':
+    case 'ADD': {
       const { index, ...otherData } = action.payload as CardDetailsProps;
 
       const existingDetailIndex = state.findIndex(
@@ -34,6 +34,7 @@ const detailsReducer = (
       } else {
         return [...state, action.payload] as CardDetailsProps[];
       }
+    }
     case 'DELETE':
       return state.filter((detail) => detail.index !== action.payload);
     default:

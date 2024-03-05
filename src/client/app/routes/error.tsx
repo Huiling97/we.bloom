@@ -6,7 +6,7 @@ const Error = () => {
     <div className='error-container'>
       <div className='error-text'>
         <div>Ooops, seems like you got lost</div>
-        <div>Let's get you back home</div>
+        <div>Let&apos;s get you back home</div>
       </div>
       <Button>
         <NavLink to='/' className='link-no-decoration button-white'>

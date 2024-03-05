@@ -24,19 +24,21 @@ const categoriesReducer = (state: {}, action: CategoryActionProps) => {
       return { ...action.payload };
     case 'ADD':
       return { ...action.payload, ...state };
-    case 'UPDATE':
+    case 'UPDATE': {
       const { id, image } = action.payload as CategoryUpdatePayload;
       const allCategories = Object.values(state);
-      let editedCategory = allCategories.find(
+      const editedCategory = allCategories.find(
         (category) => (category as CardCategoryProps).id === id
       ) as CardCategoryProps;
       editedCategory.image = image;
       return { ...state };
-    case 'DELETE':
+    }
+    case 'DELETE': {
       const categories = Object.values(state);
       return categories.filter(
         (category) => (category as CardCategoryProps).id !== action.payload!.id
       );
+    }
     default:
       return state;
   }

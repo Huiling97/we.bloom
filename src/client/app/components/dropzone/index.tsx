@@ -75,7 +75,9 @@ const DropZone = ({ onAdd, setHasNoImage }: DropZoneProps) => {
           />
           <div {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
-            <p>Drag 'n' drop an image here, or click to select an image</p>
+            <p>
+              Drag &apos;n&apos; drop an image here, or click to select an image
+            </p>
             <em>(Only *.jpeg, *.jpg and *.png images will be accepted)</em>
           </div>
         </section>

@@ -11,8 +11,8 @@ enum ProductsActionType {
 export interface ProductsContextProps {
   products: ProductProps[];
   setProducts: (productsData: ProductProps[]) => void;
-  selectedProduct: ProductProps | {};
-  setSelectedProduct: Dispatch<SetStateAction<ProductProps | {}>>;
+  selectedProduct: ProductProps | object;
+  setSelectedProduct: Dispatch<SetStateAction<ProductProps | object>>;
   addProducts: (productData: ProductProps) => void;
   updateProduct: (productData: ProductProps) => void;
   deleteProduct: (id: number) => void;
