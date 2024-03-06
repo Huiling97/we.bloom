@@ -13,23 +13,25 @@ const fetchCategoriesData = () => {
   useEffect(() => {
     const categoriesRef = ref(database, 'categories');
 
-    try {
-      onValue(categoriesRef, (snapshot) => {
-        if (snapshot) {
-          const data = snapshot.val() as CardCategoryObjectProps;
-          if (data) {
-            const updatedTypes = Object.keys(data);
-            setCategoryTypes(updatedTypes);
-            setCategories(data);
+    if (categoriesRef) {
+      try {
+        onValue(categoriesRef, (snapshot) => {
+          if (snapshot) {
+            const data = snapshot.val() as CardCategoryObjectProps;
+            if (data) {
+              const updatedTypes = Object.keys(data);
+              setCategoryTypes(updatedTypes);
+              setCategories(data);
+            }
+          } else {
+            throw new Error('Unable to fetch categories');
           }
-        } else {
-          throw new Error('Unable to fetch categories');
-        }
+          setIsLoading(false);
+        });
+      } catch (e) {
         setIsLoading(false);
-      });
-    } catch (e) {
-      setIsLoading(false);
-      throw new Error('Unable to fetch categories');
+        throw new Error('Unable to fetch categories');
+      }
     }
   }, []);
 
