@@ -1,17 +1,57 @@
 import { useContext } from 'react';
+import { isEmpty } from 'lodash';
+import { Button } from 'react-bootstrap';
 import { CartContext } from '../store/cart-context';
-import { getCartProducts } from '../components/card/card-product/helpers';
-import { ProductsContext } from '../store/products-context';
+import { fetchCartsProducts } from '../util/fetch-carts-products';
+import CartItem from '../components/card/card-cart';
+import { getCartTotalPrice } from '../components/card/card-product/helpers';
+import { useNavigate } from 'react-router-dom';
+import { BackLink } from '../components/link';
 
 const Cart = () => {
-  const { cartItems } = useContext(CartContext);
-  const { products } = useContext(ProductsContext);
+  const navigate = useNavigate();
+  const { cartItems, setCartItems } = useContext(CartContext);
 
-  const cartProductItems = getCartProducts(cartItems, products);
+  const onClickHandler = () => {
+    navigate('/shop');
+  };
 
-  return cartProductItems.map((item) => {
-    return <div>{item?.name}</div>;
-  });
+  if (isEmpty(cartItems)) {
+    const fetchCartItems = async () => {
+      const items = await fetchCartsProducts();
+      setCartItems(items);
+    };
+
+    fetchCartItems();
+  }
+
+  if (!isEmpty(cartItems)) {
+    return (
+      <>
+        <BackLink link='/shop' content='Back to shop' />
+        <div className='cart-content-container'>
+          <div>
+            <CartItem cartItems={cartItems} />
+          </div>
+          <div className='subtotal-container'>
+            <div className='price-details'>
+              <div>SubTotal</div>
+              <div className='font-bold'>${getCartTotalPrice(cartItems)}</div>
+            </div>
+            <Button>Continue to checkout</Button>
+          </div>
+        </div>
+      </>
+    );
+  }
+  return (
+    <div className='content-centered content-flex-column'>
+      It's feeling empty here, add some items here now
+      <Button variant='secondary' onClick={onClickHandler}>
+        Let's go shopping
+      </Button>
+    </div>
+  );
 };
 
 export default Cart;

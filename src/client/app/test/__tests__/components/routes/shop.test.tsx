@@ -7,11 +7,11 @@ import { CategoriesContext } from '../../../../store/categories-context';
 import { ProductsContext } from '../../../../store/products-context';
 import { mockCategoriesContextValue } from '../../../__mocks__/store/categories-context-mock';
 import { mockProductsContextValue } from '../../../__mocks__/store/products-context-mock';
-import { renderContextProps } from '../../../__mocks__/store/context-mock';
+import { renderShopContextProps } from '../../../__mocks__/store/context-mock';
 
 jest.mock('../../../../components/card/card-product/helpers');
 
-const renderContext = (props: renderContextProps) => {
+const renderContext = (props: renderShopContextProps) => {
   const { categoriesContextValue, productsContextValue } = props;
 
   return render(

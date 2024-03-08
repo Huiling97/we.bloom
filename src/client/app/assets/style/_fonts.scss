@@ -1,10 +1,24 @@
+@import 'src/client/app/assets/style/_color.scss';
+
 @font-face {
   font-family: 'Source Sans 3';
   src: url('./fonts/SourceSans3-VariableFont_wght.ttf') format('truetype');
 }
 
+// font weight
 $font-bold-600: 600;
+
+// font size
+$font-size-18: 18px;
 
 .font-bold {
   font-weight: $font-bold-600;
+}
+
+.font-large {
+  font-size: $font-size-18;
+}
+
+.font-grey {
+  color: $grey-medium-dark-color;
 }

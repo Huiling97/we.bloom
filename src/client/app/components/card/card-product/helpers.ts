@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import axios from 'axios';
 import URLConstants from '../../../util/constants/url-constants';
 import { ProductsContext } from '../../../store/products-context';
+import { formatPrice } from '../../../util/format-helper';
 import { type CartItemsProps } from '../../../types/context/cart';
 import { type ProductProps } from '../../../types/components/card/card-product';
 
@@ -29,7 +30,12 @@ const getCartProducts = (
   );
 };
 
-const getCartTotalPrice = (cartItems: CartItemsProps[]) =>
-  cartItems.reduce((acc, currItem) => acc + currItem.total_price, 0);
+const getCartTotalPrice = (cartItems: CartItemsProps[]) => {
+  const total = cartItems.reduce(
+    (acc, currItem) => acc + currItem.total_price,
+    0
+  );
+  return formatPrice(total);
+};
 
 export { fetchProducts, getCartTotalPrice, getCartProducts };

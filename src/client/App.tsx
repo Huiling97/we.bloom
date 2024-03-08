@@ -63,7 +63,12 @@ function App() {
     },
     {
       path: '/cart',
-      element: <Cart />,
+      element: (
+        <>
+          <NavBar />
+          <Cart />
+        </>
+      ),
     },
     {
       path: '/contact',
