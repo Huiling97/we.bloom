@@ -69,6 +69,7 @@ function App() {
           <Cart />
         </>
       ),
+      errorElement: <Error />,
     },
     {
       path: '/contact',
