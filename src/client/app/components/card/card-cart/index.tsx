@@ -1,19 +1,34 @@
-import { CartItemsProps } from '../../../types/context/cart';
+import { useContext } from 'react';
 import { formatPrice } from '../../../util/format-helper';
+import { addItemHandler, removeItemHandler } from '../card-product/helpers';
+import { CartContext } from '../../../store/cart-context';
+import { type CartItemsProps } from '../../../types/context/cart';
 
-const quantityButtons = (quantity: number) => {
+const quantityButtons = (item: CartItemsProps) => {
+  const { incrementCartItem, decrementCartItem } = useContext(CartContext);
+
   return (
     <div className='quantity-buttons-container'>
-      <div className='quantity-button quantity-button--right'>-</div>
-      <div className='padding-center'>{quantity}</div>
-      <div className='quantity-button quantity-button--left'>+</div>
+      <div
+        className='quantity-button quantity-button--right'
+        onClick={() => removeItemHandler(item, decrementCartItem)}
+      >
+        -
+      </div>
+      <div className='padding-center'>{item.quantity}</div>
+      <div
+        className='quantity-button quantity-button--left'
+        onClick={() => addItemHandler(item, incrementCartItem)}
+      >
+        +
+      </div>
     </div>
   );
 };
 
 const CartItem = ({ cartItems }: { cartItems: CartItemsProps[] }) => {
   return cartItems.map((item, index) => {
-    const { brand, name, size, price, quantity } = item;
+    const { brand, name, size, price } = item;
 
     return (
       <div key={index} className='cart-item-container'>
@@ -25,7 +40,7 @@ const CartItem = ({ cartItems }: { cartItems: CartItemsProps[] }) => {
             <div className='font-grey cart-item-details'>
               <div>{size}</div>
               <div>${formatPrice(price)}</div>
-              <div>{quantityButtons(quantity)}</div>
+              <div>{quantityButtons(item)}</div>
             </div>
           </div>
         </div>

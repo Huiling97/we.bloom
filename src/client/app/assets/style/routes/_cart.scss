@@ -52,6 +52,10 @@
     padding: 0 5px;
     background-color: $grey-medium-light-color;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     &--right {
       border-right: grey 1px solid;
     }
