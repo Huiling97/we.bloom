@@ -10,7 +10,6 @@ import {
   deleteCartItem,
 } from '../../../service/cartService';
 import { type CartItemsProps } from '../../../types/context/cart';
-import { type ProductProps } from '../../../types/components/card/card-product';
 
 const fetchProducts = async () => {
   const { setProducts } = useContext(ProductsContext);
@@ -61,15 +60,6 @@ const removeItemHandler = async (
   decrementCartItem(item);
 };
 
-const getCartProducts = (
-  cartList: CartItemsProps[],
-  productList: ProductProps[]
-) => {
-  return cartList.map((item) =>
-    productList.find((product) => product.id === item.id)
-  );
-};
-
 const getCartTotalPrice = (cartItems: CartItemsProps[]) => {
   const total = cartItems.reduce(
     (acc, currItem) => acc + currItem.total_price,
@@ -78,10 +68,4 @@ const getCartTotalPrice = (cartItems: CartItemsProps[]) => {
   return formatPrice(total);
 };
 
-export {
-  fetchProducts,
-  addItemHandler,
-  removeItemHandler,
-  getCartTotalPrice,
-  getCartProducts,
-};
+export { fetchProducts, addItemHandler, removeItemHandler, getCartTotalPrice };
