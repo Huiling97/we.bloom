@@ -26,3 +26,19 @@ export const cartItemsMock = [
     ingredients: 'Mock ingredients list',
   },
 ];
+
+export const CartNewItemMock = [
+  {
+    id: 1,
+    quantity: 0,
+    total_price: 11.0,
+    brand: 'Mock brand 3',
+    category: 'Mock category 3',
+    name: 'Mock name 3',
+    price: 30,
+    size: '30ml',
+    details: 'Mock details 3',
+    usage: 'Mock',
+    ingredients: 'Mock ingredients list',
+  },
+];
