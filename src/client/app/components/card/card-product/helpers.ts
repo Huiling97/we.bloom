@@ -1,10 +1,15 @@
 import { useContext } from 'react';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import URLConstants from '../../../util/constants/url-constants';
 import { ProductsContext } from '../../../store/products-context';
 import { formatPrice } from '../../../util/format-helper';
+import {
+  updateCartItems,
+  addCartItem,
+  deleteCartItem,
+} from '../../../service/cartService';
 import { type CartItemsProps } from '../../../types/context/cart';
-import { type ProductProps } from '../../../types/components/card/card-product';
 
 const fetchProducts = async () => {
   const { setProducts } = useContext(ProductsContext);
@@ -21,13 +26,38 @@ const fetchProducts = async () => {
   }
 };
 
-const getCartProducts = (
-  cartList: CartItemsProps[],
-  productList: ProductProps[]
+const addItemHandler = async (
+  item: CartItemsProps,
+  incrementCartItem: (items: CartItemsProps) => void
 ) => {
-  return cartList.map((item) =>
-    productList.find((product) => product.id === item.id)
-  );
+  const { id, quantity, price } = item;
+  const updatedQuantity = quantity + 1;
+
+  if (quantity) {
+    debounce(async () => {
+      await updateCartItems(id, updatedQuantity, price);
+    }, 1000)();
+  } else {
+    await addCartItem(id, price);
+  }
+  incrementCartItem(item);
+};
+
+const removeItemHandler = async (
+  item: CartItemsProps,
+  decrementCartItem: (items: CartItemsProps) => void
+) => {
+  const { id, quantity, price } = item;
+  const updatedQuantity = quantity - 1;
+
+  if (updatedQuantity) {
+    debounce(async () => {
+      await updateCartItems(id, updatedQuantity, price);
+    }, 1000)();
+  } else {
+    await deleteCartItem(id);
+  }
+  decrementCartItem(item);
 };
 
 const getCartTotalPrice = (cartItems: CartItemsProps[]) => {
@@ -38,4 +68,4 @@ const getCartTotalPrice = (cartItems: CartItemsProps[]) => {
   return formatPrice(total);
 };
 
-export { fetchProducts, getCartTotalPrice, getCartProducts };
+export { fetchProducts, addItemHandler, removeItemHandler, getCartTotalPrice };

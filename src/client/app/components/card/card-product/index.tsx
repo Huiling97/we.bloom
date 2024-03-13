@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { debounce, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -9,16 +9,11 @@ import {
   type ProductProps,
   type CardProductProps,
 } from '../../../types/components/card/card-product';
-import { type CartItemsProps } from '../../../types/context/cart';
 import { CartContext } from '../../../store/cart-context';
-import {
-  updateCartItems,
-  addCartItem,
-  deleteCartItem,
-} from '../../../service/cartService';
 import { isManageStorePage } from '../../../util/path-helper';
 import { getFromStorage } from '../../../util/storage-helper';
 import { fetchCartsProducts } from '../../../util/fetch-carts-products';
+import { addItemHandler, removeItemHandler } from './helpers';
 
 const CardProduct = ({ products }: CardProductProps) => {
   const { cartItems, setCartItems, incrementCartItem, decrementCartItem } =
@@ -39,34 +34,6 @@ const CardProduct = ({ products }: CardProductProps) => {
     }
     setCartItems(storageData);
     return storageData;
-  };
-
-  const addItemHandler = async (item: CartItemsProps) => {
-    const { id, quantity, price } = item;
-    const updatedQuantity = quantity + 1;
-
-    if (quantity) {
-      debounce(async () => {
-        await updateCartItems(id, updatedQuantity, price);
-      }, 1000)();
-    } else {
-      await addCartItem(id, price);
-    }
-    incrementCartItem(item);
-  };
-
-  const removeItemHandler = async (item: CartItemsProps) => {
-    const { id, quantity, price } = item;
-    const updatedQuantity = quantity - 1;
-
-    if (updatedQuantity) {
-      debounce(async () => {
-        await updateCartItems(id, updatedQuantity, price);
-      }, 1000)();
-    } else {
-      await deleteCartItem(id);
-    }
-    decrementCartItem(item);
   };
 
   useEffect(() => {
@@ -90,8 +57,18 @@ const CardProduct = ({ products }: CardProductProps) => {
           <div className='card-cart-product-actions'>
             <div className='cart-product-description'>{quantity}</div>
             <div className='cart-product-button-container'>
-              <Button onClick={() => addItemHandler(cartProduct)}>+</Button>
-              <Button onClick={() => removeItemHandler(cartProduct)}>-</Button>
+              <Button
+                onClick={() => addItemHandler(cartProduct, incrementCartItem)}
+              >
+                +
+              </Button>
+              <Button
+                onClick={() =>
+                  removeItemHandler(cartProduct, decrementCartItem)
+                }
+              >
+                -
+              </Button>
             </div>
           </div>
         );
@@ -107,7 +84,7 @@ const CardProduct = ({ products }: CardProductProps) => {
         <Button
           variant='success'
           className='cart-product-button-container'
-          onClick={() => addItemHandler(addedProduct)}
+          onClick={() => addItemHandler(addedProduct, incrementCartItem)}
         >
           Add to cart
         </Button>

@@ -61,7 +61,7 @@ const NavBarDropdown = () => {
         <NavDropdown.Divider />
         <div className='cart-summary-container'>
           {getRemainingItemsCount()}
-          <NavDropdown.Item eventKey='viewCart'>
+          <NavDropdown.Item>
             <Button onClick={viewCartHandler}>View my cart</Button>
           </NavDropdown.Item>
         </div>
