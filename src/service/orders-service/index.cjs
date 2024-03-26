@@ -1,4 +1,6 @@
 const express = require('express');
+const { addOrder, addOrderProduct } = require('./database.cjs');
+const { retrieveCartItemsId } = require('../util/cart-helper.cjs');
 
 const endpointSecret = process.env.VITE_STRIPE_ENDPOINT_SECRET_LOCAL;
 const API_PATH = '/api/v1/checkout';
@@ -6,6 +8,15 @@ const API_PATH = '/api/v1/checkout';
 const ordersRequestHandler = (app, stripe) => {
   app.post(`${API_PATH}/create-checkout-session`, async (req, res) => {
     const { cartItems } = req.body;
+    const cartItemsId = retrieveCartItemsId(cartItems);
+    const customer_id = 1;
+
+    const customer = await stripe.customers.create({
+      metadata: {
+        customerId: customer_id,
+        cart: JSON.stringify(cartItemsId),
+      },
+    });
 
     const lineItems = cartItems.map((item) => ({
       price_data: {
@@ -20,6 +31,7 @@ const ordersRequestHandler = (app, stripe) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      customer: customer.id,
       line_items: lineItems,
       mode: 'payment',
       success_url: 'http://localhost:8080/success',
@@ -40,26 +52,45 @@ const ordersRequestHandler = (app, stripe) => {
 
       try {
         event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-        console.log('Webhook verification successful');
       } catch (err) {
-        console.log('Webhook verification failed', err.message);
         res.status(400).send(`Webhook Error: ${err.message}`);
         return;
       }
 
-      // Handle the event
-      switch (event.type) {
-        case 'payment_intent.succeeded':
-          const paymentIntentSucceeded = event.data.object;
-          // Then define and call a function to handle the event payment_intent.succeeded
-          break;
-        // ... handle other event types
-        default:
-          console.log(`Unhandled event type ${event.type}`);
-      }
+      if (event.type === 'payment_intent.succeeded') {
+        const data = event.data.object;
+        const { amount, currency, payment_method, status, created, customer } =
+          data;
 
-      // Return a 200 res to acknowledge receipt of the event
-      res.send();
+        try {
+          const user = await stripe.customers.retrieve(customer);
+          const paymentMethod = await stripe.paymentMethods.retrieve(
+            payment_method
+          );
+          const amountInDollars = amount / 100;
+
+          const { cart, customerId } = user.metadata;
+
+          if (paymentMethod && customerId) {
+            const orderId = await addOrder(
+              amountInDollars,
+              currency,
+              paymentMethod.type,
+              status,
+              created,
+              customerId
+            );
+
+            if (orderId) {
+              await addOrderProduct(orderId, JSON.parse(cart), customerId);
+            }
+          }
+
+          res.send();
+        } catch (e) {
+          console.error('Error in payment intent', e);
+        }
+      }
     }
   );
 };
