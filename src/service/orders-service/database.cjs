@@ -27,8 +27,18 @@ const addOrder = async (
   }
 };
 
+const retrieveLastOrder = async (user_id) => {
+  const q = `SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 1`;
+
+  try {
+    const [result] = await db.query(q, [user_id]);
+    return result[0];
+  } catch (e) {
+    console.error('Error retrieving last order from database', e);
+  }
+};
+
 const addOrderProduct = async (order_id, cart, user_id) => {
-  console.log('cart in add order product', cart);
   const q = `INSERT INTO orders_products (order_id, product_id, quantity, user_id) VALUES ?`;
   const values = cart.map((product) => {
     const { id, quantity } = product;
@@ -42,4 +52,4 @@ const addOrderProduct = async (order_id, cart, user_id) => {
   }
 };
 
-module.exports = { addOrder, addOrderProduct };
+module.exports = { addOrder, retrieveLastOrder, addOrderProduct };

@@ -1,5 +1,9 @@
 const express = require('express');
-const { addOrder, addOrderProduct } = require('./database.cjs');
+const {
+  addOrder,
+  retrieveLastOrder,
+  addOrderProduct,
+} = require('./database.cjs');
 const { retrieveCartItemsId } = require('../util/cart-helper.cjs');
 
 const endpointSecret = process.env.VITE_STRIPE_ENDPOINT_SECRET_LOCAL;
@@ -93,6 +97,19 @@ const ordersRequestHandler = (app, stripe) => {
       }
     }
   );
+
+  app.get(`${API_PATH}/get-order-details`, async (req, res) => {
+    try {
+      const orderDetails = await retrieveLastOrder(1);
+      if (orderDetails) {
+        res.status(200).send(orderDetails);
+      } else {
+        res.status(404).send({ error: `Order not found` });
+      }
+    } catch (e) {
+      console.error('Error retrieving last order details', e);
+    }
+  });
 };
 
 module.exports = { ordersRequestHandler };
