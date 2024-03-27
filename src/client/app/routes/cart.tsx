@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { Button } from 'react-bootstrap';
@@ -7,6 +8,7 @@ import CartItem from '../components/card/card-cart';
 import { getCartTotalPrice } from '../components/card/card-product/helpers';
 import { useNavigate } from 'react-router-dom';
 import { BackLink } from '../components/link';
+import URLConstants from '../util/constants/url-constants';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -14,6 +16,20 @@ const Cart = () => {
 
   const onClickHandler = () => {
     navigate('/shop');
+  };
+
+  const checkoutHandler = async () => {
+    try {
+      const response = await axios.post(
+        `${URLConstants.CHECKOUT_PATH}/create-checkout-session`,
+        { cartItems }
+      );
+      if (response.data) {
+        window.location.href = response.data.url;
+      }
+    } catch (e) {
+      console.error('Error checking out', e);
+    }
   };
 
   if (isEmpty(cartItems)) {
@@ -38,7 +54,7 @@ const Cart = () => {
               <div>SubTotal</div>
               <div className='font-bold'>${getCartTotalPrice(cartItems)}</div>
             </div>
-            <Button>Continue to checkout</Button>
+            <Button onClick={checkoutHandler}>Continue to checkout</Button>
           </div>
         </div>
       </>
