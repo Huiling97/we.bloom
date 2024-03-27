@@ -22,9 +22,7 @@ const Cart = () => {
     try {
       const response = await axios.post(
         `${URLConstants.CHECKOUT_PATH}/create-checkout-session`,
-        {
-          cartItems,
-        }
+        { cartItems }
       );
       if (response.data) {
         window.location.href = response.data.url;
