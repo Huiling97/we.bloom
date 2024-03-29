@@ -17,6 +17,7 @@ import Product from './app/routes/shop/product.tsx';
 import ManageActions from './app/routes/manage/manage-actions.tsx';
 import ManageCategories from './app/routes/manage/manage-categories.tsx';
 import ManageProducts from './app/routes/manage/manage-products.tsx';
+import Success from './app/routes/success.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -67,6 +68,16 @@ function App() {
         <>
           <NavBar />
           <Cart />
+        </>
+      ),
+      errorElement: <Error />,
+    },
+    {
+      path: '/success',
+      element: (
+        <>
+          <NavBar />
+          <Success />
         </>
       ),
       errorElement: <Error />,
