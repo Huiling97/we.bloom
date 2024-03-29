@@ -6,7 +6,8 @@ const {
 } = require('./database.cjs');
 const { retrieveCartItemsId } = require('../util/cart-helper.cjs');
 
-const endpointSecret = process.env.VITE_STRIPE_ENDPOINT_SECRET_LOCAL;
+const endpointSecret = process.env.VITE_STRIPE_ENDPOINT_SECRET;
+const HOST_PATH = 'https://we-bloom.onrender.com';
 const API_PATH = '/api/v1/checkout';
 
 const ordersRequestHandler = (app, stripe) => {
@@ -38,8 +39,8 @@ const ordersRequestHandler = (app, stripe) => {
       customer: customer.id,
       line_items: lineItems,
       mode: 'payment',
-      success_url: 'http://localhost:8080/success',
-      cancel_url: 'http://localhost:8080/cart',
+      success_url: `${HOST_PATH}/success`,
+      cancel_url: `${HOST_PATH}/cart`,
     });
 
     res.json({ url: session.url });
