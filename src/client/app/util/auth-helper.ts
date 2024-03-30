@@ -1,6 +1,9 @@
 import { get } from 'lodash';
 import { type ProtectedService } from '../types/util.ts';
-import { PROTECTED_CATEGORY_IDS, PROTECTED_SERVICE_IDS } from './constants.ts';
+import {
+  PROTECTED_CATEGORY_IDS,
+  PROTECTED_SERVICE_IDS,
+} from './constants/constants.ts';
 
 const users: { [key: string]: string } = {
   [import.meta.env.VITE_LOGIN_USERNAME]: import.meta.env.VITE_LOGIN_PASSWORD,
