@@ -16,12 +16,12 @@ const Service = () => {
   const { id } = useParams();
   const { setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
-  const { services } = useContext(ServicesContext);
+  const { services, setServices } = useContext(ServicesContext);
 
   useEffect(() => {
     fetchCategoriesData(setCategoryTypes, setCategories);
+    fetchServicesData(`${id}`, setServices);
   }, []);
-  fetchServicesData(`${id}`);
 
   return (
     <div>

@@ -1,34 +1,30 @@
-import { useContext, useEffect, useState } from 'react';
-import { ServicesContext } from '../store/services-context.tsx';
 import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
+import { ServicesContextProps } from '../types/context/services.ts';
 
-const fetchServicesData = (category: string) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const { services, setServices } = useContext(ServicesContext);
-
+const fetchServicesData = (
+  category: string,
+  setServices: ServicesContextProps['setServices'],
+  setIsLoading?: (isLoading: boolean) => void
+) => {
   const serviceRef = ref(database, `services/${category}`);
 
-  useEffect(() => {
-    try {
-      onValue(serviceRef, (snapshot) => {
-        if (snapshot) {
-          const data = snapshot.val();
-          if (data) {
-            setServices(data);
-          }
-        } else {
-          throw new Error('Unable to fetch services');
+  try {
+    onValue(serviceRef, (snapshot) => {
+      if (snapshot) {
+        const data = snapshot.val();
+        if (data) {
+          setServices(data);
         }
-        setIsLoading(false);
-      });
-    } catch (e) {
-      setIsLoading(false);
-      throw new Error('Unable to fetch services');
-    }
-  }, []);
-
-  return { isLoading, services };
+      } else {
+        throw new Error('Unable to fetch services');
+      }
+      setIsLoading && setIsLoading(false);
+    });
+  } catch (e) {
+    setIsLoading && setIsLoading(false);
+    throw new Error('Unable to fetch services');
+  }
 };
 
 export default fetchServicesData;

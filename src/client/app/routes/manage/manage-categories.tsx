@@ -24,8 +24,6 @@ import { database } from '../../../main.tsx';
 
 const Manage = () => {
   const formId = uuidv4();
-  const { services } = fetchServicesData('');
-
   const {
     showModal,
     setShowModal,
@@ -36,6 +34,7 @@ const Manage = () => {
   } = useContext(ModalContext);
   const { categoryTypes, setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
+  const { services, setServices } = useContext(ServicesContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
 
@@ -115,6 +114,7 @@ const Manage = () => {
 
   useEffect(() => {
     fetchCategoriesData(setCategoryTypes, setCategories, setIsLoading);
+    fetchServicesData('', setServices, setIsLoading);
   }, []);
 
   return (
