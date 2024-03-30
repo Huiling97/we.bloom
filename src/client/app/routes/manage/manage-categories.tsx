@@ -9,6 +9,7 @@ import CardCategoryForm from '../../components/card/card-category/form.tsx';
 import CardServiceForm from '../../components/card/card-services/form.tsx';
 import TabSwitch from '../../components/tabs/index.tsx';
 import AuthForm from '../../components/form/auth-form.tsx';
+import LoadingSpinner from '../../components/spinner/index.tsx';
 import { BackLink } from '../../components/link';
 import fetchCategoriesData from '../../util/fetch-categories.ts';
 import fetchServicesData from '../../util/fetch-services.ts';
@@ -54,7 +55,7 @@ const Manage = () => {
     description: '',
     details: [],
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const deleteCategoryModalHandler = (id: string) => {
     if (isProtectedCategory(id)) {
@@ -117,11 +118,13 @@ const Manage = () => {
     fetchServicesData('', setServices, setIsLoading);
   }, []);
 
+  console.log('check isLoading', isLoading);
+
   return (
     <div>
       <BackLink link='/manage' content='Back' />
       {isLoading ? (
-        <div>loading</div>
+        <LoadingSpinner />
       ) : (
         <div className='manage-page-container'>
           <div className='buttons-container left'>
