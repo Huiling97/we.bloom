@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import Cart from '../../../../routes/cart/cart';
+import Cart from '../../../routes/cart/cart';
 import { MemoryRouter } from 'react-router-dom';
-import { CartContext } from '../../../../store/cart-context';
-import { mockCartContextValue } from '../../../__mocks__/store/cart-context-mock';
-import { type renderCartContextProps } from '../../../__mocks__/store/context-mock';
+import { CartContext } from '../../../store/cart-context';
+import { mockCartContextValue } from '../../__mocks__/store/cart-context-mock';
+import { type renderCartContextProps } from '../../__mocks__/store/context-mock';
 
-jest.mock('../../../../service/carts-products-service', () => ({
+jest.mock('../../../service/carts-products-service', () => ({
   getCartsProducts: jest.fn(() => Promise.resolve([])),
 }));
 
