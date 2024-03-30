@@ -1,6 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { Whatsapp } from '@styled-icons/boxicons-logos';
+import { CategoryTypesContext } from '../store/category-types-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import LoadingSpinner from '../components/spinner/index.tsx';
 import CarouselBanner from '../components/carousel/index.tsx';
@@ -12,11 +13,14 @@ import { isMobile } from '../util/screen-size-helper.ts';
 import { REVIEWS_LIST } from '../util/constants.ts';
 
 const Home = () => {
-  const { categories } = useContext(CategoriesContext);
+  const { setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
 
-  if (isEmpty(categories)) {
-    fetchCategoriesData();
-  }
+  useEffect(() => {
+    if (isEmpty(categories)) {
+      fetchCategoriesData(setCategoryTypes, setCategories);
+    }
+  }, []);
 
   return (
     <div>

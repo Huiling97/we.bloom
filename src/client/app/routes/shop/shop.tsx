@@ -1,5 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { isEmpty } from 'lodash';
+import { CategoryTypesContext } from '../../store/category-types-context';
 import { CategoriesContext } from '../../store/categories-context';
 import { ProductsContext } from '../../store/products-context';
 import fetchCategoriesData from '../../util/fetch-categories';
@@ -8,12 +9,15 @@ import TabsTop from '../../components/tabs/tab';
 import LoadingSpinner from '../../components/spinner';
 
 const Shop = () => {
-  const { categories } = useContext(CategoriesContext);
+  const { setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
   const { products } = useContext(ProductsContext);
 
-  if (isEmpty(categories)) {
-    fetchCategoriesData();
-  }
+  useEffect(() => {
+    if (isEmpty(categories)) {
+      fetchCategoriesData(setCategoryTypes, setCategories);
+    }
+  }, []);
 
   if (isEmpty(products)) {
     fetchProducts();

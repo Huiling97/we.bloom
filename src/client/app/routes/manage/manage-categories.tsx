@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../../types/components/form.ts';
@@ -14,6 +14,8 @@ import fetchCategoriesData from '../../util/fetch-categories.ts';
 import fetchServicesData from '../../util/fetch-services.ts';
 import { isProtectedCategory } from '../../util/auth-helper.ts';
 import { ModalContext } from '../../store/modal-context.tsx';
+import { CategoryTypesContext } from '../../store/category-types-context.tsx';
+import { CategoriesContext } from '../../store/categories-context.tsx';
 import { ServicesContext } from '../../store/services-context.tsx';
 import { DetailsContext } from '../../store/details-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,13 +24,7 @@ import { database } from '../../../main.tsx';
 
 const Manage = () => {
   const formId = uuidv4();
-
-  const {
-    isLoading: isLoadingCategories,
-    categories,
-    categoryTypes,
-  } = fetchCategoriesData();
-  const { isLoading: isLoadingServices, services } = fetchServicesData('');
+  const { services } = fetchServicesData('');
 
   const {
     showModal,
@@ -38,6 +34,8 @@ const Manage = () => {
     isAuthModal,
     setIsAuthModal,
   } = useContext(ModalContext);
+  const { categoryTypes, setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
 
@@ -57,6 +55,7 @@ const Manage = () => {
     description: '',
     details: [],
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const deleteCategoryModalHandler = (id: string) => {
     if (isProtectedCategory(id)) {
@@ -114,10 +113,14 @@ const Manage = () => {
     setDetails(data.details);
   };
 
+  useEffect(() => {
+    fetchCategoriesData(setCategoryTypes, setCategories, setIsLoading);
+  }, []);
+
   return (
     <div>
       <BackLink link='/manage' content='Back' />
-      {isLoadingCategories || isLoadingServices ? (
+      {isLoading ? (
         <div>loading</div>
       ) : (
         <div className='manage-page-container'>

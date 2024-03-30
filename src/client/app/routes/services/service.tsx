@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 import { type CardServiceObjectProps } from '../../types/components/card/card-service.ts';
+import { CategoryTypesContext } from '../../store/category-types-context.tsx';
 import { CategoriesContext } from '../../store/categories-context.tsx';
 import { ServicesContext } from '../../store/services-context.tsx';
 import fetchServicesData from '../../util/fetch-services.ts';
@@ -13,10 +14,13 @@ import fetchCategoriesData from '../../util/fetch-categories.ts';
 
 const Service = () => {
   const { id } = useParams();
-  const { categories } = useContext(CategoriesContext);
+  const { setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
   const { services } = useContext(ServicesContext);
 
-  fetchCategoriesData();
+  useEffect(() => {
+    fetchCategoriesData(setCategoryTypes, setCategories);
+  }, []);
   fetchServicesData(`${id}`);
 
   return (
