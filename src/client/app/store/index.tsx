@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import { type AllProvidersProps } from '../types/context';
 import { AuthContextProvider } from './auth-context';
 import { ModalContextProvider } from './modal-context';
-import { CategoryTypesContectProvider } from './category-types-context';
+import { CategoryTypesContextProvider } from './category-types-context';
 import { CategoriesContextProvider } from './categories-context';
 import { DetailsContextProvider } from './details-context';
 import { ServicesContextProvider } from './services-context';
@@ -17,7 +17,7 @@ const AllProviders: React.FC<AllProvidersProps> = ({
   return (
     <AuthContextProvider>
       <ModalContextProvider>
-        <CategoryTypesContectProvider>
+        <CategoryTypesContextProvider>
           <CategoriesContextProvider>
             <ServicesContextProvider>
               <DetailsContextProvider>
@@ -27,7 +27,7 @@ const AllProviders: React.FC<AllProvidersProps> = ({
               </DetailsContextProvider>
             </ServicesContextProvider>
           </CategoriesContextProvider>
-        </CategoryTypesContectProvider>
+        </CategoryTypesContextProvider>
       </ModalContextProvider>
     </AuthContextProvider>
   );

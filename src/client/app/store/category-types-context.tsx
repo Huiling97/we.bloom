@@ -21,7 +21,7 @@ const categoryTypesReducer = (
   }
 };
 
-const CategoryTypesContectProvider = ({
+const CategoryTypesContextProvider = ({
   children,
 }: {
   children: ReactNode;
@@ -44,4 +44,4 @@ const CategoryTypesContectProvider = ({
   );
 };
 
-export { CategoryTypesContext, CategoryTypesContectProvider };
+export { CategoryTypesContext, CategoryTypesContextProvider };
