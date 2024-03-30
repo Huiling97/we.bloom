@@ -2,13 +2,13 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { Button } from 'react-bootstrap';
-import { CartContext } from '../store/cart-context';
-import { getCartsProducts } from '../service/carts-products-service';
-import CartItem from '../components/card/card-cart';
-import { getCartTotalPrice } from '../components/card/card-product/helpers';
+import { CartContext } from '../../store/cart-context';
+import { getCartsProducts } from '../../service/carts-products-service';
+import CartItem from '../../components/card/card-cart';
+import { getCartTotalPrice } from '../../components/card/card-product/helpers';
 import { useNavigate } from 'react-router-dom';
-import { BackLink } from '../components/link';
-import URLConstants from '../util/constants/url-constants';
+import { BackLink } from '../../components/link';
+import URLConstants from '../../util/constants/url-constants';
 
 const Cart = () => {
   const navigate = useNavigate();

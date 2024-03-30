@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import Cart from '../../../../routes/cart';
+import Cart from '../../../../routes/cart/cart';
 import { MemoryRouter } from 'react-router-dom';
 import { CartContext } from '../../../../store/cart-context';
 import { mockCartContextValue } from '../../../__mocks__/store/cart-context-mock';

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import URLConstants from '../util/constants/url-constants';
+import URLConstants from '../../util/constants/url-constants';
 import { useEffect, useState } from 'react';
-import { OrderDetailsProps } from '../types/routes/success';
-import { formatDateTime } from '../util/format-helper';
+import { OrderDetailsProps } from '../../types/routes/success';
+import { formatDateTime } from '../../util/format-helper';
 
 const Success = () => {
   const [orderDetails, setOrderDetails] = useState<OrderDetailsProps>({
