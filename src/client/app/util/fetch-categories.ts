@@ -12,19 +12,20 @@ const fetchCategoriesData = (
   const categoriesRef = ref(database, 'categories');
 
   try {
+    setIsLoading && setIsLoading(true);
     onValue(categoriesRef, (snapshot) => {
       if (snapshot) {
-        setIsLoading && setIsLoading(true);
         const data = snapshot.val() as CardCategoryObjectProps;
         if (data) {
           const updatedTypes = Object.keys(data);
           setCategoryTypes(updatedTypes);
           setCategories(data);
+          setIsLoading && setIsLoading(false);
         }
       } else {
+        setIsLoading && setIsLoading(false);
         throw new Error('Unable to fetch categories');
       }
-      setIsLoading && setIsLoading(false);
     });
   } catch (e) {
     setIsLoading && setIsLoading(false);

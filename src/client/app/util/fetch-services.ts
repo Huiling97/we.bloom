@@ -10,16 +10,18 @@ const fetchServicesData = (
   const serviceRef = ref(database, `services/${category}`);
 
   try {
+    setIsLoading && setIsLoading(true);
     onValue(serviceRef, (snapshot) => {
       if (snapshot) {
         const data = snapshot.val();
         if (data) {
           setServices(data);
+          setIsLoading && setIsLoading(false);
         }
       } else {
+        setIsLoading && setIsLoading(false);
         throw new Error('Unable to fetch services');
       }
-      setIsLoading && setIsLoading(false);
     });
   } catch (e) {
     setIsLoading && setIsLoading(false);
