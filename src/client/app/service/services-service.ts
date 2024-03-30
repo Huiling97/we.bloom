@@ -2,7 +2,7 @@ import { onValue, ref } from 'firebase/database';
 import { database } from '../../main.tsx';
 import { ServicesContextProps } from '../types/context/services.ts';
 
-const fetchServicesData = (
+const getServices = (
   category: string,
   setServices: ServicesContextProps['setServices'],
   setIsLoading?: (isLoading: boolean) => void
@@ -29,4 +29,4 @@ const fetchServicesData = (
   }
 };
 
-export default fetchServicesData;
+export default getServices;

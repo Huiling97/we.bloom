@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { CategoryTypesContext } from '../../store/category-types-context';
 import { CategoriesContext } from '../../store/categories-context';
 import { ProductsContext } from '../../store/products-context';
-import fetchCategoriesData from '../../util/fetch-categories';
+import getCategories from '../../service/categories-service';
 import { fetchProducts } from '../../components/card/card-product/helpers';
 import TabsTop from '../../components/tabs/tab';
 import LoadingSpinner from '../../components/spinner';
@@ -15,7 +15,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (isEmpty(categories)) {
-      fetchCategoriesData(setCategoryTypes, setCategories);
+      getCategories(setCategoryTypes, setCategories);
     }
   }, []);
 

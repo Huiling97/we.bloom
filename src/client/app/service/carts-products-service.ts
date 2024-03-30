@@ -1,8 +1,8 @@
 import axios from 'axios';
-import URLConstants from './constants/url-constants';
-import { saveToStorage } from './storage-helper';
+import URLConstants from '../util/constants/url-constants';
+import { saveToStorage } from '../util/storage-helper';
 
-const fetchCartsProducts = async () => {
+const getCartsProducts = async () => {
   try {
     const response = await axios.get(`${URLConstants.CART_PRODUCTS_PATH}/all`);
     if (response.data) {
@@ -15,4 +15,4 @@ const fetchCartsProducts = async () => {
   }
 };
 
-export { fetchCartsProducts };
+export { getCartsProducts };

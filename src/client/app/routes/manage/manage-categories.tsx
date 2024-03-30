@@ -11,8 +11,8 @@ import TabSwitch from '../../components/tabs/index.tsx';
 import AuthForm from '../../components/form/auth-form.tsx';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 import { BackLink } from '../../components/link';
-import fetchCategoriesData from '../../util/fetch-categories.ts';
-import fetchServicesData from '../../util/fetch-services.ts';
+import getCategories from '../../service/categories-service.ts';
+import getServices from '../../service/services-service.ts';
 import { isProtectedCategory } from '../../util/auth-helper.ts';
 import { ModalContext } from '../../store/modal-context.tsx';
 import { CategoryTypesContext } from '../../store/category-types-context.tsx';
@@ -114,8 +114,8 @@ const Manage = () => {
   };
 
   useEffect(() => {
-    fetchCategoriesData(setCategoryTypes, setCategories, setIsLoading);
-    fetchServicesData('', setServices, setIsLoading);
+    getCategories(setCategoryTypes, setCategories, setIsLoading);
+    getServices('', setServices, setIsLoading);
   }, []);
 
   console.log('check isLoading', isLoading);

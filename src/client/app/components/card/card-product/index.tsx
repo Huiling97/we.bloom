@@ -12,7 +12,7 @@ import {
 import { CartContext } from '../../../store/cart-context';
 import { isManageStorePage } from '../../../util/path-helper';
 import { getFromStorage } from '../../../util/storage-helper';
-import { fetchCartsProducts } from '../../../util/fetch-carts-products';
+import { getCartsProducts } from '../../../service/carts-products-service';
 import { addItemHandler, removeItemHandler } from './helpers';
 
 const CardProduct = ({ products }: CardProductProps) => {
@@ -28,7 +28,7 @@ const CardProduct = ({ products }: CardProductProps) => {
     const storageData = getFromStorage('cartItems');
 
     if (!storageData) {
-      const cartProducts = await fetchCartsProducts();
+      const cartProducts = await getCartsProducts();
       setCartItems(cartProducts);
       return cartProducts;
     }

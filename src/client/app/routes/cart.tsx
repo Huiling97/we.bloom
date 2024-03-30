@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { Button } from 'react-bootstrap';
 import { CartContext } from '../store/cart-context';
-import { fetchCartsProducts } from '../util/fetch-carts-products';
+import { getCartsProducts } from '../service/carts-products-service';
 import CartItem from '../components/card/card-cart';
 import { getCartTotalPrice } from '../components/card/card-product/helpers';
 import { useNavigate } from 'react-router-dom';
@@ -34,7 +34,7 @@ const Cart = () => {
 
   if (isEmpty(cartItems)) {
     const fetchCartItems = async () => {
-      const items = await fetchCartsProducts();
+      const items = await getCartsProducts();
       setCartItems(items);
     };
 

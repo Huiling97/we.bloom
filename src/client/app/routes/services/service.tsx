@@ -6,11 +6,11 @@ import { type CardServiceObjectProps } from '../../types/components/card/card-se
 import { CategoryTypesContext } from '../../store/category-types-context.tsx';
 import { CategoriesContext } from '../../store/categories-context.tsx';
 import { ServicesContext } from '../../store/services-context.tsx';
-import fetchServicesData from '../../util/fetch-services.ts';
+import getServices from '../../service/services-service.ts';
 import Banner from '../../components/banner/index.tsx';
 import CardGrid from '../../components/card/card-grid/index.tsx';
 import { BackLink } from '../../components/link/index.tsx';
-import fetchCategoriesData from '../../util/fetch-categories.ts';
+import getCategories from '../../service/categories-service.ts';
 
 const Service = () => {
   const { id } = useParams();
@@ -19,8 +19,8 @@ const Service = () => {
   const { services, setServices } = useContext(ServicesContext);
 
   useEffect(() => {
-    fetchCategoriesData(setCategoryTypes, setCategories);
-    fetchServicesData(`${id}`, setServices);
+    getCategories(setCategoryTypes, setCategories);
+    getServices(`${id}`, setServices);
   }, []);
 
   return (

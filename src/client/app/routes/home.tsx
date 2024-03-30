@@ -8,9 +8,9 @@ import CarouselBanner from '../components/carousel/index.tsx';
 import CardGrid from '../components/card/card-grid/index.tsx';
 import CardReview from '../components/card/card-review/index.tsx';
 import Separator from '../components/separator/index.tsx';
-import fetchCategoriesData from '../util/fetch-categories.ts';
+import getCategories from '../service/categories-service.ts';
 import { isMobile } from '../util/screen-size-helper.ts';
-import { REVIEWS_LIST } from '../util/constants.ts';
+import { REVIEWS_LIST } from '../util/constants/constants.ts';
 
 const Home = () => {
   const { setCategoryTypes } = useContext(CategoryTypesContext);
@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     if (isEmpty(categories)) {
-      fetchCategoriesData(setCategoryTypes, setCategories);
+      getCategories(setCategoryTypes, setCategories);
     }
   }, []);
 

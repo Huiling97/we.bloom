@@ -4,7 +4,7 @@ import { database } from '../../main.tsx';
 import { CategoryTypesContextProps } from '../types/context/categoryTypes.ts';
 import { CategoriesContextProps } from '../types/context/categories.ts';
 
-const fetchCategoriesData = (
+const getCategories = (
   setCategoryTypes: CategoryTypesContextProps['setCategoryTypes'],
   setCategories: CategoriesContextProps['setCategories'],
   setIsLoading?: (loading: boolean) => void
@@ -33,4 +33,4 @@ const fetchCategoriesData = (
   }
 };
 
-export default fetchCategoriesData;
+export default getCategories;

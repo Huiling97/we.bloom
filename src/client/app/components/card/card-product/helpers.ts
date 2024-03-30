@@ -8,7 +8,7 @@ import {
   updateCartItems,
   addCartItem,
   deleteCartItem,
-} from '../../../service/cartService';
+} from '../../../service/cart-service';
 import { type CartItemsProps } from '../../../types/context/cart';
 
 const fetchProducts = async () => {

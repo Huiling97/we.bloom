@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { CategoryTypesContext } from '../../store/category-types-context.tsx';
 import { CategoriesContext } from '../../store/categories-context.tsx';
 import CardGrid from '../../components/card/card-grid/index.tsx';
-import fetchCategoriesData from '../../util/fetch-categories.ts';
+import getCategories from '../../service/categories-service.ts';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 
 const AllServices = () => {
@@ -12,7 +12,7 @@ const AllServices = () => {
 
   useEffect(() => {
     if (isEmpty(categories)) {
-      fetchCategoriesData(setCategoryTypes, setCategories);
+      getCategories(setCategoryTypes, setCategories);
     }
   }, []);
 
