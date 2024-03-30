@@ -1,4 +1,4 @@
-const { db } = require('../databse.cjs');
+const { db } = require('../database.cjs');
 
 const getProducts = async () => {
   const q = 'SELECT * FROM products';
