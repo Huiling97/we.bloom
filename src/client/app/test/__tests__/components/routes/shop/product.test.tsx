@@ -3,7 +3,7 @@ import { MemoryRouter, Routes, Route, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { setupAxiosMock } from '../../../../util/axiosMockUtils';
 import URLConstants from '../../../../../util/constants/url-constants';
-import Shop from '../../../../../routes/shop';
+import Shop from '../../../../../routes/shop/shop';
 import Product from '../../../../../routes/shop/product';
 import Error from '../../../../../routes/error';
 import { ProductsContext } from '../../../../../store/products-context';

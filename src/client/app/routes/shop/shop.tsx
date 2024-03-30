@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { isEmpty } from 'lodash';
-import { CategoriesContext } from '../store/categories-context';
-import { ProductsContext } from '../store/products-context';
-import fetchCategoriesData from '../util/fetch-categories';
-import { fetchProducts } from '../components/card/card-product/helpers';
-import TabsTop from '../components/tabs/tab';
-import LoadingSpinner from '../components/spinner';
+import { CategoriesContext } from '../../store/categories-context';
+import { ProductsContext } from '../../store/products-context';
+import fetchCategoriesData from '../../util/fetch-categories';
+import { fetchProducts } from '../../components/card/card-product/helpers';
+import TabsTop from '../../components/tabs/tab';
+import LoadingSpinner from '../../components/spinner';
 
 const Shop = () => {
   const { categories } = useContext(CategoriesContext);

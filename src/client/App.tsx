@@ -11,7 +11,7 @@ import NavBar from './app/components/navbar/index.tsx';
 import AdminNavBar from './app/components/navbar/admin-navbar.tsx';
 import Footer from './app/components/footer/index.tsx';
 import Login from './app/routes/login.tsx';
-import Shop from './app/routes/shop.tsx';
+import Shop from './app/routes/shop/shop.tsx';
 import Cart from './app/routes/cart.tsx';
 import Product from './app/routes/shop/product.tsx';
 import ManageActions from './app/routes/manage/manage-actions.tsx';
