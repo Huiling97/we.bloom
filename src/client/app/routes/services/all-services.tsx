@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { CategoryTypesContext } from '../../store/category-types-context.tsx';
 import { CategoriesContext } from '../../store/categories-context.tsx';
@@ -9,16 +9,17 @@ import LoadingSpinner from '../../components/spinner/index.tsx';
 const AllServices = () => {
   const { setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isEmpty(categories)) {
-      getCategories(setCategoryTypes, setCategories);
+      getCategories(setCategoryTypes, setCategories, setIsLoading);
     }
   }, []);
 
   return (
     <div>
-      {isEmpty(categories) ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <div>

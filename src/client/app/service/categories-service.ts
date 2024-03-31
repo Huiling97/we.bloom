@@ -7,12 +7,12 @@ import { CategoriesContextProps } from '../types/context/categories.ts';
 const getCategories = (
   setCategoryTypes: CategoryTypesContextProps['setCategoryTypes'],
   setCategories: CategoriesContextProps['setCategories'],
-  setIsLoading?: (loading: boolean) => void
+  setIsLoading: (loading: boolean) => void
 ) => {
   const categoriesRef = ref(database, 'categories');
 
   try {
-    setIsLoading && setIsLoading(true);
+    setIsLoading(true);
     onValue(categoriesRef, (snapshot) => {
       if (snapshot) {
         const data = snapshot.val() as CardCategoryObjectProps;
@@ -20,15 +20,14 @@ const getCategories = (
           const updatedTypes = Object.keys(data);
           setCategoryTypes(updatedTypes);
           setCategories(data);
-          setIsLoading && setIsLoading(false);
         }
       } else {
-        setIsLoading && setIsLoading(false);
         throw new Error('Unable to fetch categories');
       }
+      setIsLoading(false);
     });
   } catch (e) {
-    setIsLoading && setIsLoading(false);
+    setIsLoading(false);
     throw new Error('Unable to fetch categories');
   }
 };

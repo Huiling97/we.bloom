@@ -5,26 +5,25 @@ import { ServicesContextProps } from '../types/context/services.ts';
 const getServices = (
   category: string,
   setServices: ServicesContextProps['setServices'],
-  setIsLoading?: (isLoading: boolean) => void
+  setIsLoading: (isLoading: boolean) => void
 ) => {
   const serviceRef = ref(database, `services/${category}`);
 
   try {
-    setIsLoading && setIsLoading(true);
+    setIsLoading(true);
     onValue(serviceRef, (snapshot) => {
       if (snapshot) {
         const data = snapshot.val();
         if (data) {
           setServices(data);
-          setIsLoading && setIsLoading(false);
         }
       } else {
-        setIsLoading && setIsLoading(false);
         throw new Error('Unable to fetch services');
       }
+      setIsLoading(false);
     });
   } catch (e) {
-    setIsLoading && setIsLoading(false);
+    setIsLoading(false);
     throw new Error('Unable to fetch services');
   }
 };

@@ -1,6 +1,5 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isEmpty } from 'lodash';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 import { type CardServiceObjectProps } from '../../types/components/card/card-service.ts';
 import { CategoryTypesContext } from '../../store/category-types-context.tsx';
@@ -17,15 +16,16 @@ const Service = () => {
   const { setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
   const { services, setServices } = useContext(ServicesContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    getCategories(setCategoryTypes, setCategories);
-    getServices(`${id}`, setServices);
+    getCategories(setCategoryTypes, setCategories, setIsLoading);
+    getServices(`${id}`, setServices, setIsLoading);
   }, []);
 
   return (
     <div>
-      {isEmpty(services) ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <div>

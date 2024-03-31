@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { CategoryTypesContext } from '../../store/category-types-context';
 import { CategoriesContext } from '../../store/categories-context';
@@ -12,10 +12,11 @@ const Shop = () => {
   const { setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
   const { products } = useContext(ProductsContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isEmpty(categories)) {
-      getCategories(setCategoryTypes, setCategories);
+      getCategories(setCategoryTypes, setCategories, setIsLoading);
     }
   }, []);
 
@@ -25,7 +26,7 @@ const Shop = () => {
 
   return (
     <div>
-      {isEmpty(products) || isEmpty(categories) ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <TabsTop products={products} categories={categories} />
