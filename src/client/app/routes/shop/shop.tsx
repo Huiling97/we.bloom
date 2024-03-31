@@ -26,7 +26,7 @@ const Shop = () => {
 
   return (
     <div>
-      {isLoading ? (
+      {isLoading || isEmpty(products) ? (
         <LoadingSpinner />
       ) : (
         <TabsTop products={products} categories={categories} />
