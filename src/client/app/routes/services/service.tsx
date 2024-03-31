@@ -16,7 +16,7 @@ const Service = () => {
   const { setCategoryTypes } = useContext(CategoryTypesContext);
   const { categories, setCategories } = useContext(CategoriesContext);
   const { services, setServices } = useContext(ServicesContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getCategories(setCategoryTypes, setCategories, setIsLoading);
