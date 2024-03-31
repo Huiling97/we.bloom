@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { ModalContext } from '../../store/modal-context';
 import { CategoriesContext } from '../../store/categories-context';
 import { ProductsContext } from '../../store/products-context';
-import Shop from '../shop';
+import Shop from '../shop/shop';
 import ProductModal from '../../components/modal/product-modal';
 import { BackLink } from '../../components/link';
 

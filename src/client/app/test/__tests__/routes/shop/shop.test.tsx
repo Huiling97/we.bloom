@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { setupAxiosMock } from '../../../util/axiosMockUtils';
 import URLConstants from '../../../../util/constants/url-constants';
-import Shop from '../../../../routes/shop';
+import Shop from '../../../../routes/shop/shop';
 import { CategoriesContext } from '../../../../store/categories-context';
 import { ProductsContext } from '../../../../store/products-context';
 import { mockCategoriesContextValue } from '../../../__mocks__/store/categories-context-mock';

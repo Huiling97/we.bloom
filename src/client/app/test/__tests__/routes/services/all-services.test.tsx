@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import AllServices from '../../../../../routes/services/all-services';
-import { CategoriesContext } from '../../../../../store/categories-context';
-import { mockCategoriesContextValue } from '../../../../__mocks__/store/categories-context-mock';
+import AllServices from '../../../../routes/services/all-services';
+import { CategoriesContext } from '../../../../store/categories-context';
+import { mockCategoriesContextValue } from '../../../__mocks__/store/categories-context-mock';
 
 let container: HTMLElement;
 

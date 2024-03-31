@@ -1,26 +1,31 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { Whatsapp } from '@styled-icons/boxicons-logos';
+import { CategoryTypesContext } from '../store/category-types-context.tsx';
 import { CategoriesContext } from '../store/categories-context.tsx';
 import LoadingSpinner from '../components/spinner/index.tsx';
 import CarouselBanner from '../components/carousel/index.tsx';
 import CardGrid from '../components/card/card-grid/index.tsx';
 import CardReview from '../components/card/card-review/index.tsx';
 import Separator from '../components/separator/index.tsx';
-import fetchCategoriesData from '../util/fetch-categories.ts';
+import getCategories from '../service/categories-service.ts';
 import { isMobile } from '../util/screen-size-helper.ts';
-import { REVIEWS_LIST } from '../util/constants.ts';
+import { REVIEWS_LIST } from '../util/constants/constants.ts';
 
 const Home = () => {
-  const { categories } = useContext(CategoriesContext);
+  const { setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (isEmpty(categories)) {
-    fetchCategoriesData();
-  }
+  useEffect(() => {
+    if (isEmpty(categories)) {
+      getCategories(setCategoryTypes, setCategories, setIsLoading);
+    }
+  }, []);
 
   return (
     <div>
-      {isEmpty(categories) ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <div>

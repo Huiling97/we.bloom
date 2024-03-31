@@ -1,20 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
+import { CategoryTypesContext } from '../../store/category-types-context.tsx';
 import { CategoriesContext } from '../../store/categories-context.tsx';
 import CardGrid from '../../components/card/card-grid/index.tsx';
-import fetchCategoriesData from '../../util/fetch-categories.ts';
+import getCategories from '../../service/categories-service.ts';
 import LoadingSpinner from '../../components/spinner/index.tsx';
 
 const AllServices = () => {
-  const { categories } = useContext(CategoriesContext);
+  const { setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (isEmpty(categories)) {
-    fetchCategoriesData();
-  }
+  useEffect(() => {
+    if (isEmpty(categories)) {
+      getCategories(setCategoryTypes, setCategories, setIsLoading);
+    }
+  }, []);
 
   return (
     <div>
-      {isEmpty(categories) ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <div>

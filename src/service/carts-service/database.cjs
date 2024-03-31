@@ -1,4 +1,4 @@
-const { db } = require('../databse.cjs');
+const { db } = require('../database.cjs');
 
 const getCartProducts = async () => {
   const q = `SELECT cp.quantity, cp.total_price, p.* 

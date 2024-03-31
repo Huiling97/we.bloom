@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { setupAxiosMock } from '../../../../util/axiosMockUtils';
-import URLConstants from '../../../../../util/constants/url-constants';
-import ManageProducts from '../../../../../routes/manage/manage-products';
-import { CategoriesContext } from '../../../../../store/categories-context';
-import { ProductsContext } from '../../../../../store/products-context';
-import { mockCategoriesContextValue } from '../../../../__mocks__/store/categories-context-mock';
-import { mockProductsContextValue } from '../../../../__mocks__/store/products-context-mock';
+import { setupAxiosMock } from '../../../util/axiosMockUtils';
+import URLConstants from '../../../../util/constants/url-constants';
+import ManageProducts from '../../../../routes/manage/manage-products';
+import { CategoriesContext } from '../../../../store/categories-context';
+import { ProductsContext } from '../../../../store/products-context';
+import { mockCategoriesContextValue } from '../../../__mocks__/store/categories-context-mock';
+import { mockProductsContextValue } from '../../../__mocks__/store/products-context-mock';
 
-jest.mock('../../../../../components/card/card-product/helpers');
+jest.mock('../../../../components/card/card-product/helpers');
 
 const renderEmptyContext = () => {
   return render(

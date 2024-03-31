@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import Button from 'react-bootstrap/Button';
 import { type CardServiceFormInputProps } from '../../types/components/form.ts';
@@ -9,11 +9,14 @@ import CardCategoryForm from '../../components/card/card-category/form.tsx';
 import CardServiceForm from '../../components/card/card-services/form.tsx';
 import TabSwitch from '../../components/tabs/index.tsx';
 import AuthForm from '../../components/form/auth-form.tsx';
+import LoadingSpinner from '../../components/spinner/index.tsx';
 import { BackLink } from '../../components/link';
-import fetchCategoriesData from '../../util/fetch-categories.ts';
-import fetchServicesData from '../../util/fetch-services.ts';
+import getCategories from '../../service/categories-service.ts';
+import getServices from '../../service/services-service.ts';
 import { isProtectedCategory } from '../../util/auth-helper.ts';
 import { ModalContext } from '../../store/modal-context.tsx';
+import { CategoryTypesContext } from '../../store/category-types-context.tsx';
+import { CategoriesContext } from '../../store/categories-context.tsx';
 import { ServicesContext } from '../../store/services-context.tsx';
 import { DetailsContext } from '../../store/details-context.tsx';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,14 +25,6 @@ import { database } from '../../../main.tsx';
 
 const Manage = () => {
   const formId = uuidv4();
-
-  const {
-    isLoading: isLoadingCategories,
-    categories,
-    categoryTypes,
-  } = fetchCategoriesData();
-  const { isLoading: isLoadingServices, services } = fetchServicesData('');
-
   const {
     showModal,
     setShowModal,
@@ -38,6 +33,9 @@ const Manage = () => {
     isAuthModal,
     setIsAuthModal,
   } = useContext(ModalContext);
+  const { categoryTypes, setCategoryTypes } = useContext(CategoryTypesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
+  const { services, setServices } = useContext(ServicesContext);
   const servicesCtx = useContext(ServicesContext);
   const { setDetails } = useContext(DetailsContext);
 
@@ -57,6 +55,7 @@ const Manage = () => {
     description: '',
     details: [],
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const deleteCategoryModalHandler = (id: string) => {
     if (isProtectedCategory(id)) {
@@ -114,11 +113,18 @@ const Manage = () => {
     setDetails(data.details);
   };
 
+  useEffect(() => {
+    getCategories(setCategoryTypes, setCategories, setIsLoading);
+    getServices('', setServices, setIsLoading);
+  }, []);
+
+  console.log('check isLoading', isLoading);
+
   return (
     <div>
       <BackLink link='/manage' content='Back' />
-      {isLoadingCategories || isLoadingServices ? (
-        <div>loading</div>
+      {isLoading ? (
+        <LoadingSpinner />
       ) : (
         <div className='manage-page-container'>
           <div className='buttons-container left'>

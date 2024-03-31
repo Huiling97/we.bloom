@@ -8,13 +8,13 @@ import {
   addCartItem,
   deleteCartItem,
   updateCartItems,
-} from '../../../../../service/cartService';
+} from '../../../../../service/cart-service';
 import {
   cartItemsMock,
   CartNewItemMock,
 } from '../../../../__mocks__/cart-mock';
 
-jest.mock('../../../../../service/cartService', () => ({
+jest.mock('../../../../../service/cart-service', () => ({
   addCartItem: jest.fn(),
   deleteCartItem: jest.fn(),
   updateCartItems: jest.fn(),

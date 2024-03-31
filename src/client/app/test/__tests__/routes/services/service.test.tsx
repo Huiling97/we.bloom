@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Service from '../../../../../routes/services/service';
+import Service from '../../../../routes/services/service';
 
 describe('Service', () => {
   it('displays loading spinner while fetching services data', () => {
